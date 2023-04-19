@@ -4,9 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class ServiceClassProvider extends ServiceProvider
+class RepositoryServiceProvider extends ServiceProvider
 {
-    private const PREFIXES = [
+    private const MODELS = [
         'Test',
     ];
 
@@ -17,10 +17,10 @@ class ServiceClassProvider extends ServiceProvider
      */
     public function register()
     {
-        foreach (self::PREFIXES as $prefix) {
+        foreach (self::MODELS as $model) {
             $this->app->bind(
-                "App\Services\Interfaces\\{$prefix}ServiceInterface",
-                "App\Services\\{$prefix}Service"
+                "App\Repositories\Interfaces\\{$model}RepositoryInterface",
+                "App\Repositories\Eloquent{$model}Repository"
             );
         }
     }
