@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    // 管理者ユーザー
+    public const ADMIN = 0;
+    // 一般ユーザー
+    public const GENERAL = 1;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -41,4 +46,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * role値をテキストに変換する
+     *
+     * @return string
+     */
+    public function convertRoleString(): string
+    {
+        return match ($this->role) {
+            self::ADMIN => 'admin',
+            self::GENERAL => 'general',
+        };
+    }
 }
