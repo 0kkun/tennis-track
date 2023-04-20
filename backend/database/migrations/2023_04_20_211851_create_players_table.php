@@ -21,6 +21,13 @@ return new class extends Migration
             $table->string('country', 100)->nullable()->comment('出身');
             $table->date('birthday')->nullable()->comment('生年月日');
             $table->unsignedTinyInteger('gender')->nullable()->comment('性別[0:男/1:女]');
+            $table->unsignedTinyInteger('dominant_arm')->nullable()->comment('利き腕[0:右/1:左/2:両方]');
+            $table->unsignedTinyInteger('backhand_style')->nullable()->comment('バックハンド[0:片手/1:両手]');
+            $table->foreignId('sport_category_id')
+                ->constrained('sport_categories')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->unique(['name_jp', 'name_en']);
             $table->timestamps();
         });
     }
