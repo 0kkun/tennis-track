@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public $timestamps = true;
+
     // 管理者ユーザー
     public const ADMIN = 0;
     // 一般ユーザー
