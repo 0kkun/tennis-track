@@ -2,12 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Http\Resources\Common\ErrorResource;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -47,9 +46,13 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e, $request) {
+        $this->reportable(function (\Throwable $e) {
+            //
+        });
+
+        $this->renderable(function (\Throwable $e, $request) {
             if ($request->is('api/*')) {
-                return $this->apiErrorResponse($e, $request);
+                return $this->apiErrorResponse($e);
             }
         });
     }
@@ -57,23 +60,30 @@ class Handler extends ExceptionHandler
     /**
      * APIのエラーハンドリング
      *
-     * @param [type] $request
-     * @param \Throwable $exception
-     * @return void
+     * @param \Throwable $e
+     * @return ErrorResource
      */
-    private function apiErrorResponse(Throwable $e, $request)
+    private function apiErrorResponse(\Throwable $e): ErrorResource
     {
         if ($e instanceof HttpException) {
+            $messages = config('api_response.messages');
             $statusCode = $e->getStatusCode();
+            Log::alert(print_r([
+                'status' => $statusCode,
+                'message' => $e->getMessage(),
+                'class' => get_class($e),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ],true));
             return match ($statusCode) {
-                400 => response()->error(Response::HTTP_BAD_REQUEST, 'Bad Request'),
-                401 => response()->error(Response::HTTP_UNAUTHORIZED, 'Unauthorized'),
-                403 => response()->error(Response::HTTP_FORBIDDEN, 'Forbidden'),
-                404 => response()->error(Response::HTTP_NOT_FOUND, 'Not Found'),
-                405 => response()->error(Response::HTTP_METHOD_NOT_ALLOWED, 'Method Not Allowed'),
-                422 => response()->error(Response::HTTP_UNPROCESSABLE_ENTITY, 'Unprocessable Entity'),
-                500 => response()->error(Response::HTTP_INTERNAL_SERVER_ERROR, 'Server Error'),
-                503 => response()->error(Response::HTTP_SERVICE_UNAVAILABLE, 'Service Unavailable'),
+                400 => new ErrorResource([$messages[Response::HTTP_BAD_REQUEST]], Response::HTTP_BAD_REQUEST),
+                401 => new ErrorResource([$messages[Response::HTTP_UNAUTHORIZED]], Response::HTTP_UNAUTHORIZED),
+                403 => new ErrorResource([$messages[Response::HTTP_BAD_REQUEST]], Response::HTTP_BAD_REQUEST),
+                404 => new ErrorResource([$messages[Response::HTTP_NOT_FOUND]], Response::HTTP_NOT_FOUND),
+                405 => new ErrorResource([$messages[Response::HTTP_METHOD_NOT_ALLOWED]], Response::HTTP_METHOD_NOT_ALLOWED),
+                422 => new ErrorResource([$messages[Response::HTTP_UNPROCESSABLE_ENTITY]], Response::HTTP_UNPROCESSABLE_ENTITY),
+                500 => new ErrorResource([$messages[Response::HTTP_INTERNAL_SERVER_ERROR]], Response::HTTP_INTERNAL_SERVER_ERROR),
+                503 => new ErrorResource([$messages[Response::HTTP_SERVICE_UNAVAILABLE]], Response::HTTP_SERVICE_UNAVAILABLE),
             };
         }
     }

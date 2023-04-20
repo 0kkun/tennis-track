@@ -16,6 +16,7 @@ return [
         'bad_request' => 400, // リクエストが間違っている
         'unauthorized' => 401, // 未認証
         'forbidden' => 403,
+        'not_found' => 404,
         'method_not_allowed' => 405, // ルーティングが無い
         'unprocessable_entity' => 422, // リクエストは正常だが引数が足りない・バリデーションに引っかかった場合など
         'server_error' => 500, // サーバ内部にエラーが発生した場合。予期しないサーバー処理のエラー。
@@ -31,6 +32,7 @@ return [
         400 => 'Bad Request',
         401 => 'Unauthorized Error.',
         403 => 'Forbidden',
+        404 => 'Not Found',
         405 => 'Method Not Allowed.',
         422 => 'Validation Error. There is a problem with the request params.',
         500 => 'Server Error',
