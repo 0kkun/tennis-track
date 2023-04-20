@@ -3,6 +3,7 @@
 use App\Http\Controllers\Apis\V1\Admins\Auth\AdminAuthController;
 use App\Http\Controllers\Apis\V1\Users\Auth\UserAuthController;
 use App\Http\Controllers\Apis\V1\Users\Auth\UserPasswordResetController;
+use App\Http\Controllers\Apis\V1\Admins\Csv\CsvController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -28,7 +29,7 @@ Route::prefix('v1/')->group(function() {
         Route::post('/logout', [AdminAuthController::class, 'logout']);
         Route::middleware(['auth:sanctum', 'can:admin'])->group(function() {
             Route::get('/me', [AdminAuthController::class, 'me']);
-            // Route::apiResource('/csv', CsvController::class)->only(['index', 'store']);
+            Route::apiResource('/csv', CsvController::class)->only(['index', 'store']);
         });
     });
 });
