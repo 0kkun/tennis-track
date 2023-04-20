@@ -5,6 +5,7 @@ use App\Http\Controllers\Apis\V1\Users\Auth\UserAuthController;
 use App\Http\Controllers\Apis\V1\Users\Auth\UserPasswordResetController;
 use App\Http\Controllers\Apis\V1\Admins\Csv\CsvController;
 use App\Http\Controllers\Apis\V1\Admins\File\FileController;
+use App\Http\Controllers\Apis\V1\Users\Player\PlayerController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,6 +22,7 @@ Route::prefix('v1/')->group(function() {
             Route::as('users.')->group(function () {
                 Route::patch('reset/{id}', [UserPasswordResetController::class, 'reset'])->name('password.reset');
             });
+            Route::apiResource('/players', PlayerController::class)->only(['index']);
         });
     });
 

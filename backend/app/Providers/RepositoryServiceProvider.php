@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 class RepositoryServiceProvider extends ServiceProvider
 {
     private const MODELS = [
-        'Test',
+        'Player',
     ];
 
     /**
