@@ -3,9 +3,14 @@
 namespace App\Exceptions;
 
 use App\Http\Resources\Common\ErrorResource;
+use App\Http\Resources\Common\InvalidResource;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
@@ -61,12 +66,30 @@ class Handler extends ExceptionHandler
      * APIのエラーハンドリング
      *
      * @param \Throwable $e
-     * @return ErrorResource
+     * @return ErrorResource|InvalidResource
      */
-    private function apiErrorResponse(\Throwable $e): ErrorResource
+    private function apiErrorResponse(\Throwable $e): ErrorResource|InvalidResource
     {
+        $messages = config('api_response.messages');
+
+        // 未認証 or トークンが間違っている or 権限が無い
+        if (
+            $e instanceof AuthorizationException
+            || $e instanceof AuthenticationException
+            || $e instanceof AccessDeniedHttpException
+        ) {
+            return new ErrorResource([
+                $messages[Response::HTTP_UNAUTHORIZED]
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        // バリデーションエラー
+        if ($e instanceof ValidationException) {
+            return new InvalidResource($e->errors());
+        }
+
+        // HTTPエラー
         if ($e instanceof HttpException) {
-            $messages = config('api_response.messages');
             $statusCode = $e->getStatusCode();
             Log::alert(print_r([
                 'status' => $statusCode,
@@ -77,14 +100,22 @@ class Handler extends ExceptionHandler
             ],true));
             return match ($statusCode) {
                 400 => new ErrorResource([$messages[Response::HTTP_BAD_REQUEST]], Response::HTTP_BAD_REQUEST),
-                401 => new ErrorResource([$messages[Response::HTTP_UNAUTHORIZED]], Response::HTTP_UNAUTHORIZED),
-                403 => new ErrorResource([$messages[Response::HTTP_BAD_REQUEST]], Response::HTTP_BAD_REQUEST),
+                403 => new ErrorResource([$messages[Response::HTTP_FORBIDDEN]], Response::HTTP_FORBIDDEN),
                 404 => new ErrorResource([$messages[Response::HTTP_NOT_FOUND]], Response::HTTP_NOT_FOUND),
                 405 => new ErrorResource([$messages[Response::HTTP_METHOD_NOT_ALLOWED]], Response::HTTP_METHOD_NOT_ALLOWED),
-                422 => new ErrorResource([$messages[Response::HTTP_UNPROCESSABLE_ENTITY]], Response::HTTP_UNPROCESSABLE_ENTITY),
                 500 => new ErrorResource([$messages[Response::HTTP_INTERNAL_SERVER_ERROR]], Response::HTTP_INTERNAL_SERVER_ERROR),
                 503 => new ErrorResource([$messages[Response::HTTP_SERVICE_UNAVAILABLE]], Response::HTTP_SERVICE_UNAVAILABLE),
             };
         }
+
+        // その他のエラー
+        return new ErrorResource([
+            'errors' => [
+                'message' => $e->getMessage(),
+                'class' => get_class($e),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]
+        ]);
     }
 }
