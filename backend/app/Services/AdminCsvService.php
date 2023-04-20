@@ -2,23 +2,20 @@
 
 namespace App\Services;
 
+use App\Modules\CsvImporter;
 use App\Services\Interfaces\AdminCsvServiceInterface;
 use Illuminate\Http\UploadedFile;
-use Carbon\Carbon;
-use App\Modules\FileUploader;
+use Illuminate\Support\Facades\Log;
 
 class AdminCsvService implements AdminCsvServiceInterface
 {
-    private const S3_PREFIX = '/csv';
-
     /**
      * @inheritDoc
      */
-    public function importCsv(UploadedFile $file): void
+    public function importCsv(UploadedFile $file): array
     {
-        // 名前をつけてS3へアップロード
-        $originName = $file->getClientOriginalName();
-        $fileName = Carbon::now()->format('Ymd_His') . '.csv';
-        $filePath = FileUploader::upload($file, 's3', self::S3_PREFIX, $fileName);
+        $csvData = CsvImporter::import($file);
+        Log::info(print_r($csvData, true));
+        return $csvData;
     }
 }

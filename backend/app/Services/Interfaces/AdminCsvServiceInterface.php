@@ -7,9 +7,10 @@ use Illuminate\Http\UploadedFile;
 interface AdminCsvServiceInterface
 {
     /**
-     * CSVファイルをS3にアップし、配列を取得する
+     * CSVファイルを元に配列データを取得する
      *
-     * @return void
+     * @param UploadedFile $file
+     * @return array
      */
-    public function importCsv(UploadedFile $file): void;
+    public function importCsv(UploadedFile $file): array;
 }
