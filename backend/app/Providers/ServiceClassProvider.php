@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 class ServiceClassProvider extends ServiceProvider
 {
     private const PREFIXES = [
-        'Test',
+        'AdminCsv',
     ];
 
     /**
