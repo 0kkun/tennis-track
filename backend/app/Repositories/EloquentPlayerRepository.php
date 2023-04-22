@@ -41,4 +41,38 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
             ->limit(Player::ITEM_PER_PAGE)
             ->get();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function destroy(int $id): void
+    {
+        $this->player->find($id)->delete();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getById(int $id): Player
+    {
+        return $this->player->find($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function create(array $player): void
+    {
+        $this->player->create($player);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function update(int $id, array $player): void
+    {
+        $this->player
+            ->find($id)
+            ->update($player);
+    }
 }

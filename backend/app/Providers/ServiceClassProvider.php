@@ -9,6 +9,7 @@ class ServiceClassProvider extends ServiceProvider
     private const PREFIXES = [
         'AdminCsv',
         'AdminFile',
+        'TennisScraping',
     ];
 
     /**

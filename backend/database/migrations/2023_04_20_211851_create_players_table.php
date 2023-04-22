@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('players', function (Blueprint $table) {
             $table->comment('テニス選手管理テーブル');
             $table->id();
-            $table->string('name_jp', 100)->nullable()->comment('選手名(和)');
-            $table->string('name_en', 100)->nullable()->comment('選手名(英)');
+            $table->string('name_jp', 100)->comment('選手名(和)');
+            $table->string('name_en', 100)->comment('選手名(英)');
             $table->string('country', 100)->nullable()->comment('出身');
             $table->date('birthday')->nullable()->comment('生年月日');
             $table->unsignedTinyInteger('gender')->nullable()->comment('性別[0:男/1:女]');
