@@ -10,6 +10,7 @@ class ServiceClassProvider extends ServiceProvider
         'AdminCsv',
         'AdminFile',
         'TennisScraping',
+        'Translate',
     ];
 
     /**
