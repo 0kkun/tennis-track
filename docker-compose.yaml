@@ -37,10 +37,7 @@ services:
     build: 
       context: .docker/db
     ports:
-      - target: ${DB_HOST_PORT}
-        published: ${DB_HOST_PORT:-3306}
-        protocol: tcp
-        mode: host
+      - ${DB_HOST_PORT}:3306
     volumes:
       - ./.docker/db/data:/var/lib/mysql
     environment:
