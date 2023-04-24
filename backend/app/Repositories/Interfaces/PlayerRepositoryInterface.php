@@ -35,9 +35,9 @@ interface PlayerRepositoryInterface
      * 選手を1件登録する
      *
      * @param array $player
-     * @return void
+     * @return integer
      */
-    public function create(array $player): void;
+    public function create(array $player): int;
 
     /**
      * 選手を1件アップデートする
@@ -56,4 +56,12 @@ interface PlayerRepositoryInterface
      * @return void
      */
     public function upsertByNameEn(array $params): void;
+
+    /**
+     * スポーツカテゴリーIDで選手を全て取得する
+     *
+     * @param integer $sportCategoryId
+     * @return Collection|null
+     */
+    public function fetchBySportCategoryId(int $sportCategoryId): ?Collection;
 }

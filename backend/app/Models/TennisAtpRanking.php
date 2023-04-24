@@ -13,7 +13,7 @@ class TennisAtpRanking extends Model
 
     protected $guarded = ['id'];
 
-    public const ITEM_PER_PAGE = 100;
+    public const ITEM_PER_PAGE = 150;
 
     /****  リレーション ****/
 
