@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\TennisAtpRanking;
+use App\Repositories\Interfaces\PlayerRepositoryInterface;
 use App\Repositories\Interfaces\SportCategoryRepositoryInterface;
+use App\Repositories\Interfaces\TennisAtpRankingRepositoryInterface;
 use App\Services\Interfaces\TennisScrapingServiceInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -20,16 +23,24 @@ class TennisScrapingService implements TennisScrapingServiceInterface
 
     /**
      * @param Client $client
+     * @param SportCategoryRepositoryInterface $sportCategoryRepository
+     * @param Carbon $now
+     * @param PlayerRepositoryInterface $playerRepository
+     * @param TennisAtpRankingRepositoryInterface $tennisAtpRankingRepository
      */
     public function __construct(
         private Client $client,
         private SportCategoryRepositoryInterface $sportCategoryRepository,
         private Carbon $now,
+        private PlayerRepositoryInterface $playerRepository,
+        private TennisAtpRankingRepositoryInterface $tennisAtpRankingRepository,
     )
     {
         $this->client = $client;
         $this->sportCategoryRepository = $sportCategoryRepository;
         $this->now = $now;
+        $this->playerRepository = $playerRepository;
+        $this->tennisAtpRankingRepository = $tennisAtpRankingRepository;
     }
 
     /**
@@ -37,6 +48,7 @@ class TennisScrapingService implements TennisScrapingServiceInterface
      */
     public function scrapeTennisRanking(ProgressBar $progressBar): array
     {
+        $progressBar->start();
         Log::info('テニスランキング - スクレイピング開始');
         $crawler = $this->client->request('GET', self::TENNIS_RANK_URL);
         $statusCode = $this->client->getResponse()->getStatusCode();
@@ -45,49 +57,69 @@ class TennisScrapingService implements TennisScrapingServiceInterface
             throw new \Exception('[Error]:ページの読み込みに失敗しました.');
         }
 
-        $rows = $crawler->filter('tbody.Table__TBODY')
-            ->filter('tr')
-            ->each(function ($node) use ($progressBar) {
-                $rank = $node->filter('td.rank_column')
-                    ->filter('span')
-                    ->text();
+        $latestTennisRanking = $this->tennisAtpRankingRepository->getLatestUpdatedRecord();
+        $lastUpdatedText = $crawler->filter('p.rankings__specialNote')->text();
+        $lastUpdated = $this->convertLastUpdatedDate($lastUpdatedText);
 
-                $rankChange = $node->filter('td.trend')
-                    ->text();
+        // テーブル内のランキングが既に最新なら処理を行わない
+        if (!$this->isRankingAlreadyNew($latestTennisRanking, $lastUpdated)) return [];
 
-                $country = $node->filter('td')
-                    ->eq(2)
-                    ->filter('img')
-                    ->attr('title');
+        $sportCategoryId = $this->sportCategoryRepository->getIdByName('テニス');
+        $tennisPlayers = $this->playerRepository->fetchBySportCategoryId($sportCategoryId)->toArray();
+        $tennisPlayers = array_column($tennisPlayers, 'id', 'name_en');
+
+        $rows = $crawler->filter('tbody.Table__TBODY tr')
+            ->each(function ($node) use ($progressBar, $tennisPlayers, $sportCategoryId, $lastUpdated) {
+                if ($node->count() === 0) throw new \Exception('[Error:] nodeが取得できませんでした.');
 
                 $name = $node->filter('td')
                     ->eq(2)
                     ->filter('a')
                     ->text();
 
-                $playerLink = $node->filter('td')
-                    ->eq(2)
-                    ->filter('a')
-                    ->attr('href');
+                // 選手が存在しない場合はplayersに新規レコード生成
+                if (!isset($tennisPlayers[$name])) {
+                    Log::info('存在しない選手がいたため新規選手登録開始: ' . $name);
+                    $country = $node->filter('td')
+                        ->eq(2)
+                        ->filter('img')
+                        ->attr('title');
+
+                    $playerLink = $node->filter('td')
+                        ->eq(2)
+                        ->filter('a')
+                        ->attr('href');
+
+                    $playerCreateParams = $this->makePlayerCreateParams($name, $country, $playerLink, $sportCategoryId);
+                    $playerId = $this->playerRepository->create($playerCreateParams);
+                } else {
+                    $playerId = $tennisPlayers[$name];
+                }
+                
+                $rank = $node->filter('td.rank_column')
+                    ->filter('span')
+                    ->text();
+
+                $rankChange = $node->filter('td')->eq(1)->text();
+                if ($rankChange === '-') $rankChange = 0;
+                $rankChangeNegative = $node->filter('td')->eq(1)->filter('div.negative');
+                if ($rankChangeNegative->count() > 0) $rankChange = '-' . $rankChange;
 
                 $currentPoint = $node->filter('td')
                     ->eq(3)
                     ->text();
 
-                $age = $node->filter('td')
-                    ->eq(4)
-                    ->text();
-
                 $progressBar->advance(1);
 
+                // FIXME: 更新の場合もcreated_atが更新されてしまう
                 return [
-                    'current_rank' => $rank,
-                    'rank_change' => $rankChange,
-                    'country' => $country,
-                    'name_en' => $name,
-                    'player_link' => $playerLink,
-                    'current_point' => $currentPoint,
-                    'age' => $age,
+                    'current_rank' => intval($rank),
+                    'rank_change' => intval($rankChange),
+                    'current_point' => intval(str_replace(',', '', $currentPoint)),
+                    'player_id' => $playerId,
+                    'updated_ymd' => $lastUpdated,
+                    'updated_at' => $this->now,
+                    'created_at' => $this->now,
                 ];
             });
         Log::info('[テニスランキング] ' . count($rows) . '件取得完了.');
@@ -149,14 +181,60 @@ class TennisScrapingService implements TennisScrapingServiceInterface
                 }
                 $progressBar->advance(1);
 
-                return [
-                    'name_en' => $name,
-                    'link' => $link,
-                    'country' => $country,
-                    'sport_category_id' => $sportCategoryId,
-                    'updated_at' => $this->now,
-                    'created_at' => $this->now,
-                ];
+                return $this->makePlayerCreateParams($name, $link, $country, $sportCategoryId);
             });
+    }
+
+    /**
+     * playersテーブル保存用の配列を作成する
+     *
+     * @param string $name
+     * @param string $country
+     * @param string $playerLink
+     * @param integer $sportCategoryId
+     * @return array
+     */
+    private function makePlayerCreateParams(string $name, string $country, string $playerLink, int $sportCategoryId): array
+    {
+        return [
+            'name_en' => $name,
+            'country' => $country,
+            'link' => $playerLink,
+            'sport_category_id' => $sportCategoryId,
+            'updated_at' => $this->now,
+            'created_at' => $this->now,
+        ];
+    }
+
+    /**
+     * 更新日情報をテーブル保存用の形式に変換する
+     *
+     * @param string $lastUpdatedText
+     * @return string
+     */
+    private function convertLastUpdatedDate(string $lastUpdatedText): string
+    {
+        $lastUpdated = explode(" ", $lastUpdatedText);
+        // ヘルパー関数を使用してテキストの月を数値に変換
+        $month = monthToInt($lastUpdated[2]);
+        $date = rtrim($lastUpdated[3], ",");
+        $year = $lastUpdated[4];
+        return Carbon::create($year, $month, $date)->format('Y-m-d');
+    }
+
+    /**
+     * スクレイピングしてきた更新日を比較し、最新かどうかチェックする
+     *
+     * @param TennisAtpRanking|null $latestTennisRanking
+     * @param string $lastUpdated
+     * @return boolean
+     */
+    private function isRankingAlreadyNew(?TennisAtpRanking $latestTennisRanking, string $lastUpdated): bool
+    {
+        // テーブル内にランキングがそもそも存在しないならスクレイピングしたものは最新である
+        if (!isset($latestTennisRanking->updated_ymd)) return true;
+        // テーブル内のランキング更新日とスクレイピングした更新日が違うなら最新である
+        if ($latestTennisRanking->updated_ymd !== $lastUpdated) return true;
+        else return false;
     }
 }
