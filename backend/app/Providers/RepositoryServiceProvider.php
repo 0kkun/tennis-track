@@ -9,6 +9,7 @@ class RepositoryServiceProvider extends ServiceProvider
     private const MODELS = [
         'Player',
         'SportCategory',
+        'TennisAtpRanking',
     ];
 
     /**

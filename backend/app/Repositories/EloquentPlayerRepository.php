@@ -61,9 +61,9 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function create(array $player): void
+    public function create(array $player): int
     {
-        $this->player->create($player);
+        return $this->player->create($player)->id;
     }
 
     /**
@@ -82,5 +82,16 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
     public function upsertByNameEn(array $params): void
     {
         $this->player->upsert($params, ['name_en']);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function fetchBySportCategoryId(int $sportCategoryId): ?Collection
+    {
+        return $this->player
+            ->select('id', 'name_en')
+            ->where('sport_category_id', $sportCategoryId)
+            ->get();
     }
 }
