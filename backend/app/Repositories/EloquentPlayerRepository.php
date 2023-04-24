@@ -75,4 +75,12 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
             ->find($id)
             ->update($player);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function upsertByNameEn(array $params): void
+    {
+        $this->player->upsert($params, ['name_en']);
+    }
 }
