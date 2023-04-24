@@ -159,6 +159,15 @@ grant-testdbuser:
 create-testdb:
 	$(DEI) $(PROJECT_NAME)_db $(MYSQL_ROOT_LOGIN_CMD) --execute="CREATE DATABASE $(PROJECT_NAME)_db_testing"
 
+# Sequero Ace接続用
+.PHONY: create-localuser
+create-localuser:
+	$(DEI) $(PROJECT_NAME)_db $(MYSQL_ROOT_LOGIN_CMD) --execute="CREATE USER 'tennis_track_user'@'127.0.0.1' IDENTIFIED BY 'password'"
+
+.PHONY: grant-dbuser
+grant-dbuser:
+	$(DEI) $(PROJECT_NAME)_db $(MYSQL_ROOT_LOGIN_CMD) --execute="GRANT ALL PRIVILEGES ON $(MYSQL_DB_NAME).* TO 'tennis_track_user'@'127.0.0.1'"
+
 .PHONY: test-init
 test-init:
 	@make create-testdb

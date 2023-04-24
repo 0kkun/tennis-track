@@ -47,4 +47,13 @@ interface PlayerRepositoryInterface
      * @return void
      */
     public function update(int $id, array $player): void;
+
+    /**
+     * upsertを行う. 
+     * name_enが同じのものはupdate、それ以外はinsert
+     *
+     * @param array $params upsertするパラメータ
+     * @return void
+     */
+    public function upsertByNameEn(array $params): void;
 }
