@@ -11,6 +11,9 @@ class ScrapeTennisRankingCommand extends Command
     protected $signature = 'command:ScrapeTennisRanking';
     protected $description = 'テニスのランキングデータをスクレイピングで取得するコマンド';
 
+    /* 進捗表示バー用 */
+    private const PROCESS_COUNT = 150;
+
     /**
      * @param TennisScrapingServiceInterface $tennisScrapingService
      */
@@ -25,16 +28,24 @@ class ScrapeTennisRankingCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $logger = new ApplicationLogger(__METHOD__);
         $this->info("[ Start ]");
-        $tennisRankings = $this->tennisScrapingService->scrapeTennisRanking();
-        $this->info('スクレイピング' . count($tennisRankings) . '件取得完了');
+        $progressBar = $this->output->createProgressBar(self::PROCESS_COUNT);
+        $progressBar->start();
+        try {
+            $tennisRankings = $this->tennisScrapingService->scrapeTennisRanking($progressBar);
+            $this->info("\n" . 'スクレイピング' . count($tennisRankings) . '件取得完了');
+            $logger->write(print_r($tennisRankings, true));
+        } catch (\Exception $e) {
+            $logger->exception($e);
+            throw $e;
+        }
+        $progressBar->finish();
         $this->info("[ Finish ]");
         $logger->success();
-        return Command::SUCCESS;
     }
 }
