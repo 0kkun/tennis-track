@@ -18,9 +18,10 @@ class PlayerFactory extends Factory
     public function definition()
     {
         return [
-            'name_en' => fake()->name(),
+            'name_en' => fake()->unique()->name(),
             'name_jp' => fake()->name(),
             'gender' => rand(0, 1),
+            'link' => fake()->url(),
             'birthday' => fake()->date(),
             'country' => fake()->country(),
             'dominant_arm' => rand(0, 2),

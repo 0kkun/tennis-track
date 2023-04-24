@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sport_categories', function (Blueprint $table) {
             $table->comment('スポーツカテゴリ管理テーブル');
             $table->id();
-            $table->string('name', 100)->nullable()->comment('カテゴリ名');
+            $table->string('name', 100)->unique()->comment('カテゴリ名');
             $table->timestamps();
         });
     }
