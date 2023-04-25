@@ -194,7 +194,7 @@ class TennisScrapingService implements TennisScrapingServiceInterface
      * @param integer $sportCategoryId
      * @return array
      */
-    private function makePlayerCreateParams(string $name, string $country, string $playerLink, int $sportCategoryId): array
+    private function makePlayerCreateParams(string $name, string $playerLink, string $country, int $sportCategoryId): array
     {
         return [
             'name_en' => $name,
