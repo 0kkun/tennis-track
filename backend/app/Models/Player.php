@@ -44,40 +44,44 @@ class Player extends Model
     /**
      * バックハンドスタイルをテキストに変換する
      *
-     * @return string
+     * @return string|null
      */
-    public function convertBackhandStyleString(): string
+    public function convertBackhandStyleString(): string|null
     {
+        if (!$this->backhand_style) return null;
         return self::BACKHAND_STYLE[$this->backhand_style];
     }
 
     /**
      * 性別をテキストに変換する
      *
-     * @return string
+     * @return string|null
      */
-    public function convertGenderString(): string
+    public function convertGenderString(): string|null
     {
+        if (!$this->gender) return null;
         return self::GENDER[$this->gender];
     }
 
     /**
      * 利き腕をテキストに変換する
      *
-     * @return string
+     * @return string|null
      */
-    public function convertDominantArmString(): string
+    public function convertDominantArmString(): string|null
     {
+        if (!$this->dominant_arm) return null;
         return self::DOMINANT_ARM[$this->dominant_arm];
     }
 
     /**
      * 生年月日から年齢を取得する
      *
-     * @return integer
+     * @return integer|null
      */
-    public function getAge(): int
+    public function getAge(): int|null
     {
+        if (!$this->birthday) return null;
         $birthday = Carbon::parse($this->birthday);
         $now = Carbon::now();
         return $birthday->diffInYears($now);
