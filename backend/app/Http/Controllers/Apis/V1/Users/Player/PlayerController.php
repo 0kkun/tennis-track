@@ -34,7 +34,7 @@ class PlayerController extends Controller
         try {
             $logger->write('選手一覧取得開始');
             $logger->write('[Request Params]' . print_r($request->all(), true));
-            $searchParams = $this->getSearchParams($request);
+            $searchParams = $request->getParams();
             $players = $this->playerRepository->fetchByParams($searchParams);
         } catch (\Exception $e) {
             $logger->exception($e);
@@ -56,30 +56,12 @@ class PlayerController extends Controller
         try {
             $logger->write('選手一覧詳細取得開始');
             $logger->write('[Request Params]' . print_r($request->all(), true));
-            $playerId = $request->id;
-            $this->playerRepository->getById($playerId);
+            $player = $this->playerRepository->getById($request->id);
         } catch (\Exception $e) {
             $logger->exception($e);
             throw $e;
         }
         $logger->success();
-        return new ShowResource();
-    }
-
-    /**
-     * 検索パスパラメータを取得
-     *
-     * @param IndexRequest $request
-     * @return array
-     */
-    private function getSearchParams(IndexRequest $request): array
-    {
-        return $request->only([
-            'sport_category_id',
-            'name',
-            'country',
-            'dominant_arm',
-            'backhand_style',
-        ]);
+        return new ShowResource($player);
     }
 }
