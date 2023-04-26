@@ -39,6 +39,7 @@ Route::prefix('v1/')->group(function() {
             Route::apiResource('/csv', CsvController::class)->only(['index', 'store']);
             Route::apiResource('/file', FileController::class)->only(['index', 'store']);
             Route::apiResource('/players', AdminPlayerController::class);
+            Route::post('/players/imports', [AdminPlayerController::class, 'import']);
             Route::get('/translate-mihon', [TranslateController::class, 'translateByMihon']);
         });
     });

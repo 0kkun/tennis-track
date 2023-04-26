@@ -15,17 +15,22 @@ use App\Http\Resources\Player\IndexResource;
 use App\Http\Resources\Player\ShowResource;
 use App\Modules\ApplicationLogger;
 use App\Repositories\Interfaces\PlayerRepositoryInterface;
+use App\Http\Requests\Admins\Player\ImportRequest;
+use App\Services\Interfaces\AdminCsvServiceInterface;
 
 class AdminPlayerController extends Controller
 {
     /**
      * @param PlayerRepositoryInterface $playerRepository
+     * @param AdminCsvServiceInterface $adminCsvService
      */
     public function __construct(
         private PlayerRepositoryInterface $playerRepository,
+        private AdminCsvServiceInterface $adminCsvService,
     )
     {
         $this->playerRepository = $playerRepository;
+        $this->adminCsvService = $adminCsvService;
     }
 
     /**
@@ -40,7 +45,7 @@ class AdminPlayerController extends Controller
         try {
             $logger->write('選手一覧取得開始');
             $logger->write('[Request Params]' . print_r($request->all(), true));
-            $searchParams = $this->getSearchParams($request);
+            $searchParams = $request->getParams();
             $players = $this->playerRepository->fetchByParams($searchParams);
         } catch (\Exception $e) {
             $logger->exception($e);
@@ -139,19 +144,22 @@ class AdminPlayerController extends Controller
     }
 
     /**
-     * 検索パスパラメータを取得
+     * CSVファイルをインポートしてテーブルへ保存する
      *
-     * @param IndexRequest $request
-     * @return array
+     * @param ImportRequest $request
+     * @return CreatedResource
      */
-    private function getSearchParams(IndexRequest $request): array
+    public function import(ImportRequest $request): CreatedResource
     {
-        return $request->only([
-            'sport_category_id',
-            'name',
-            'country',
-            'dominant_arm',
-            'backhand_style',
-        ]);
+        $logger = new ApplicationLogger(__METHOD__);
+        try {
+            $data = $this->adminCsvService->playerImportCsv($request->file('file'));
+            $logger->write('[Csv Outputed]' . print_r($data, true));
+        } catch (\Exception $e) {
+            $logger->exception($e);
+            throw $e;
+        }
+        $logger->success();
+        return new CreatedResource();
     }
 }
