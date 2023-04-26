@@ -64,4 +64,11 @@ interface PlayerRepositoryInterface
      * @return Collection|null
      */
     public function fetchBySportCategoryId(int $sportCategoryId): ?Collection;
+
+    /**
+     * 選手情報を全て取得する
+     *
+     * @return Collection
+     */
+    public function fetch(): Collection;
 }

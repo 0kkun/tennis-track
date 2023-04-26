@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
+use App\Modules\CsvExporter;
 use App\Repositories\Interfaces\PlayerRepositoryInterface;
 use App\Repositories\Interfaces\SportCategoryRepositoryInterface;
 use App\Services\Interfaces\AdminCsvServiceInterface;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use App\Modules\CsvImporter;
+use App\Modules\FileUploader;
 
 class AdminCsvService implements AdminCsvServiceInterface
 {
@@ -35,14 +37,20 @@ class AdminCsvService implements AdminCsvServiceInterface
         return $data;
     }
 
-    public function playerExportCsv()
+    /**
+     * @inheritDoc
+     */
+    public function playerExportCsv(): string
     {
-        $sportCategoryId = $this->sportCategoryRepository->getIdByName('テニス');
-        $params = [
-            'sport_category_id' => $sportCategoryId,
-        ];
-        $players = $this->playerRepository->fetchByParams($params);
+        $players = $this->playerRepository->fetch();
+        // CSV出力する列
+        $header = ['name_en', 'country'];
+        // CSVファイルを作成
+        $fileName = 'players_' . now()->format('Ymd_His') . '.csv';
+        $file = CsvExporter::export($header, $players, $fileName);
+        $path = FileUploader::upload(new UploadedFile($file->getPathname(), $fileName), 's3', '/exports', $fileName);
 
+        return $path;
     }
 
     /**

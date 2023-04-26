@@ -38,8 +38,9 @@ Route::prefix('v1/')->group(function() {
             Route::get('/me', [AdminAuthController::class, 'me']);
             Route::apiResource('/csv', CsvController::class)->only(['index', 'store']);
             Route::apiResource('/file', FileController::class)->only(['index', 'store']);
-            Route::apiResource('/players', AdminPlayerController::class);
             Route::post('/players/imports', [AdminPlayerController::class, 'import']);
+            Route::get('/players/exports', [AdminPlayerController::class, 'export']);
+            Route::apiResource('/players', AdminPlayerController::class);
             Route::get('/translate-mihon', [TranslateController::class, 'translateByMihon']);
         });
     });

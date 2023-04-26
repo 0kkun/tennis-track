@@ -16,6 +16,8 @@ use App\Http\Resources\Player\ShowResource;
 use App\Modules\ApplicationLogger;
 use App\Repositories\Interfaces\PlayerRepositoryInterface;
 use App\Http\Requests\Admins\Player\ImportRequest;
+use App\Http\Resources\Common\SuccessResource;
+use App\Http\Resources\Player\ExportResource;
 use App\Services\Interfaces\AdminCsvServiceInterface;
 
 class AdminPlayerController extends Controller
@@ -161,5 +163,24 @@ class AdminPlayerController extends Controller
         }
         $logger->success();
         return new CreatedResource();
+    }
+
+    /**
+     * 選手情報をCSVエクスポートする
+     *
+     * @return ExportResource
+     * @throws \Exception
+     */
+    public function export(): ExportResource
+    {
+        $logger = new ApplicationLogger(__METHOD__);
+        try {
+            $path = $this->adminCsvService->playerExportCsv();
+        } catch (\Exception $e) {
+            $logger->exception($e);
+            throw $e;
+        }
+        $logger->success();
+        return new ExportResource($path);
     }
 }

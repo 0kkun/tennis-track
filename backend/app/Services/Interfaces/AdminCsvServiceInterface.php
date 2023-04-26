@@ -14,7 +14,12 @@ interface AdminCsvServiceInterface
      */
     public function importCsv(UploadedFile $file): array;
 
-    public function playerExportCsv();
+    /**
+     * playersテーブルのデータをCSVにエクスポートする
+     *
+     * @return string
+     */
+    public function playerExportCsv(): string;
 
     /**
      * CSVから選手情報のデータを抽出する
