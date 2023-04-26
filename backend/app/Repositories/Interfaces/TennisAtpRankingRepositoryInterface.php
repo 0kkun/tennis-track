@@ -21,4 +21,20 @@ interface TennisAtpRankingRepositoryInterface
      * @return void
      */
     public function insert(array $params): void;
+
+    /**
+     * パラメータに基づくATPランキング一覧を取得する
+     *
+     * @param array $params
+     * @return Collection|null
+     */
+    public function fetchByParams(array $params): ?Collection;
+
+    /**
+     * idでランキングを1件取得する
+     *
+     * @param integer $id
+     * @return TennisAtpRanking
+     */
+    public function getById(int $id): TennisAtpRanking;
 }

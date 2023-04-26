@@ -8,6 +8,7 @@ use App\Http\Controllers\Apis\V1\Admins\File\FileController;
 use App\Http\Controllers\Apis\V1\Admins\Player\AdminPlayerController;
 use App\Http\Controllers\Apis\V1\Admins\Translate\TranslateController;
 use App\Http\Controllers\Apis\V1\Users\Player\PlayerController;
+use App\Http\Controllers\Apis\V1\Users\TennisAtpRanking\TennisAtpRankingController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,6 +26,7 @@ Route::prefix('v1/')->group(function() {
                 Route::patch('reset/{id}', [UserPasswordResetController::class, 'reset'])->name('password.reset');
             });
             Route::apiResource('/players', PlayerController::class)->only(['index', 'show']);
+            Route::apiResource('/tennis_atp_rankings', TennisAtpRankingController::class)->only(['index', 'show']);
         });
     });
 
@@ -36,6 +38,8 @@ Route::prefix('v1/')->group(function() {
             Route::get('/me', [AdminAuthController::class, 'me']);
             Route::apiResource('/csv', CsvController::class)->only(['index', 'store']);
             Route::apiResource('/file', FileController::class)->only(['index', 'store']);
+            Route::post('/players/imports', [AdminPlayerController::class, 'import']);
+            Route::get('/players/exports', [AdminPlayerController::class, 'export']);
             Route::apiResource('/players', AdminPlayerController::class);
             Route::get('/translate-mihon', [TranslateController::class, 'translateByMihon']);
         });

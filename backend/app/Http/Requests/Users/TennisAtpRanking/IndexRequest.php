@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Users\Player;
+namespace App\Http\Requests\Users\TennisAtpRanking;
 
 use App\Http\Requests\ApiRequest;
 
@@ -24,36 +24,24 @@ class IndexRequest extends ApiRequest
     public function rules()
     {
         return [
-            'sport_category_id' => 'nullable|integer',
             'name' => 'nullable|string|max:100',
             'country' => 'nullable|string|max:100',
-            'dominant_arm' => 'nullable|integer|digits_between:0,2',
-            'gender' => 'nullable|integer|digits_between:0,1',
-            'backhand_style' => 'nullable|integer|digits_between:0,2',
         ];
     }
 
     public function prepareForValidation()
     {
         $this->merge([
-            'sport_category_id' => $this->get('sport_category_id'),
             'name' => $this->get('name'),
             'country' => $this->get('country'),
-            'dominant_arm' => $this->get('dominant_arm'),
-            'gender' => $this->get('gender'),
-            'backhand_style' => $this->get('backhand_style'),
         ]);
     }
 
     public function getParams(): array
     {
         return [
-            'sport_category_id' => $this->input(),
             'name' => $this->input('name'),
             'country' => $this->input('country'),
-            'dominant_arm' => $this->input('dominant_arm'),
-            'gender' => $this->input('gender'),
-            'backhand_style'  => $this->input('backhand_style'),
         ];
     }
 }

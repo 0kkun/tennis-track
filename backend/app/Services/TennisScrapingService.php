@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\TennisAtpRanking;
+use App\Modules\CharacterConverter;
 use App\Repositories\Interfaces\PlayerRepositoryInterface;
 use App\Repositories\Interfaces\SportCategoryRepositoryInterface;
 use App\Repositories\Interfaces\TennisAtpRankingRepositoryInterface;
@@ -77,6 +78,9 @@ class TennisScrapingService implements TennisScrapingServiceInterface
                     ->filter('a')
                     ->text();
 
+                // チェック文字を変換する
+                $name = CharacterConverter::convertToAlphabet($name);
+
                 // 選手が存在しない場合はplayersに新規レコード生成
                 if (!isset($tennisPlayers[$name])) {
                     Log::info('存在しない選手がいたため新規選手登録開始: ' . $name);
@@ -85,12 +89,15 @@ class TennisScrapingService implements TennisScrapingServiceInterface
                         ->filter('img')
                         ->attr('title');
 
+                    // チェック文字を変換する
+                    $country = CharacterConverter::convertToAlphabet($country);
+
                     $playerLink = $node->filter('td')
                         ->eq(2)
                         ->filter('a')
                         ->attr('href');
 
-                    $playerCreateParams = $this->makePlayerCreateParams($name, $country, $playerLink, $sportCategoryId);
+                    $playerCreateParams = $this->makePlayerCreateParams($name, $playerLink, $country, $sportCategoryId);
                     $playerId = $this->playerRepository->create($playerCreateParams);
                 } else {
                     $playerId = $tennisPlayers[$name];
@@ -176,8 +183,13 @@ class TennisScrapingService implements TennisScrapingServiceInterface
                     return;
                 }
 
+                // UTF-8にエンコード
+                $name = mb_convert_encoding($name, 'UTF-8', 'auto');
+                
+
                 if ($node->filter('td')->eq(1)->count()) {
                     $country = $node->filter('td')->eq(1)->text();
+                    if (is_null($country)) $country = mb_convert_encoding($country, 'UTF-8', 'auto');
                 }
                 $progressBar->advance(1);
 
@@ -194,7 +206,7 @@ class TennisScrapingService implements TennisScrapingServiceInterface
      * @param integer $sportCategoryId
      * @return array
      */
-    private function makePlayerCreateParams(string $name, string $country, string $playerLink, int $sportCategoryId): array
+    private function makePlayerCreateParams(string $name, string $playerLink, string $country, int $sportCategoryId): array
     {
         return [
             'name_en' => $name,

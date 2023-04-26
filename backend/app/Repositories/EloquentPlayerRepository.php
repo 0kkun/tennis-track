@@ -22,6 +22,7 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
     public function fetchByParams(array $searchParams): ?Collection
     {
         return $this->player
+            ->with('sportCategory')
             ->when(!empty($searchParams['sport_category_id']), function ($query) use ($searchParams) {
                 $query->where('sport_category_id', $searchParams['sport_category_id']);
             })
@@ -55,7 +56,9 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
      */
     public function getById(int $id): Player
     {
-        return $this->player->find($id);
+        return $this->player
+            ->with('sportCategory')
+            ->find($id);
     }
 
     /**
@@ -93,5 +96,13 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
             ->select('id', 'name_en')
             ->where('sport_category_id', $sportCategoryId)
             ->get();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function fetch(): Collection
+    {
+        return $this->player->select('name_en', 'country')->get();
     }
 }
