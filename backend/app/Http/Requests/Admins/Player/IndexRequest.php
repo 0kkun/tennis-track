@@ -44,4 +44,16 @@ class IndexRequest extends ApiRequest
             'backhand_style' => $this->get('backhand_style'),
         ]);
     }
+
+    public function getParams(): array
+    {
+        return [
+            'sport_category_id' => $this->input(),
+            'name' => $this->input('name'),
+            'country' => $this->input('country'),
+            'dominant_arm' => $this->input('dominant_arm'),
+            'gender' => $this->input('gender'),
+            'backhand_style'  => $this->input('backhand_style'),
+        ];
+    }
 }
