@@ -38,7 +38,10 @@ class Player extends Model
     private const DOMINANT_ARM = [
         0 => '右',
         1 => '左',
-        2 => '両',
+    ];
+    private const DOMINANT_ARM_EN = [
+        0 => 'Right',
+        1 => 'Left',
     ];
 
     /**
@@ -72,6 +75,24 @@ class Player extends Model
     {
         if (!$this->dominant_arm) return null;
         return self::DOMINANT_ARM[$this->dominant_arm];
+    }
+
+    /**
+     * @param string $dominantArm 利き腕の文字列
+     * @return int|null 利き腕に対応する数値
+     */
+    public static function getDominantArmInt(string $dominantArm): ?int
+    {
+        // 引数が日本語の場合
+        if (in_array($dominantArm, self::DOMINANT_ARM, true)) {
+            return array_search($dominantArm, self::DOMINANT_ARM, true);
+        }
+        // 引数が英語の場合
+        if (in_array($dominantArm, self::DOMINANT_ARM_EN, true)) {
+            return array_search($dominantArm, self::DOMINANT_ARM_EN, true);
+        }
+        // 引数が該当しない場合
+        return null;
     }
 
     /**
