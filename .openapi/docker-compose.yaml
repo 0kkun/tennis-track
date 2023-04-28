@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  # api_spec.ymlを作成する
+  swagger-merger:
+    container_name: "swagger-merger"
+    build:
+      context: ./.docker
+    command: >
+      swagger-merger -i index.yaml -o api_spec.yaml
+    tty: true
+    volumes:
+      - ./src:/openapi
+    working_dir: /openapi
+
+  # OpenAPI仕様に則ったAPI仕様からドキュメントを生成するツール
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "10082:8080"
+    volumes:
+      - ./src/api_spec.yaml:/usr/share/nginx/html/api_spec.yaml
+    environment:
+      API_URL: api_spec.yaml
+
+  # Stoplight社が提供するOSSのAPIモックサーバー
+  swagger-api:
+    image: stoplight/prism:3
+    container_name: "swagger-api"
+    ports:
+      - "10083:4010"
+    command: mock -h 0.0.0.0 /api_spec.yaml
+    volumes:
+      - ./src/api_spec.yaml:/api_spec.yaml

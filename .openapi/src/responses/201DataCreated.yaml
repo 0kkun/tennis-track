@@ -1,0 +1,18 @@
+description: レコードを新規作成した場合
+content:
+  application/json:
+    schema:
+      allOf:
+        - type: object
+          properties:
+            data:
+              type: object
+          required:
+            - data
+        - $ref: '../schemas/Response.yaml'
+    examples:
+      success:
+        value:
+          data: {}
+          status: 201
+          message: success

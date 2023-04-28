@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: tennis-track
+  description: テニス情報サイト
+  version: '1.0'
+  contact:
+    name: xxx
+    url: 'https://www.example.com'
+    email: xxx@example.jp
+  license:
+    name: xxx
+    url: 'https://www.example.com'
+servers:
+  - url: 'http://localhost'
+  - url: 'http://localhost:3000'
+tags:
+  - name: 選手管理
+    description: 選手管理
+
+paths:
+  '/api/v1/users/players':
+    $ref: './paths/v1/players/players.yaml'
+  # '/api/v1/users/players/{id}':
+  #   $ref: './paths/v1/players/players_id.yaml'
+
+components:
+  schemas:
+    Response:
+      $ref: "./schemas/Response.yaml"
+    Player:
+      $ref: './schemas/Player.yaml'
+    # PlayerId:
+    #   $ref: './schemas/PlayerId.yaml'
+
+  responses:
+    200OkDataEmpty:
+      $ref: './responses/200OkDataEmpty.yaml'
+    201DataCreated:
+      $ref: './responses/201DataCreated.yaml'
+    204NoContent:
+      $ref: './responses/204NoContent.yaml'
+    401Unauthorized:
+      $ref: './responses/401Unauthorized.yaml'
+    422InvalidRequest:
+      $ref: './responses/422InvalidRequest.yaml'
+    500InternalServerError:
+      $ref: './responses/500InternalServerError.yaml'
+    503ServiceUnavailable:
+      $ref: './responses/503ServiceUnavailable.yaml'

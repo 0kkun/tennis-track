@@ -2,3 +2,4 @@
 .docker/db/data
 .env
 .vscode
+.openapi/src/api_spec.yaml
