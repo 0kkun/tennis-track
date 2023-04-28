@@ -47,3 +47,13 @@ $ make ss-run
 $ make ss-open
 
 ```
+
+## OpenAPI
+
+- 以下コマンドを実行。swagger-uiで確認できる
+
+```
+$ cd .openapi
+$ make init
+$ make open
+```

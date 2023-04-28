@@ -28,6 +28,8 @@ class ShowResource extends BaseResource
             'name_en' => $this->resource->name_en,
             'birthday' => $this->resource->birthday,
             'age' => $this->resource->getAge(),
+            'country' => $this->resource->country,
+            'turn_to_pro_year' => $this->resource->turn_to_pro_year,
             'gender' => $this->resource->convertGenderString(),
             'backhand_style' => $this->resource->convertBackhandStyleString(),
             'dominant_arm' => $this->resource->convertDominantArmString(),
