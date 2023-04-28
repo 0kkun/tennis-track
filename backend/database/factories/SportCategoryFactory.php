@@ -16,8 +16,10 @@ class SportCategoryFactory extends Factory
      */
     public function definition()
     {
+        $faker = $this->faker;
+
         return [
-            'name' => fake()->name(),
+            'name' => $faker->name(),
         ];
     }
 }
