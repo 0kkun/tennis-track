@@ -17,14 +17,18 @@ class PlayerFactory extends Factory
      */
     public function definition()
     {
+        $faker = $this->faker;
+
         return [
-            'name_en' => fake()->unique()->name(),
-            'name_jp' => fake()->name(),
+            'name_en' => $faker->unique()->name(),
+            'name_jp' => $faker->name(),
             'gender' => rand(0, 1),
-            'link' => fake()->url(),
-            'birthday' => fake()->date(),
-            'country' => fake()->country(),
-            'dominant_arm' => rand(0, 2),
+            'link' => $faker->url(),
+            'birthday' => $faker->date(),
+            'country' => $faker->country(),
+            'turn_to_pro_year' => $faker->year(),
+            'height' => $faker->height(),
+            'dominant_arm' => rand(0, 1),
             'backhand_style' => rand(0, 1),
             'sport_category_id' => SportCategory::first()->id,
         ];

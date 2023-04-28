@@ -21,8 +21,11 @@ return new class extends Migration
             $table->string('country', 100)->nullable()->comment('出身');
             $table->string('link', 2000)->nullable()->comment('選手情報詳細サイトのリンク');
             $table->date('birthday')->nullable()->comment('生年月日');
+            $table->unsignedInteger('weight')->nullable()->comment('体重[Kg]');
+            $table->unsignedFloat('height')->nullable()->comment('身長[cm]');
+            $table->year('turn_to_pro_year')->nullable()->comment('プロ転向年');
             $table->unsignedTinyInteger('gender')->nullable()->comment('性別[0:男/1:女]');
-            $table->unsignedTinyInteger('dominant_arm')->nullable()->comment('利き腕[0:右/1:左/2:両方]');
+            $table->unsignedTinyInteger('dominant_arm')->nullable()->comment('利き腕[0:右/1:左]');
             $table->unsignedTinyInteger('backhand_style')->nullable()->comment('バックハンド[0:片手/1:両手]');
             $table->foreignId('sport_category_id')
                 ->constrained('sport_categories')

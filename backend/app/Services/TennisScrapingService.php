@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\TennisAtpRanking;
 use App\Modules\CharacterConverter;
+use App\Modules\HeightConverter;
+use App\Models\Player;
 use App\Repositories\Interfaces\PlayerRepositoryInterface;
 use App\Repositories\Interfaces\SportCategoryRepositoryInterface;
 use App\Repositories\Interfaces\TennisAtpRankingRepositoryInterface;
@@ -19,7 +21,7 @@ class TennisScrapingService implements TennisScrapingServiceInterface
 {
     /** テニスランキングサイトURL */
     private const TENNIS_RANK_URL = 'https://www.espn.com/tennis/rankings';
-    private const TENNIS_PLAYER_BASE_URL = 'https://www.espn.com/';
+    private const TENNIS_PLAYER_BASE_URL = 'https://www.espn.com';
     private const TENNIS_PLAYER_URL = 'https://www.espn.com/tennis/players';
 
     /**
@@ -149,13 +151,65 @@ class TennisScrapingService implements TennisScrapingServiceInterface
 
         $results = [];
         $tags = ['#my-players-table tr.oddrow', '#my-players-table tr.evenrow'];
-    
+
         foreach ($tags as $tag) {
             $rows = $this->scrapeRows($crawler, $tag, $sportCategoryId, $progressBar);
             $results = array_merge($results, $rows);
         }
         if (count($results) < 7000) return []; 
         return $results;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function scrapeTennisPlayerInfo(ProgressBar $progressBar): array
+    {
+        $progressBar->start();
+        Log::info('テニス選手詳細 - スクレイピング開始');
+        $atpRankings = $this->tennisAtpRankingRepository->fetchByParams();
+
+        $scrapedPlayers = [];
+
+        foreach ($atpRankings as $atpRanking) {
+            $crawler = $this->client->request('GET', $atpRanking->player->link);
+            $statusCode = $this->client->getResponse()->getStatusCode();
+            if ($statusCode !== 200) throw new \Exception('[Error]:ページの読み込みに失敗しました.');
+
+            $rows = $crawler->filter('#content div.mod-container div.player-bio')
+                ->each(function ($node) use ($progressBar, $atpRanking) {
+                    if ($node->count() === 0) throw new \Exception('[Error:] nodeが取得できませんでした.');
+
+                    $row = [];
+                    for ($i=0; $i <= 4; $i++) {
+                        if ($node->filter('ul.general-info li')->eq($i)->count()) {
+                            $row[] = $node->filter('ul.general-info li')->eq($i)->text();
+                        }
+                        if ($node->filter('ul.player-metadata li')->eq($i)->count()) {
+                            $row[] = $node->filter('ul.player-metadata li')->eq($i)->text();
+                        }
+                    }
+
+                    $result = $this->mapScrapedData($row);
+
+                    $progressBar->advance(1);
+
+                    return [
+                        'id' => $atpRanking->player->id,
+                        'name_en' => $atpRanking->player->name_en,
+                        'country' => $atpRanking->player->country,
+                        'sport_category_id' => $atpRanking->player->sport_category_id,
+                        'dominant_arm' => !is_null($result['dominant_arm']) ? Player::getDominantArmInt(str_replace('Plays: ', '', $result['dominant_arm']))  : null,
+                        'turn_to_pro_year' => !is_null($result['turn_to_pro_year']) ? str_replace('Turned Pro: ', '', $result['turn_to_pro_year']) : null,
+                        'birthday' => !is_null($result['birthday']) ? $this->convertFormattedDate($result['birthday']) : null,
+                        'height' => !is_null($result['height']) ? $this->convertHeightToCm($result['height']) : null,
+                        'weight' => !is_null($result['weight']) ? $this->convertWeightToKg($result['weight']) : null,
+                        'updated_at' => $this->now,
+                    ];
+                });
+            $scrapedPlayers = array_merge($scrapedPlayers, $rows);
+        }
+        return $scrapedPlayers;
     }
 
     /**
@@ -185,7 +239,6 @@ class TennisScrapingService implements TennisScrapingServiceInterface
 
                 // UTF-8にエンコード
                 $name = mb_convert_encoding($name, 'UTF-8', 'auto');
-                
 
                 if ($node->filter('td')->eq(1)->count()) {
                     $country = $node->filter('td')->eq(1)->text();
@@ -248,5 +301,104 @@ class TennisScrapingService implements TennisScrapingServiceInterface
         // テーブル内のランキング更新日とスクレイピングした更新日が違うなら最新である
         if ($latestTennisRanking->updated_ymd !== $lastUpdated) return true;
         else return false;
+    }
+
+    /**
+     * 「5-10」のようにインチとフィードで表記された単位をcmに変換する
+     *
+     * @param string $height
+     * @return integer
+     */
+    private function convertHeightToCm(?string $height)
+    {
+        if (is_null($height)) return null; 
+        preg_match('/(\d+)-(\d+)/', $height, $matches);
+        $feet = $matches[1];
+        $inch = $matches[2];
+        return HeightConverter::convertToCm($feet, $inch);
+    }
+
+    /**
+     * 余計な文字を省きつつ生年月日を日付フォーマットにする
+     *
+     * @param string $text
+     * @return string
+     */
+    private function convertFormattedDate(?string $text): string|null
+    {
+        if (is_null($text)) return null; 
+        $matches = [];
+        // 余計な文字を削除
+        $text = str_replace('Birth Date', '', $text);
+        preg_match('/(\w+\s+\d+,\s+\d+)/', $text, $matches);
+        $dateString = $matches[1]; // 'December 29, 1989 の形'
+        return Carbon::createFromFormat('F j, Y', $dateString)->format('Y-m-d');
+    }
+
+    /**
+     * 数値だけを抽出しlbsからkgへ変換する
+     *
+     * @param string|null $text
+     * @return string|null
+     */
+    private function convertWeightToKg(?string $text): string|null
+    {
+        if (is_null($text)) return null; 
+        // 正規表現で数字だけを抽出する
+        preg_match('/\d+/', $text, $matches);
+        $weight = (int)$matches[0];
+        // lbsからkgに変換する
+        $weightKg = $weight * 0.453592;
+        // 2桁まで表示する
+        $weightKg = round($weightKg, 2);
+        return $weightKg;
+    }
+
+    /**
+     * スクレイピングしたデータをキーワードに基づいてマッピングした配列を作成する
+     *
+     * @param array $rows The scraped data to be arranged.
+     * @return array The arranged data in the form of an associative array.
+     */
+    private function mapScrapedData(array $rows): array
+    {
+        $keywords = [
+            'Plays',
+            'Turned Pro',
+            'Birth Date',
+            'Height', 
+            'Weight',
+        ];
+
+        $keys = [
+            'dominant_arm',
+            'turn_to_pro_year',
+            'birthday',
+            'height',
+            'weight',
+        ];
+
+        // キーを設定しつつvalueをnullにして配列を生成する
+        $result = array_combine($keys, array_fill(0, count($keys), null));
+        foreach ($rows as $row) {
+            foreach ($keywords as $index => $keyword) {
+                if ($this->isContainText($keyword, $row)) {
+                    $result[$keys[$index]] = $row;
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * 特定のキーワードが含まれるかどうか判定する
+     *
+     * @param string $keyword
+     * @param string|null $targetText
+     * @return boolean
+     */
+    private function isContainText(string $keyword, ?string $targetText): bool
+    {
+        return strpos($targetText, $keyword) !== false;
     }
 }
