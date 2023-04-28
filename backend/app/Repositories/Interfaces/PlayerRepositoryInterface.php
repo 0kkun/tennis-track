@@ -71,4 +71,12 @@ interface PlayerRepositoryInterface
      * @return Collection
      */
     public function fetch(): Collection;
+
+    /**
+     * 選手情報を更新するカラムを指定し一括アップデートを行う
+     *
+     * @param array $players
+     * @return void
+     */
+    public function updateMultiple(array $players): void;
 }

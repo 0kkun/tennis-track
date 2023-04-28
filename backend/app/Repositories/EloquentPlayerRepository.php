@@ -93,7 +93,6 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
     public function fetchBySportCategoryId(int $sportCategoryId): ?Collection
     {
         return $this->player
-            ->select('id', 'name_en')
             ->where('sport_category_id', $sportCategoryId)
             ->get();
     }
@@ -104,5 +103,16 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
     public function fetch(): Collection
     {
         return $this->player->select('name_en', 'country')->get();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateMultiple(array $players): void
+    {
+        $this->player->upsert(
+            $players,
+            ['id'],
+        );
     }
 }

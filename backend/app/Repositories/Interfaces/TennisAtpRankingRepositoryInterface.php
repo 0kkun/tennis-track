@@ -25,10 +25,10 @@ interface TennisAtpRankingRepositoryInterface
     /**
      * パラメータに基づくATPランキング一覧を取得する
      *
-     * @param array $params
+     * @param array|null $params
      * @return Collection|null
      */
-    public function fetchByParams(array $params): ?Collection;
+    public function fetchByParams(?array $params = []): ?Collection;
 
     /**
      * idでランキングを1件取得する

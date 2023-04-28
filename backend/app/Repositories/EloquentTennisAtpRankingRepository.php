@@ -38,11 +38,11 @@ class EloquentTennisAtpRankingRepository implements TennisAtpRankingRepositoryIn
     /**
      * @inheritDoc
      */
-    public function fetchByParams(array $searchParams): ?Collection
+    public function fetchByParams(?array $searchParams = []): ?Collection
     {
         return $this->tennisAtpRanking
             ->with('player')
-            ->when(!empty($searchParams['name']), function ($query) use ($searchParams) {
+            ->when(!empty($searchParams) && !empty($searchParams['name']), function ($query) use ($searchParams) {
                 $query->where('name_en', 'like', $searchParams['name'] . '%');
             })
             ->limit(TennisAtpRanking::ITEM_PER_PAGE)
