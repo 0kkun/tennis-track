@@ -21,4 +21,12 @@ interface TennisScrapingServiceInterface
      * @throws \Exception
      */
     public function scrapeTennisPlayer(ProgressBar $progressBar): array;
+
+    /**
+     * テニス選手の詳細データをスクレイピングで取得する
+     *
+     * @param ProgressBar $progressBar
+     * @return array
+     */
+    public function scrapeTennisPlayerInfo(ProgressBar $progressBar): array;
 }
