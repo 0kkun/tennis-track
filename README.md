@@ -22,7 +22,11 @@
 
 |*Tool*|*Version*|
 |---|---|
-|React|*|
+|React|18.0.28|
+|Typescript|5.0.2|
+|vite|4.3.2|
+|node|v16.14.0|
+|npm|8.3.1|
 
 ## 環境構築手順
 
