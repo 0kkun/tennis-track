@@ -1,3 +1,18 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.layer-1 {
+  z-index: 0;
+  position: relative;
+}
+
+.layer-2 {
+  z-index: 100;
+  position: absolute;
+}
+
+.layer-3 {
+  z-index: 200;
+  position: absolute;
+}
