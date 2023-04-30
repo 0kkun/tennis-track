@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
 import Logo from '@/components/elements/Icons/Logo'
 import { Link, useLocation } from 'react-router-dom'
-import { HomeIcon, CogIcon, NewspaperIcon, VideoCameraIcon, HeartIcon, MenuAlt1Icon, FireIcon } from '@heroicons/react/solid'
+import {
+  HomeIcon,
+  CogIcon,
+  NewspaperIcon,
+  VideoCameraIcon,
+  HeartIcon,
+  MenuAlt1Icon,
+  FireIcon,
+} from '@heroicons/react/solid'
 
 function Sidebar() {
   // サイドバーの開閉
@@ -14,48 +22,86 @@ function Sidebar() {
   }
 
   return (
-    <div className={`bg-green-800 text-white text-center w-[80px] px-3 py-3 border-r mt-[8px] mb-[8px] ml-[8px] rounded-md ${isMenuOpen ? '' : 'h-[55px]'}`}>
-      <button className="md:hidden mb-3" onClick={handleMenuClick}>
-        <MenuAlt1Icon className="w-[32px] h-[32px] fill-current inline-block" />
+    <div
+      className={`mb-[8px] ml-[8px] mt-[8px] w-[80px] rounded-md border-r bg-green-800 px-3 py-3 text-center text-white ${
+        isMenuOpen ? '' : 'h-[55px]'
+      }`}
+    >
+      <button className="mb-3 md:hidden" onClick={handleMenuClick}>
+        <MenuAlt1Icon className="inline-block h-[32px] w-[32px] fill-current" />
       </button>
       <div className={`${isMenuOpen ? 'block' : 'hidden'}`}>
         <div className="mb-3 text-center">
-          <Logo className="w-[32px] h-[32px] fill-current inline-block" />
+          <Logo className="inline-block h-[32px] w-[32px] fill-current" />
         </div>
-        <div className="text-sm space-y-[13px]">
-          <div className={`w-[100%] text-center ${location.pathname === '/' ? 'bg-white rounded-md text-black' : ''}`}>
+        <div className="space-y-[13px] text-sm">
+          <div
+            className={`w-[100%] text-center ${
+              location.pathname === '/' ? 'rounded-md bg-white text-black' : ''
+            }`}
+          >
             <Link to="/" className="hover:text-gray-400">
-              <HomeIcon className="w-[32px] h-[32px] inline-block" />
+              <HomeIcon className="inline-block h-[32px] w-[32px]" />
               <p>Home</p>
             </Link>
           </div>
-          <div className={`w-[100%] text-center ${location.pathname === '/news' ? 'bg-white rounded-md text-black' : ''}`}>
+          <div
+            className={`w-[100%] text-center ${
+              location.pathname === '/news'
+                ? 'rounded-md bg-white text-black'
+                : ''
+            }`}
+          >
             <Link to="/" className="hover:text-gray-400">
-              <NewspaperIcon className="w-[32px] h-[32px] inline-block" />
+              <NewspaperIcon className="inline-block h-[32px] w-[32px]" />
               <p>News</p>
             </Link>
           </div>
-          <div className={`w-[100%] text-center ${location.pathname === '/movies' ? 'bg-white rounded-md text-black' : ''}`}>
+          <div
+            className={`w-[100%] text-center ${
+              location.pathname === '/movies'
+                ? 'rounded-md bg-white text-black'
+                : ''
+            }`}
+          >
             <Link to="/" className="hover:text-gray-400">
-              <VideoCameraIcon className="w-[32px] h-[32px] inline-block" />
+              <VideoCameraIcon className="inline-block h-[32px] w-[32px]" />
               <p>Movie</p>
             </Link>
           </div>
-          <div className={`w-[100%] text-center ${location.pathname === '/rankings' ? 'bg-white rounded-md text-black' : ''}`}>
+          <div
+            className={`w-[100%] text-center ${
+              location.pathname === '/rankings'
+                ? 'rounded-md bg-white text-black'
+                : ''
+            }`}
+          >
             <Link to="/" className="hover:text-gray-400">
-              <FireIcon className="w-[32px] h-[32px] inline-block" />
+              <FireIcon className="inline-block h-[32px] w-[32px]" />
               <p>Ranking</p>
             </Link>
           </div>
-          <div className={`w-[100%] text-center ${location.pathname === '/favorites' ? 'bg-white rounded-md text-black' : ''}`}>
+          <div
+            className={`w-[100%] text-center ${
+              location.pathname === '/favorites'
+                ? 'rounded-md bg-white text-black'
+                : ''
+            }`}
+          >
             <Link to="/" className="hover:text-gray-400">
-              <HeartIcon className="w-[32px] h-[32px] inline-block" />
+              <HeartIcon className="inline-block h-[32px] w-[32px]" />
               <p>Favorite</p>
             </Link>
           </div>
-          <div className={`w-[100%] text-center ${location.pathname === '/settings' ? 'bg-white rounded-md text-black' : ''}`}>
+          <div
+            className={`w-[100%] text-center ${
+              location.pathname === '/settings'
+                ? 'rounded-md bg-white text-black'
+                : ''
+            }`}
+          >
             <Link to="/" className="hover:text-gray-400">
-              <CogIcon className="w-[32px] h-[32px] inline-block" />
+              <CogIcon className="inline-block h-[32px] w-[32px]" />
               <p>Setting</p>
             </Link>
           </div>
