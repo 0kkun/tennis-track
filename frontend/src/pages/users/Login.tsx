@@ -1,12 +1,11 @@
 import { LoginHeader } from '@/components/layouts/LoginHeader'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useLogin } from '@/features/login/hooks/useLogin'
 import { BasicTextField } from '@/components/elements/Inputs/BasicTextField'
 import { ExecuteButton } from '@/components/elements/Buttons/ExcuteButton'
 
 export const Login = () => {
   const login = useLogin()
-  const navigate = useNavigate()
 
   return (
     <div className="layer-1 h-screen bg-gray-100">
