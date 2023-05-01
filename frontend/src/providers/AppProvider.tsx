@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
-import { axiosConfig } from '@/libs/axios'
+import apiClient from '@/libs/apiClient'
 
 const ErrorFallback = () => {
   return (
@@ -21,12 +21,12 @@ const ErrorFallback = () => {
 }
 
 type AppProviderProps = {
-  children?: React.ReactNode
+  children: React.ReactElement
 }
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   React.useEffect(() => {
-    axiosConfig()
+    apiClient
   }, [])
 
   return (

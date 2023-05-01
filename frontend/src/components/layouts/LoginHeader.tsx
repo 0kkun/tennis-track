@@ -5,7 +5,7 @@ export const LoginHeader: FC = memo(() => {
   return (
     <header className="h-[80px] w-[100%] bg-green-800 text-white">
       <h1>
-        <Logo className="inline-block h-[50px] w-[auto] fill-current mt-[15px] ml-[10px]" />
+        <Logo className="ml-[10px] mt-[15px] inline-block h-[50px] w-[auto] fill-current" />
       </h1>
     </header>
   )
