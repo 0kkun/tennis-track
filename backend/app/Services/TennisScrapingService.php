@@ -104,7 +104,7 @@ class TennisScrapingService implements TennisScrapingServiceInterface
                 } else {
                     $playerId = $tennisPlayers[$name];
                 }
-                
+
                 $rank = $node->filter('td.rank_column')
                     ->filter('span')
                     ->text();
@@ -156,7 +156,7 @@ class TennisScrapingService implements TennisScrapingServiceInterface
             $rows = $this->scrapeRows($crawler, $tag, $sportCategoryId, $progressBar);
             $results = array_merge($results, $rows);
         }
-        if (count($results) < 7000) return []; 
+        if (count($results) < 7000) return [];
         return $results;
     }
 
@@ -167,7 +167,7 @@ class TennisScrapingService implements TennisScrapingServiceInterface
     {
         $progressBar->start();
         Log::info('テニス選手詳細 - スクレイピング開始');
-        $atpRankings = $this->tennisAtpRankingRepository->fetchByParams();
+        $atpRankings = $this->tennisAtpRankingRepository->fetchWithPlayerByParams();
 
         $scrapedPlayers = [];
 
@@ -311,7 +311,7 @@ class TennisScrapingService implements TennisScrapingServiceInterface
      */
     private function convertHeightToCm(?string $height)
     {
-        if (is_null($height)) return null; 
+        if (is_null($height)) return null;
         preg_match('/(\d+)-(\d+)/', $height, $matches);
         $feet = $matches[1];
         $inch = $matches[2];
@@ -326,7 +326,7 @@ class TennisScrapingService implements TennisScrapingServiceInterface
      */
     private function convertFormattedDate(?string $text): string|null
     {
-        if (is_null($text)) return null; 
+        if (is_null($text)) return null;
         $matches = [];
         // 余計な文字を削除
         $text = str_replace('Birth Date', '', $text);
@@ -343,7 +343,7 @@ class TennisScrapingService implements TennisScrapingServiceInterface
      */
     private function convertWeightToKg(?string $text): string|null
     {
-        if (is_null($text)) return null; 
+        if (is_null($text)) return null;
         // 正規表現で数字だけを抽出する
         preg_match('/\d+/', $text, $matches);
         $weight = (int)$matches[0];
@@ -366,7 +366,7 @@ class TennisScrapingService implements TennisScrapingServiceInterface
             'Plays',
             'Turned Pro',
             'Birth Date',
-            'Height', 
+            'Height',
             'Weight',
         ];
 

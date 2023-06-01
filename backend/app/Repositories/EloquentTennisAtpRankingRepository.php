@@ -38,7 +38,7 @@ class EloquentTennisAtpRankingRepository implements TennisAtpRankingRepositoryIn
     /**
      * @inheritDoc
      */
-    public function fetchByParams(?array $searchParams = []): ?Collection
+    public function fetchWithPlayerByParams(?array $searchParams = []): ?Collection
     {
         return $this->tennisAtpRanking
             ->with('player')
