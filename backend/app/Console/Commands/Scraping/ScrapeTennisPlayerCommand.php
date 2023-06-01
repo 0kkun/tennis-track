@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class ScrapeTennisPlayerCommand extends Command
 {
     protected $signature = 'command:ScrapeTennisPlayer';
-    protected $description = 'テニスの選手データをスクレイピングで取得するコマンド';
+    protected $description = 'テニスの選手データをスクレイピングで取得するコマンド. 名前・国・リンクの一覧を取得する';
 
     /* 進捗表示バー用 */
     private const PROCESS_COUNT = 12139;
