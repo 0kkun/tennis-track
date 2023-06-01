@@ -9,13 +9,17 @@ import {
   HeartIcon,
   MenuAlt1Icon,
   FireIcon,
+  LogoutIcon,
 } from '@heroicons/react/solid'
+import { useLogout } from '@/features/logout/hooks/useLogout'
 
 function Sidebar() {
   // サイドバーの開閉
   const [isMenuOpen, setIsMenuOpen] = useState(true)
   // 現在のパス名を取得
   const location = useLocation()
+
+  const logout = useLogout()
 
   const handleMenuClick = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -105,6 +109,10 @@ function Sidebar() {
               <p>Setting</p>
             </Link>
           </div>
+          <button className="hover:text-gray-400" onClick={logout.logout}>
+            <LogoutIcon className="inline-block h-[32px] w-[32px]" />
+            <p>Logout</p>
+          </button>
         </div>
       </div>
     </div>

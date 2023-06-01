@@ -5,6 +5,12 @@ import axios, {
   AxiosResponse,
 } from 'axios'
 
+export type ApiSuccessResponse = {
+  status: number
+  message: string
+  data?: object
+}
+
 export type ApiErrorResponse = {
   status: number
   message: string
@@ -98,6 +104,11 @@ class ApiClient {
       // Cookieからトークンを削除する
       document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
     }
+  }
+
+  unsetAuthToken(): void {
+    this.setAuthToken('')
+    console.log('Delete access_token.')
   }
 }
 

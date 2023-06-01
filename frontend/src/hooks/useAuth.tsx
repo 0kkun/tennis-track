@@ -12,7 +12,7 @@ export const useAuth = () => {
   return [isLoggedIn, setIsLoggedIn]
 }
 
- // ログインしている場合はtrue、そうでない場合はfalseを返す
+// ログインしている場合はtrue、そうでない場合はfalseを返す
 function checkAuth(): boolean {
   const token = document.cookie.replace(
     /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
