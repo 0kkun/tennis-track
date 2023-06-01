@@ -34,22 +34,37 @@ composer-install:
 # *****************************
 # *       For Frontend        *
 # *****************************
+# .PHONY: npm-install
+# npm-install:
+# 	$(DCE) app npm install
+
+# .PHONY: npm-run
+# npm-run:
+# 	$(DEI) $(PROJECT_NAME)_app npm run dev
+
+# .PHONY: lint
+# lint:
+# 	$(DEI) $(PROJECT_NAME)_app npm run lint
+
+# .PHONY: format
+# format:
+# 	$(DEI) $(PROJECT_NAME)_app npm run format
+
 .PHONY: npm-install
 npm-install:
-	$(DCE) app npm install
+	cd frontend; npm install
 
 .PHONY: npm-run
 npm-run:
-	$(DEI) $(PROJECT_NAME)_app npm run dev
+	cd frontend; npm run dev
 
 .PHONY: lint
 lint:
-	$(DEI) $(PROJECT_NAME)_app npm run lint
+	cd frontend; npm run lint
 
 .PHONY: format
 format:
-	$(DEI) $(PROJECT_NAME)_app npm run format
-
+	cd frontend; npm run format
 
 # *****************************
 # *      Laravel Command      *
