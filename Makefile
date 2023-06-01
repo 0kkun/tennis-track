@@ -10,6 +10,7 @@ DEI = docker exec -it
 # *****************************
 .PHONY: init
 init:
+	@make down
 	@make set-up
 	@make build
 	@make up
