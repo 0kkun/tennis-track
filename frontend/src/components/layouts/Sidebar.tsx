@@ -51,9 +51,7 @@ function Sidebar() {
           </div>
           <div
             className={`w-[100%] text-center ${
-              location.pathname === '/news'
-                ? 'rounded-md bg-white text-black'
-                : ''
+              location.pathname === '/news' ? 'rounded-md bg-white text-black' : ''
             }`}
           >
             <Link to="/" className="hover:text-gray-400">
@@ -63,9 +61,7 @@ function Sidebar() {
           </div>
           <div
             className={`w-[100%] text-center ${
-              location.pathname === '/movies'
-                ? 'rounded-md bg-white text-black'
-                : ''
+              location.pathname === '/movies' ? 'rounded-md bg-white text-black' : ''
             }`}
           >
             <Link to="/" className="hover:text-gray-400">
@@ -75,9 +71,7 @@ function Sidebar() {
           </div>
           <div
             className={`w-[100%] text-center ${
-              location.pathname === '/rankings'
-                ? 'rounded-md bg-white text-black'
-                : ''
+              location.pathname === '/rankings' ? 'rounded-md bg-white text-black' : ''
             }`}
           >
             <Link to="/" className="hover:text-gray-400">
@@ -87,9 +81,7 @@ function Sidebar() {
           </div>
           <div
             className={`w-[100%] text-center ${
-              location.pathname === '/favorites'
-                ? 'rounded-md bg-white text-black'
-                : ''
+              location.pathname === '/favorites' ? 'rounded-md bg-white text-black' : ''
             }`}
           >
             <Link to="/" className="hover:text-gray-400">
@@ -99,9 +91,7 @@ function Sidebar() {
           </div>
           <div
             className={`w-[100%] text-center ${
-              location.pathname === '/settings'
-                ? 'rounded-md bg-white text-black'
-                : ''
+              location.pathname === '/settings' ? 'rounded-md bg-white text-black' : ''
             }`}
           >
             <Link to="/" className="hover:text-gray-400">

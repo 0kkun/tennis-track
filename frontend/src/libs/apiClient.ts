@@ -1,9 +1,4 @@
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from 'axios'
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 export type ApiSuccessResponse = {
   status: number
@@ -67,26 +62,15 @@ class ApiClient {
     return this.instance.get(url, config)
   }
 
-  public post(
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig,
-  ): Promise<AxiosResponse> {
+  public post(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.instance.post(url, data, config)
   }
 
-  public patch(
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig,
-  ): Promise<AxiosResponse> {
+  public patch(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.instance.patch(url, data, config)
   }
 
-  public delete(
-    url: string,
-    config?: AxiosRequestConfig,
-  ): Promise<AxiosResponse> {
+  public delete(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.instance.delete(url, config)
   }
 

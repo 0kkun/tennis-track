@@ -14,9 +14,6 @@ export const useAuth = () => {
 
 // ログインしている場合はtrue、そうでない場合はfalseを返す
 function checkAuth(): boolean {
-  const token = document.cookie.replace(
-    /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
-    '$1',
-  )
+  const token = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/, '$1')
   return Boolean(token)
 }

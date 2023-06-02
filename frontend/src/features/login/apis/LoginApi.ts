@@ -3,9 +3,7 @@ import { LoginRequest } from '../types/login'
 import apiClient from '@/libs/apiClient'
 import { ApiSuccessResponse, ApiErrorResponse } from '@/libs/apiClient'
 
-export const sendLogin = async (
-  request: LoginRequest,
-): Promise<ApiSuccessResponse> => {
+export const sendLogin = async (request: LoginRequest): Promise<ApiSuccessResponse> => {
   try {
     const response = await apiClient.post('/api/v1/users/login', request)
     console.log('Login api success!')

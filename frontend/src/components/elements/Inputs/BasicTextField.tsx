@@ -29,13 +29,9 @@ export const BasicTextField: FC<Props> = memo(
             type={isPassword ? 'password' : 'text'}
             {...register}
           />
-          {password && (
-            <button className="ml-[15px]" onClick={togglePassword}></button>
-          )}
+          {password && <button className="ml-[15px]" onClick={togglePassword}></button>}
         </div>
       </div>
     )
   },
 )
-
-BasicTextField.displayName = 'BasicTextField'
