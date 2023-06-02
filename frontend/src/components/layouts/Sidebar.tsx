@@ -11,7 +11,7 @@ import {
   FireIcon,
   LogoutIcon,
 } from '@heroicons/react/solid'
-import { useLogout } from '@/features/logout/hooks/useLogout'
+import { useLogout } from '@/features/users/logout/hooks/useLogout'
 
 function Sidebar() {
   // サイドバーの開閉
