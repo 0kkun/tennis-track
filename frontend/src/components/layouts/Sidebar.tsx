@@ -81,10 +81,10 @@ function Sidebar() {
           </div>
           <div
             className={`w-[100%] text-center ${
-              location.pathname === '/favorites' ? 'rounded-md bg-white text-black' : ''
+              location.pathname === '/favorite' ? 'rounded-md bg-white text-black' : ''
             }`}
           >
-            <Link to="/" className="hover:text-gray-400">
+            <Link to="/favorite" className="hover:text-gray-400">
               <HeartIcon className="inline-block h-[32px] w-[32px]" />
               <p>Favorite</p>
             </Link>
