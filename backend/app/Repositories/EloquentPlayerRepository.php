@@ -27,8 +27,10 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
                 $query->where('sport_category_id', $searchParams['sport_category_id']);
             })
             ->when(!empty($searchParams['name']), function ($query) use ($searchParams) {
-                $query->orWhere('name_jp', 'like', $searchParams['name'] . '%')
-                    ->orWhere('name_en', 'like', $searchParams['name'] . '%');
+                $query->where('name_en', 'like', '%' . $searchParams['name'] . '%');
+                // FIXME: OR検索がうまくいかない。
+                // $query->orWhere('name_jp', 'like', '%' . $searchParams['name'] . '%')
+                //     ->orWhere('name_en', 'like', '%' . $searchParams['name'] . '%');
             })
             ->when(!empty($searchParams['country']), function ($query) use ($searchParams) {
                 $query->where('country', 'like', $searchParams['country'] . '%');
