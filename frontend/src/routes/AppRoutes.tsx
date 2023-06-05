@@ -9,7 +9,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate()
 
   if (!isLoggedIn) {
-    navigate('/login')
+    navigate('/login', { replace: true })
     return null
   }
   return <>{children}</>
@@ -19,8 +19,22 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<AuthGuard><Home /></AuthGuard>} />
-      <Route path="/favorite" element={ <AuthGuard><Favorite /></AuthGuard> }/>
+      <Route
+        path="/"
+        element={
+          <AuthGuard>
+            <Home />
+          </AuthGuard>
+        }
+      />
+      <Route
+        path="/favorite"
+        element={
+          <AuthGuard>
+            <Favorite />
+          </AuthGuard>
+        }
+      />
     </Routes>
   )
 }
