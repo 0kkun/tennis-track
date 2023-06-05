@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { checkAuth } from '@/hooks/useAuth'
 
 export type ApiSuccessResponse = {
   status: number
@@ -23,6 +24,7 @@ class ApiClient {
         Accept: 'application/json',
       },
       timeout: 10000,
+      withCredentials: true,
     })
 
     this.instance.interceptors.request.use(
@@ -39,6 +41,7 @@ class ApiClient {
         return config
       },
       (error) => {
+        console.log(error)
         return Promise.reject(error)
       },
     )
@@ -48,11 +51,14 @@ class ApiClient {
       (response: AxiosResponse) => {
         // APIから返却されたトークンをCookieに保存する
         if (response.data?.data) {
-          this.setAuthToken(response.data.data.token)
+          if (!checkAuth()) {
+            this.setAuthToken(response.data.data.token)
+          }
         }
         return response
       },
       (error: AxiosError<ApiErrorResponse>) => {
+        console.log(error)
         return Promise.reject(error)
       },
     )
@@ -80,8 +86,10 @@ class ApiClient {
    */
   private setAuthToken(token: string): void {
     if (token) {
+      const expires = new Date()
+      expires.setDate(expires.getDate() + 7)
       // Cookieにトークンを保存する
-      document.cookie = `access_token=${token}`
+      document.cookie = `access_token=${token}; expires=${expires.toUTCString()}; path=/`
       console.log('Complete set access_token to cookie')
     } else {
       console.log('access_token delete')
