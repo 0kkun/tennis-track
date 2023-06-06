@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\FavoritePlayer\IndexResource;
 use App\Http\Requests\Users\FavoritePlayer\DestroyRequest;
 use App\Http\Resources\Common\DestroyResource;
-use Illuminate\Http\Request;
 
 class FavoritePlayerController extends Controller
 {
