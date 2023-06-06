@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { BasicTextField } from '@/components/elements/Inputs/BasicTextField'
 import { ExecuteButton } from '@/components/elements/Buttons/ExcuteButton'
 import { UseFormRegister } from 'react-hook-form'
+import { MuiButton } from '@/components/elements/Buttons/MuiButton'
 
 interface PlayerSearchBoxProps {
   fetchPlayers: () => void
@@ -37,7 +38,13 @@ export const PlayerSearchBox: FC<PlayerSearchBoxProps> = ({ fetchPlayers, regist
         </div>
       </div>
       <div className="text-right">
-        <ExecuteButton title="Search" onClick={fetchPlayers} />
+        <MuiButton
+          title="Search"
+          variant="contained"
+          style=""
+          color="primary"
+          onClick={() => fetchPlayers}
+        />
       </div>
     </div>
   )

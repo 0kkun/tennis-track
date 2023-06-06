@@ -43,5 +43,6 @@ export const useFetchPlayers = () => {
     fetchPlayers,
     validationErrors,
     players,
+    setPlayers,
   }
 }
