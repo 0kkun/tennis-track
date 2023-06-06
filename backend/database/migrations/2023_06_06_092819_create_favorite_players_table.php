@@ -15,14 +15,15 @@ return new class extends Migration
     {
         Schema::create('favorite_players', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
             $table->foreignId('player_id')
                 ->constrained('players')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->foreignId('user_id')
-                ->constrained('players')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
+            // 複合ユニーク制約を追加
             $table->unique(['player_id','user_id']);
             $table->timestamps();
         });

@@ -18,7 +18,7 @@ class FavoritePlayerFactory extends Factory
      */
     public function definition()
     {
-        $player_ids = Player::where('sport_category_id', 1)->limit(100)->pluck('id');
+        $player_ids = Player::where('sport_category_id', 1)->limit(1000)->pluck('id');
 
         return [
             'user_id' => User::first()->id,
