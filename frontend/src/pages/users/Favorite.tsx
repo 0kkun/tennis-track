@@ -4,6 +4,7 @@ import { PlayerTable } from '@/features/users/player/components/PlayerTable'
 import { PlayerSearchBox } from '@/features/users/player/components/PlayerSearchBox'
 import { useFetchPlayers } from '@/features/users/player/hooks/useFetchPlayers'
 import { Players } from '@/features/users/player/types/player'
+import Typography from '@mui/material/Typography'
 
 export const Favorite: FC = () => {
   const { fetchPlayers, players, register } = useFetchPlayers()
@@ -32,7 +33,7 @@ export const Favorite: FC = () => {
     <div className="layer-1 flex h-screen bg-gray-100">
       <Sidebar />
       <div className="flex-1 p-10">
-        <h1 className="font-semibol mb-5 text-xl">Favorite</h1>
+        <Typography variant="h3" component="h1" color="">Favorite</Typography>
         <PlayerSearchBox fetchPlayers={fetchPlayers} register={register} />
         <PlayerTable players={players.length > 0 ? players : initPlayers} isLoading={isLoading} />
       </div>

@@ -10,6 +10,8 @@ import {
 } from '@mui/material'
 import { Players } from '../types/player'
 import CircularProgress from '@mui/material/CircularProgress'
+import { MuiButton } from '@/components/elements/Buttons/MuiButton'
+import Typography from '@mui/material/Typography'
 
 interface PlayerTableProps {
   players: Players
@@ -27,7 +29,9 @@ export const PlayerTable: FC<PlayerTableProps> = ({ players, isLoading }) => {
       {!isLoading && (
         <div className="flex">
           <div className="flex-1 pr-2">
-            <h2>Your Favorite</h2>
+            <Typography variant="h5" component="h2" color="">
+              Your Favorite
+            </Typography>
             <TableContainer component={Paper} style={{ maxHeight: '80vh' }}>
               <Table stickyHeader>
                 <TableHead>
@@ -40,7 +44,9 @@ export const PlayerTable: FC<PlayerTableProps> = ({ players, isLoading }) => {
                   <TableRow>
                     <TableCell>Carlos Alcaraz</TableCell>
                     <TableCell>
-                      <button>Remove</button>
+                      <div className="text-center">
+                        <MuiButton title="Remove" style="" color="error" variant="contained" />
+                      </div>
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -48,7 +54,9 @@ export const PlayerTable: FC<PlayerTableProps> = ({ players, isLoading }) => {
             </TableContainer>
           </div>
           <div className="flex-1">
-            <h2>Players</h2>
+            <Typography variant="h5" component="h2" color="">
+              Players
+            </Typography>
             <TableContainer component={Paper} style={{ maxHeight: '80vh' }}>
               <Table stickyHeader>
                 <TableHead>
@@ -78,7 +86,9 @@ export const PlayerTable: FC<PlayerTableProps> = ({ players, isLoading }) => {
                       <TableCell>{player.dominant_arm}</TableCell>
                       <TableCell>{player.sport_category}</TableCell>
                       <TableCell>
-                        <button>Add</button>
+                        <div className="text-center">
+                          <MuiButton title="Add" style="" color="success" variant="contained" />
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
