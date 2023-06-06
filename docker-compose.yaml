@@ -22,7 +22,6 @@ services:
         - ${APP_VITE_HOST_PORT}:5173
     volumes:
       - ./${SOURCE_DIR_NAME}:/var/www
-      - ./.docker/php/php.ini:/usr/local/etc/php/php.ini
       - /${SOURCE_DIR_NAME}/node_modules
       - /${SOURCE_DIR_NAME}/vendor
     tty: true
@@ -44,7 +43,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DB_NAME}
       MYSQL_USER: ${MYSQL_USER_NAME}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       TZ: Asia/Tokyo
 
   redis:

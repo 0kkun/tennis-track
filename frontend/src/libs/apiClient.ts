@@ -1,9 +1,11 @@
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from 'axios'
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { checkAuth } from '@/hooks/useAuth'
+
+export type ApiSuccessResponse = {
+  status: number
+  message: string
+  data?: object
+}
 
 export type ApiErrorResponse = {
   status: number
@@ -22,6 +24,7 @@ class ApiClient {
         Accept: 'application/json',
       },
       timeout: 10000,
+      withCredentials: true,
     })
 
     this.instance.interceptors.request.use(
@@ -38,6 +41,7 @@ class ApiClient {
         return config
       },
       (error) => {
+        console.log(error)
         return Promise.reject(error)
       },
     )
@@ -47,11 +51,14 @@ class ApiClient {
       (response: AxiosResponse) => {
         // APIから返却されたトークンをCookieに保存する
         if (response.data?.data) {
-          this.setAuthToken(response.data.data.token)
+          if (!checkAuth()) {
+            this.setAuthToken(response.data.data.token)
+          }
         }
         return response
       },
       (error: AxiosError<ApiErrorResponse>) => {
+        console.log(error)
         return Promise.reject(error)
       },
     )
@@ -61,26 +68,15 @@ class ApiClient {
     return this.instance.get(url, config)
   }
 
-  public post(
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig,
-  ): Promise<AxiosResponse> {
+  public post(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.instance.post(url, data, config)
   }
 
-  public patch(
-    url: string,
-    data?: any,
-    config?: AxiosRequestConfig,
-  ): Promise<AxiosResponse> {
+  public patch(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.instance.patch(url, data, config)
   }
 
-  public delete(
-    url: string,
-    config?: AxiosRequestConfig,
-  ): Promise<AxiosResponse> {
+  public delete(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.instance.delete(url, config)
   }
 
@@ -90,14 +86,21 @@ class ApiClient {
    */
   private setAuthToken(token: string): void {
     if (token) {
+      const expires = new Date()
+      expires.setDate(expires.getDate() + 7)
       // Cookieにトークンを保存する
-      document.cookie = `access_token=${token}`
+      document.cookie = `access_token=${token}; expires=${expires.toUTCString()}; path=/`
       console.log('Complete set access_token to cookie')
     } else {
       console.log('access_token delete')
       // Cookieからトークンを削除する
       document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
     }
+  }
+
+  unsetAuthToken(): void {
+    this.setAuthToken('')
+    console.log('Delete access_token.')
   }
 }
 
