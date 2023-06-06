@@ -49,7 +49,7 @@ interface PlayerRepositoryInterface
     public function update(int $id, array $player): void;
 
     /**
-     * upsertを行う. 
+     * upsertを行う.
      * name_enが同じのものはupdate、それ以外はinsert
      *
      * @param array $params upsertするパラメータ

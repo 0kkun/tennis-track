@@ -18,11 +18,11 @@ class FavoritePlayerFactory extends Factory
      */
     public function definition()
     {
-        $player_ids = Player::where('sport_category_id', 1)->limit(1000)->pluck('id');
+        $playerIds = Player::where('sport_category_id', 1)->limit(1000)->pluck('id');
 
         return [
             'user_id' => User::first()->id,
-            'player_id' => $this->faker->randomElement($player_ids),
+            'player_id' => $this->faker->randomElement($playerIds),
         ];
     }
 }

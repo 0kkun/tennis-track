@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Interfaces;
 
-use App\Models\SportCategory;
 use Illuminate\Support\Collection;
 
 interface SportCategoryRepositoryInterface
