@@ -10,6 +10,7 @@ class RepositoryServiceProvider extends ServiceProvider
         'Player',
         'SportCategory',
         'TennisAtpRanking',
+        'FavoritePlayer',
     ];
 
     /**

@@ -35,7 +35,7 @@ class TennisAtpRankingController extends Controller
             $logger->write('ATPランキング一覧取得開始');
             $searchParams = $request->getParams();
             $logger->write('[Request Params]' . print_r($searchParams, true));
-            $players = $this->tennisAtpRankingRepository->fetchByParams($searchParams);
+            $players = $this->tennisAtpRankingRepository->fetchWithPlayerByParams($searchParams);
         } catch (\Exception $e) {
             $logger->exception($e);
             throw $e;
