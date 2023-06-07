@@ -10,13 +10,12 @@ class CsvExporter
     /**
      * CSVファイル出力
      * データベースから取得したデータをカラム毎に列に格納する
-     *
      * @param array $header
-     * @param Collection $records
+     * @param Collection|array $records
      * @param string $fileName
      * @return \SplFileObject
      */
-    public static function export(array $header, Collection $records, string $fileName): \SplFileObject
+    public static function export(array $header, Collection|array $records, string $fileName): \SplFileObject
     {
         Log::info('[CSV Export Start]');
         // CSVファイルを作成
