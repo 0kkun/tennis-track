@@ -43,7 +43,7 @@ export const PlayerSearchBox: FC<PlayerSearchBoxProps> = ({ fetchPlayers, regist
           variant="contained"
           style=""
           color="primary"
-          onClick={() => fetchPlayers}
+          onClick={() => fetchPlayers()}
         />
       </div>
     </div>
