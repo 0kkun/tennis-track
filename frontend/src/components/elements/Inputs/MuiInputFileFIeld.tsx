@@ -1,23 +1,31 @@
-import { FC, memo, HTMLProps } from 'react'
+import { FC, memo } from 'react'
 import { Button, ButtonProps } from '@mui/material'
+import { UseFormRegister, FieldValues } from 'react-hook-form'
 
 type Props = {
+  name: string
   title?: string
-  register?: HTMLProps<HTMLInputElement>['ref']
+  register: UseFormRegister<FieldValues>
   style?: string
 } & ButtonProps
 
 export const BasicFileField: FC<Props> = memo(
-  ({ title = 'ファイルを選択', register, style, ...buttonProps }) => {
+  ({ name, title = 'ファイルを選択', register, style, ...buttonProps }) => {
     return (
-      <div>
-        <input accept="image/*" className="hidden" id="file-input" type="file" ref={register} />
+      <>
+        <input
+          accept="image/*"
+          className="hidden"
+          id="file-input"
+          type="file"
+          {...register(name)}
+        />
         <label htmlFor="file-input">
           <Button variant="contained" component="span" {...buttonProps}>
             {title}
           </Button>
         </label>
-      </div>
+      </>
     )
   },
 )

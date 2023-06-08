@@ -24,7 +24,7 @@ export const FavoritePlayerTable: FC<FavoritePlayerTableProps> = ({
   return (
     <section>
       <Typography variant="h5" component="h2" color="textPrimary">
-        Your Favorite
+        My Favorite Player
       </Typography>
       <TableContainer component={Paper} style={{ maxHeight: '65vh' }}>
         <Table stickyHeader>

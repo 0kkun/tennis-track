@@ -21,7 +21,7 @@ export const PlayerTable: FC<PlayerTableProps> = ({ addFavoritePlayer, players }
   return (
     <section>
       <Typography variant="h5" component="h2" color="">
-        Players
+        Player List
       </Typography>
       <TableContainer component={Paper} style={{ maxHeight: '65vh' }}>
         <Table stickyHeader>
