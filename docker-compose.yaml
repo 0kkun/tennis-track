@@ -33,6 +33,7 @@ services:
 
   db:
     container_name: ${PROJECT_NAME}_db
+    platform: linux/x86_64
     build: 
       context: .docker/db
     ports:
@@ -61,7 +62,7 @@ services:
     environment:
       MINIO_ACCESS_KEY: access_key
       MINIO_SECRET_KEY: secret_key
-      MINIO_DEFAULT_BUCKETS: uploads
+      MINIO_DEFAULT_BUCKETS: uploads:public
     command: server /export --address :9999 --console-address :9001
 
   create-bucket:
@@ -84,6 +85,22 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+
+  queue_worker:
+    container_name: ${PROJECT_NAME}_queue_worker
+    build:
+      context: ./.docker/php
+    command: >
+      php artisan queue:work --tries=3
+    depends_on:
+      - db
+      - redis
+      - app
+      - nginx
+    volumes:
+      - ./${SOURCE_DIR_NAME}:/var/www
+      - /${SOURCE_DIR_NAME}/node_modules
+      - /${SOURCE_DIR_NAME}/vendor
 
   # DB作成後、ER図作成したい時以外は一旦コメントアウトしておく
   # schemaspy:
