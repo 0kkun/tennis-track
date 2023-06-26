@@ -85,6 +85,18 @@ dump:
 test:
 	docker exec $(PROJECT_NAME)_app ./vendor/bin/phpunit --testdox
 
+.PHONY: pint-check
+pint-check:
+	docker exec $(PROJECT_NAME)_app ./vendor/bin/pint --test
+
+.PHONY: pint
+pint-dirty:
+	docker exec $(PROJECT_NAME)_app ./vendor/bin/pint --dirty
+
+.PHONY: pint-all
+pint:
+	docker exec $(PROJECT_NAME)_app ./vendor/bin/pint
+
 # *****************************
 # *     Container Controll    *
 # *****************************
