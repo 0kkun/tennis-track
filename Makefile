@@ -94,7 +94,7 @@ pint-dirty:
 	docker exec $(PROJECT_NAME)_app ./vendor/bin/pint --dirty
 
 .PHONY: pint-all
-pint:
+pint-all:
 	docker exec $(PROJECT_NAME)_app ./vendor/bin/pint
 
 # *****************************

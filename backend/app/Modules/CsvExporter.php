@@ -22,7 +22,7 @@ class CsvExporter
         $file = new \SplFileObject($fileName, 'w');
 
         // 文字コードをUTF-8に設定
-        $file->fwrite(chr(0xEF) . chr(0xBB) . chr(0xBF));
+        $file->fwrite(chr(0xEF).chr(0xBB).chr(0xBF));
 
         $file->fputcsv($header);
 
@@ -40,7 +40,8 @@ class CsvExporter
         // ファイルを閉じる
         unset($file);
 
-        Log::info('[CSV Export End] rowCount:' . $rowCount);
+        Log::info('[CSV Export End] rowCount:'.$rowCount);
+
         return new \SplFileObject($fileName);
     }
 }

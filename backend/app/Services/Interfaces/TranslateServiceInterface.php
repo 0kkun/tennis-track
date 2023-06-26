@@ -9,8 +9,8 @@ interface TranslateServiceInterface
      * 1日2MBまで。それ以上超えたらその日は使用できなくなる。
      *
      * @param array $requestParams
-     * @return array $results
      * @throws IdentityProviderException
+     * @return array $results
      */
     public function translateByMihon(array $requestParams): array;
 }

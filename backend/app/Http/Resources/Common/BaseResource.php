@@ -25,14 +25,14 @@ class BaseResource extends JsonResource
     public function __construct($resource = [], int $status = 0)
     {
         $this->status = $status ?: $this->status;
-        $this->message = config('api_response.messages.' . $this->status);
+        $this->message = config('api_response.messages.'.$this->status);
         parent::__construct($resource);
     }
 
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
@@ -46,7 +46,7 @@ class BaseResource extends JsonResource
 
     /**
      * withResponse
-     * 
+     *
      * @param Request $request
      * @param Response $response
      */

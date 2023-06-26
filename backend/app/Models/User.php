@@ -16,6 +16,7 @@ class User extends Authenticatable
 
     // 管理者ユーザー
     public const ADMIN = 0;
+
     // 一般ユーザー
     public const GENERAL = 1;
 

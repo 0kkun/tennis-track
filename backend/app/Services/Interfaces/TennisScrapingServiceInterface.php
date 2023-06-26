@@ -9,16 +9,16 @@ interface TennisScrapingServiceInterface
     /**
      * テニスのATPランキングをスクレイピングで取得する
      *
-     * @return array $results, $statusCode
      * @throws \Exception
+     * @return array $results, $statusCode
      */
     public function scrapeTennisRanking(ProgressBar $progressBar): array;
 
     /**
      * テニス選手をスクレイピングで取得する
      *
-     * @return array
      * @throws \Exception
+     * @return array
      */
     public function scrapeTennisPlayer(ProgressBar $progressBar): array;
 

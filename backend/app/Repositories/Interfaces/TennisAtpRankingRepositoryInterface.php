@@ -33,7 +33,7 @@ interface TennisAtpRankingRepositoryInterface
     /**
      * idでランキングを1件取得する
      *
-     * @param integer $id
+     * @param int $id
      * @return TennisAtpRanking
      */
     public function getById(int $id): TennisAtpRanking;

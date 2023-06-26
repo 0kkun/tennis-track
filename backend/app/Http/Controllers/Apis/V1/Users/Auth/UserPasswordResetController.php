@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Apis\V1\Users\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Users\Auth\SendPasswordResetMailRequest;
 use App\Http\Resources\Common\SuccessResource;
 use App\Models\User;
 use App\Modules\ApplicationLogger;
+use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\Users\Auth\SendPasswordResetMailRequest;
 use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Illuminate\Contracts\Auth\PasswordBroker;
 
 class UserPasswordResetController extends Controller
 {
@@ -19,8 +19,8 @@ class UserPasswordResetController extends Controller
      * パスワードリセット用のメールを送信する
      *
      * @param SendPasswordResetMailRequest $request
-     * @return SuccessResource
      * @throws Exception
+     * @return SuccessResource
      */
     public function sendResetLinkEmail(SendPasswordResetMailRequest $request): SuccessResource
     {
@@ -40,14 +40,15 @@ class UserPasswordResetController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new SuccessResource();
     }
 
     /**
      * パスワードリセットを行う
      *
-     * @return SuccessResource
      * @throws Exception
+     * @return SuccessResource
      */
     public function reset(): SuccessResource
     {
@@ -72,6 +73,7 @@ class UserPasswordResetController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new SuccessResource();
     }
 

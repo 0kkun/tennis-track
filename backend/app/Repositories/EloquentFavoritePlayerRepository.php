@@ -17,7 +17,7 @@ class EloquentFavoritePlayerRepository implements FavoritePlayerRepositoryInterf
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function fetchWithPlayerByUserId(int $userId): Collection
     {
@@ -28,7 +28,7 @@ class EloquentFavoritePlayerRepository implements FavoritePlayerRepositoryInterf
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function create(int $userId, int $playerId): void
     {
@@ -40,7 +40,7 @@ class EloquentFavoritePlayerRepository implements FavoritePlayerRepositoryInterf
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function destroy(int $id): void
     {

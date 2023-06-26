@@ -10,7 +10,7 @@ interface FavoritePlayerRepositoryInterface
      * userIdにひもづくFavoritePlayerデータを取得する
      * withでplayerデータも取得する
      *
-     * @param integer $userId
+     * @param int $userId
      * @return Collection
      */
     public function fetchWithPlayerByUserId(int $userId): Collection;
@@ -18,8 +18,8 @@ interface FavoritePlayerRepositoryInterface
     /**
      * favoriteを1件生成する
      *
-     * @param integer $userId
-     * @param integer $playerId
+     * @param int $userId
+     * @param int $playerId
      * @return void
      */
     public function create(int $userId, int $playerId): void;
@@ -27,7 +27,7 @@ interface FavoritePlayerRepositoryInterface
     /**
      * お気に入り選手を1件削除
      *
-     * @param integer $id
+     * @param int $id
      * @return void
      */
     public function destroy(int $id): void;

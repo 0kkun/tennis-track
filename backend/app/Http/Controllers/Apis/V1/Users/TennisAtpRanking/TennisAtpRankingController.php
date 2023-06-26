@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Apis\V1\Users\TennisAtpRanking;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Users\TennisAtpRanking\ShowRequest;
 use App\Http\Requests\Users\TennisAtpRanking\IndexRequest;
+use App\Http\Requests\Users\TennisAtpRanking\ShowRequest;
 use App\Http\Resources\TennisAtpRanking\IndexResource;
 use App\Http\Resources\TennisAtpRanking\ShowResource;
 use App\Modules\ApplicationLogger;
@@ -17,16 +17,15 @@ class TennisAtpRankingController extends Controller
      */
     public function __construct(
         private TennisAtpRankingRepositoryInterface $tennisAtpRankingRepository,
-    )
-    {
+    ) {
         $this->tennisAtpRankingRepository = $tennisAtpRankingRepository;
     }
 
     /**
      * ランキング一覧取得
      *
-     * @return IndexResource
      * @throws Exception
+     * @return IndexResource
      */
     public function index(IndexRequest $request): IndexResource
     {
@@ -34,13 +33,14 @@ class TennisAtpRankingController extends Controller
         try {
             $logger->write('ATPランキング一覧取得開始');
             $searchParams = $request->getParams();
-            $logger->write('[Request Params]' . print_r($searchParams, true));
+            $logger->write('[Request Params]'.print_r($searchParams, true));
             $players = $this->tennisAtpRankingRepository->fetchWithPlayerByParams($searchParams);
         } catch (\Exception $e) {
             $logger->exception($e);
             throw $e;
         }
         $logger->success();
+
         return new IndexResource($players);
     }
 
@@ -55,13 +55,14 @@ class TennisAtpRankingController extends Controller
         $logger = new ApplicationLogger(__METHOD__);
         try {
             $logger->write('ATPランキング詳細取得開始');
-            $logger->write('[Request Params]' . print_r($request->all(), true));
+            $logger->write('[Request Params]'.print_r($request->all(), true));
             $rankings = $this->tennisAtpRankingRepository->getById($request->id);
         } catch (\Exception $e) {
             $logger->exception($e);
             throw $e;
         }
         $logger->success();
+
         return new ShowResource($rankings);
     }
 }

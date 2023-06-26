@@ -3,16 +3,18 @@
 namespace App\Services;
 
 use App\Services\Interfaces\TranslateServiceInterface;
-use \League\OAuth2\Client\Provider\GenericProvider;
+use League\OAuth2\Client\Provider\GenericProvider;
 
 class TranslateService implements TranslateServiceInterface
 {
     private const API_NAME = 'mt';
+
     private const API_PARAM = 'generalNT_ja_en';
+
     private const BASE_API_URL = 'https://mt-auto-minhon-mlt.ucri.jgn-x.jp';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function translateByMihon(array $requestParams): array
     {
@@ -22,7 +24,7 @@ class TranslateService implements TranslateServiceInterface
                 'clientSecret' => env('MIHON_API_SECRET'), // API secret
                 'redirectUri' => '', // リダイレクトURI（不要）
                 'urlAuthorize' => '', // 認可コード取得URI（不要）
-                'urlAccessToken' => self::BASE_API_URL . '/oauth2/token.php', // アクセストークン取得URI
+                'urlAccessToken' => self::BASE_API_URL.'/oauth2/token.php', // アクセストークン取得URI
                 'urlResourceOwnerDetails' => '',
             ],
         );
@@ -39,7 +41,7 @@ class TranslateService implements TranslateServiceInterface
 
         $request = $provider->getAuthenticatedRequest(
             'POST',
-            self::BASE_API_URL . '/api/?' . http_build_query($params), // URL + URLパラメータ
+            self::BASE_API_URL.'/api/?'.http_build_query($params), // URL + URLパラメータ
             $accessToken,
         );
         $response = $provider->getResponse($request);

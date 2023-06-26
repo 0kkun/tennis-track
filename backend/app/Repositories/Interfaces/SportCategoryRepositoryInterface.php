@@ -17,7 +17,7 @@ interface SportCategoryRepositoryInterface
      * 名前を指定してスポーツカテゴリを1件取得する
      *
      * @param string $name
-     * @return integer|null
+     * @return int|null
      */
     public function getIdByName(string $name): ?int;
 }

@@ -41,7 +41,7 @@ class StoreRequest extends ApiRequest
     public function getParams(): array
     {
         return [
-            'player_id' => $this->input('player_id')
+            'player_id' => $this->input('player_id'),
         ];
     }
 }

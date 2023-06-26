@@ -18,7 +18,7 @@ interface PlayerRepositoryInterface
     /**
      * 選手を1件削除する
      *
-     * @param integer $id
+     * @param int $id
      * @return void
      */
     public function destroy(int $id): void;
@@ -26,7 +26,7 @@ interface PlayerRepositoryInterface
     /**
      * 選手を1件取得する
      *
-     * @param integer $id
+     * @param int $id
      * @return Player
      */
     public function getById(int $id): Player;
@@ -35,14 +35,14 @@ interface PlayerRepositoryInterface
      * 選手を1件登録する
      *
      * @param array $player
-     * @return integer
+     * @return int
      */
     public function create(array $player): int;
 
     /**
      * 選手を1件アップデートする
      *
-     * @param integer $id
+     * @param int $id
      * @param array $player
      * @return void
      */
@@ -60,7 +60,7 @@ interface PlayerRepositoryInterface
     /**
      * スポーツカテゴリーIDで選手を全て取得する
      *
-     * @param integer $sportCategoryId
+     * @param int $sportCategoryId
      * @return Collection|null
      */
     public function fetchBySportCategoryId(int $sportCategoryId): ?Collection;

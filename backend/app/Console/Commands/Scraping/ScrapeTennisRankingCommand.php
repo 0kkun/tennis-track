@@ -2,14 +2,15 @@
 
 namespace App\Console\Commands\Scraping;
 
-use App\Services\Interfaces\TennisScrapingServiceInterface;
-use Illuminate\Console\Command;
 use App\Modules\ApplicationLogger;
 use App\Repositories\Interfaces\TennisAtpRankingRepositoryInterface;
+use App\Services\Interfaces\TennisScrapingServiceInterface;
+use Illuminate\Console\Command;
 
 class ScrapeTennisRankingCommand extends Command
 {
     protected $signature = 'command:ScrapeTennisRanking';
+
     protected $description = 'テニスのランキングデータをスクレイピングで取得するコマンド';
 
     /* 進捗表示バー用 */
@@ -21,8 +22,7 @@ class ScrapeTennisRankingCommand extends Command
     public function __construct(
         private TennisScrapingServiceInterface $tennisScrapingService,
         private TennisAtpRankingRepositoryInterface $tennisAtpRankingRepository,
-    )
-    {
+    ) {
         parent::__construct();
         $this->tennisScrapingService = $tennisScrapingService;
         $this->tennisAtpRankingRepository = $tennisAtpRankingRepository;
@@ -36,25 +36,25 @@ class ScrapeTennisRankingCommand extends Command
     public function handle(): void
     {
         $logger = new ApplicationLogger(__METHOD__);
-        $this->info("[ Start ]");
+        $this->info('[ Start ]');
         $progressBar = $this->output->createProgressBar(self::PROCESS_COUNT);
         try {
             $tennisRankings = $this->tennisScrapingService->scrapeTennisRanking($progressBar);
-            $this->info("\n" . 'スクレイピング' . count($tennisRankings) . '件取得完了');
+            $this->info("\n".'スクレイピング'.count($tennisRankings).'件取得完了');
 
-            if (!empty($tennisRankings)) {
-                $this->info("\n" . 'ランキング保存開始');
+            if (! empty($tennisRankings)) {
+                $this->info("\n".'ランキング保存開始');
                 $this->tennisAtpRankingRepository->insert($tennisRankings);
-                $this->info("\n" . 'ランキング保存完了');
+                $this->info("\n".'ランキング保存完了');
             } else {
-                $this->info("\n" . 'ランキングは既に最新です');
+                $this->info("\n".'ランキングは既に最新です');
             }
         } catch (\Exception $e) {
             $logger->exception($e);
             throw $e;
         }
         $progressBar->finish();
-        $this->info("[ Finish ]");
+        $this->info('[ Finish ]');
         $logger->success();
     }
 }

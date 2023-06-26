@@ -10,7 +10,7 @@ class IndexResource extends BaseResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request): array
@@ -25,7 +25,7 @@ class IndexResource extends BaseResource
 
         $results = [];
         foreach ($this->resource as $tennisAtpRanking) {
-            $results [] = [
+            $results[] = [
                 'id' => $tennisAtpRanking->id,
                 'current_rank' => $tennisAtpRanking->current_rank,
                 'current_point' => $tennisAtpRanking->current_point,
@@ -37,6 +37,7 @@ class IndexResource extends BaseResource
                 'age' => $tennisAtpRanking->player->getAge(),
             ];
         }
+
         return [
             'status' => $this->status,
             'message' => $this->message,

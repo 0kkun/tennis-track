@@ -24,7 +24,7 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             // 複合ユニーク制約を追加
-            $table->unique(['player_id','user_id']);
+            $table->unique(['player_id', 'user_id']);
             $table->timestamps();
         });
     }

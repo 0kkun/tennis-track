@@ -2,19 +2,21 @@
 
 namespace App\Console\Commands\Scraping;
 
-use App\Services\Interfaces\TennisScrapingServiceInterface;
-use Illuminate\Console\Command;
 use App\Modules\ApplicationLogger;
 use App\Repositories\Interfaces\PlayerRepositoryInterface;
+use App\Services\Interfaces\TennisScrapingServiceInterface;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
 class ScrapeTennisPlayerCommand extends Command
 {
     protected $signature = 'command:ScrapeTennisPlayer';
+
     protected $description = 'テニスの選手データをスクレイピングで取得するコマンド. 名前・国・リンクの一覧を取得する';
 
     /* 進捗表示バー用 */
     private const PROCESS_COUNT = 12139;
+
     /* playersテーブル保存時のチャンクサイズ */
     private const CHUNK_SIZE = 1000;
 
@@ -25,8 +27,7 @@ class ScrapeTennisPlayerCommand extends Command
     public function __construct(
         private TennisScrapingServiceInterface $tennisScrapingService,
         private PlayerRepositoryInterface $playerRepository,
-    )
-    {
+    ) {
         parent::__construct();
         $this->tennisScrapingService = $tennisScrapingService;
         $this->playerRepository = $playerRepository;
@@ -40,16 +41,18 @@ class ScrapeTennisPlayerCommand extends Command
     public function handle(): void
     {
         $logger = new ApplicationLogger(__METHOD__);
-        $this->info("[ Start ]");
+        $this->info('[ Start ]');
         $progressBar = $this->output->createProgressBar(self::PROCESS_COUNT);
         try {
             $logger->write('スクレイピング開始');
             $this->info("\nスクレイピング開始");
             $tennisPlayers = $this->tennisScrapingService->scrapeTennisPlayer($progressBar);
-            if (empty($tennisPlayers)) throw new \Exception('スクレイピングに失敗しました.');
+            if (empty($tennisPlayers)) {
+                throw new \Exception('スクレイピングに失敗しました.');
+            }
             $progressBar->finish();
-            $logger->write('スクレイピング' . count($tennisPlayers) . '件取得完了');
-            $this->info("\n" . 'スクレイピング' . count($tennisPlayers) . '件取得完了');
+            $logger->write('スクレイピング'.count($tennisPlayers).'件取得完了');
+            $this->info("\n".'スクレイピング'.count($tennisPlayers).'件取得完了');
 
             $logger->write('playersテーブルへ保存開始');
             $this->info("\n playersテーブルへ保存開始");
@@ -66,7 +69,7 @@ class ScrapeTennisPlayerCommand extends Command
             $logger->exception($e);
             throw $e;
         }
-        $this->info("[ Finish ]");
+        $this->info('[ Finish ]');
         $logger->success();
     }
 }
