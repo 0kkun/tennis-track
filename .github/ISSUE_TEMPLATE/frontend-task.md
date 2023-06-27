@@ -1,3 +1,12 @@
+---
+name: タスク (frontend)
+about: タスクを整理し実装する
+assignees: 0kkun
+labels: 'frontend'
+title: '【frontendタスク】 '
+
+---
+
 ## 目的
 
 ## やること
