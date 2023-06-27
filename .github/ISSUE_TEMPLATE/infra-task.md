@@ -1,9 +1,9 @@
 ---
-name: タスク (Backend)
+name: タスク (Infra)
 about: タスクを整理し実装する
 assignees: 0kkun
-labels: Backend
-title: "【Backendタスク】 "
+labels: Infra
+title: "【Infraタスク】 "
 
 ---
 
