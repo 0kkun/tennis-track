@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\Validator;
 abstract class AbstractCsvImporter
 {
     protected UploadedFile $file;
+
     /* CSVファイルの区切り文字 */
     protected string $delimiter;
+
     /* CSVファイルにヘッダー行があるかどうかのフラグ */
     protected bool $hasHeaderRow = true;
+
     /* CSVファイルの最大行数 */
     protected const MAX_ROWS = 10000;
 
@@ -28,16 +31,16 @@ abstract class AbstractCsvImporter
     /**
      * CSVファイルのバリデーションを行う
      *
-     * @return void
      * @throws \Exception
+     * @return void
      */
     protected function validateCsvFile()
     {
-        if (!$this->file->isValid()) {
+        if (! $this->file->isValid()) {
             throw new \Exception('CSV file not found.');
         }
 
-        if (!$this->file->isReadable()) {
+        if (! $this->file->isReadable()) {
             throw new \Exception('Unable to read CSV file.');
         }
 
@@ -98,6 +101,7 @@ abstract class AbstractCsvImporter
             $validator->setData($row);
             $validator->validate();
         }
+
         return $validator->errors()->toArray();
     }
 

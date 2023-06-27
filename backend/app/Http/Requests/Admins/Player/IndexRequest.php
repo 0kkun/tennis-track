@@ -53,7 +53,7 @@ class IndexRequest extends ApiRequest
             'country' => $this->input('country'),
             'dominant_arm' => $this->input('dominant_arm'),
             'gender' => $this->input('gender'),
-            'backhand_style'  => $this->input('backhand_style'),
+            'backhand_style' => $this->input('backhand_style'),
         ];
     }
 }

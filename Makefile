@@ -22,9 +22,14 @@ init:
 	@make seed
 	@make test-init
 
+# .envがなければ生成する
 .PHONY: set-up
-set-up:
-	cp ${SOURCE_DIR_NAME}/.env.example ${SOURCE_DIR_NAME}/.env
+setup:
+	@if [ -e ${SOURCE_DIR_NAME}/.env ] ; then \
+		echo "${SOURCE_DIR_NAME}/.env already exists"; \
+	else \
+		cp ${SOURCE_DIR_NAME}/.env.example ${SOURCE_DIR_NAME}/.env; \
+	fi
 
 .PHONY: composer-install
 composer-install:
@@ -84,6 +89,18 @@ dump:
 .PHONY: test
 test:
 	docker exec $(PROJECT_NAME)_app ./vendor/bin/phpunit --testdox
+
+.PHONY: pint-check
+pint-check:
+	docker exec $(PROJECT_NAME)_app ./vendor/bin/pint --test
+
+.PHONY: pint
+pint-dirty:
+	docker exec $(PROJECT_NAME)_app ./vendor/bin/pint --dirty
+
+.PHONY: pint-all
+pint-all:
+	docker exec $(PROJECT_NAME)_app ./vendor/bin/pint
 
 # *****************************
 # *     Container Controll    *

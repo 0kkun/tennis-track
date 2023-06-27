@@ -7,7 +7,7 @@ export const sendFetchPlayers = async (
   request: FetchPlayersRequest,
 ): Promise<ApiSuccessResponse> => {
   try {
-    const baseEndpoint = '/api/v1/admins/players'
+    const baseEndpoint = '/api/v1/users/players'
     const endpoint = generateEndpoint(baseEndpoint, request)
     const response = await apiClient.get(endpoint)
     console.log('fetch players api success!')

@@ -10,7 +10,7 @@ class ExportResource extends BaseResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request): array
@@ -25,6 +25,7 @@ class ExportResource extends BaseResource
         $results = [
             'path' => $this->resource,
         ];
+
         return [
             'status' => $this->status,
             'message' => $this->message,

@@ -17,7 +17,7 @@ class EloquentSportCategoryRepository implements SportCategoryRepositoryInterfac
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function fetchAll(): ?Collection
     {
@@ -27,7 +27,7 @@ class EloquentSportCategoryRepository implements SportCategoryRepositoryInterfac
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getIdByName(string $name): ?int
     {

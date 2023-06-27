@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, FieldValues } from 'react-hook-form'
 import { sendFetchPlayers } from '../apis/playerApi'
 import { FetchPlayersRequest, Players } from '../types/player'
 
@@ -8,7 +8,7 @@ interface ValidationErrors {
 }
 
 export const useFetchPlayers = () => {
-  const { register, getValues } = useForm()
+  const { register, getValues } = useForm<FieldValues>()
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>()
   const [players, setPlayers] = useState<Players>([])
 
@@ -26,7 +26,6 @@ export const useFetchPlayers = () => {
     try {
       result = await sendFetchPlayers(request)
       if (result.status === 200) {
-        console.log(result)
         // レスポンスデータを状態として更新
         setPlayers(result.data as Players)
       }
@@ -43,5 +42,6 @@ export const useFetchPlayers = () => {
     fetchPlayers,
     validationErrors,
     players,
+    setPlayers,
   }
 }

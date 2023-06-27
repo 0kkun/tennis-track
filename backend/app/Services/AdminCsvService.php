@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\Modules\CsvExporter;
+use App\Modules\CsvImporter;
+use App\Modules\FileUploader;
 use App\Repositories\Interfaces\PlayerRepositoryInterface;
 use App\Repositories\Interfaces\SportCategoryRepositoryInterface;
 use App\Services\Interfaces\AdminCsvServiceInterface;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
-use App\Modules\CsvImporter;
-use App\Modules\FileUploader;
 
 class AdminCsvService implements AdminCsvServiceInterface
 {
@@ -20,25 +20,25 @@ class AdminCsvService implements AdminCsvServiceInterface
     public function __construct(
         private PlayerRepositoryInterface $playerRepository,
         private SportCategoryRepositoryInterface $sportCategoryRepository,
-    )
-    {
+    ) {
         $this->playerRepository = $playerRepository;
         $this->sportCategoryRepository = $sportCategoryRepository;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function importCsv(UploadedFile $file): array
     {
         $importer = new CsvImporter($file);
         $data = $importer->import();
         Log::info(print_r($data, true));
+
         return $data;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function playerExportCsv(): string
     {
@@ -46,7 +46,7 @@ class AdminCsvService implements AdminCsvServiceInterface
         // CSV出力する列
         $header = ['name_en', 'country'];
         // CSVファイルを作成
-        $fileName = 'players_' . now()->format('Ymd_His') . '.csv';
+        $fileName = 'players_'.now()->format('Ymd_His').'.csv';
         $file = CsvExporter::export($header, $players, $fileName);
         $path = FileUploader::upload(new UploadedFile($file->getPathname(), $fileName), 's3', '/exports', $fileName);
 
@@ -54,7 +54,7 @@ class AdminCsvService implements AdminCsvServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function playerImportCsv(UploadedFile $file): array
     {
@@ -64,13 +64,14 @@ class AdminCsvService implements AdminCsvServiceInterface
                 'required',
                 'string',
                 'max:255',
-                'unique:players,name_en'
+                'unique:players,name_en',
             ],
             'country' => 'required|string|max:100',
             'gender' => 'required|integer|digits_between:0,1',
             'link' => 'required|string|max:300',
         ];
         $data = $importer->import($rules);
+
         return $data;
     }
 }

@@ -39,6 +39,7 @@ class Player extends Model
         0 => '右',
         1 => '左',
     ];
+
     private const DOMINANT_ARM_EN = [
         0 => 'Right',
         1 => 'Left',
@@ -51,7 +52,10 @@ class Player extends Model
      */
     public function convertBackhandStyleString(): string|null
     {
-        if (!$this->backhand_style) return null;
+        if (! $this->backhand_style) {
+            return null;
+        }
+
         return self::BACKHAND_STYLE[$this->backhand_style];
     }
 
@@ -62,7 +66,10 @@ class Player extends Model
      */
     public function convertGenderString(): string|null
     {
-        if (!$this->gender) return null;
+        if (! $this->gender) {
+            return null;
+        }
+
         return self::GENDER[$this->gender];
     }
 
@@ -73,7 +80,10 @@ class Player extends Model
      */
     public function convertDominantArmString(): string|null
     {
-        if (!$this->dominant_arm) return null;
+        if (! $this->dominant_arm) {
+            return null;
+        }
+
         return self::DOMINANT_ARM[$this->dominant_arm];
     }
 
@@ -98,13 +108,16 @@ class Player extends Model
     /**
      * 生年月日から年齢を取得する
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getAge(): int|null
     {
-        if (!$this->birthday) return null;
+        if (! $this->birthday) {
+            return null;
+        }
         $birthday = Carbon::parse($this->birthday);
         $now = Carbon::now();
+
         return $birthday->diffInYears($now);
     }
 
@@ -112,6 +125,6 @@ class Player extends Model
 
     public function sportCategory()
     {
-        return  $this->belongsTo(SportCategory::class);
+        return $this->belongsTo(SportCategory::class);
     }
 }

@@ -24,7 +24,7 @@ class StoreRequest extends ApiRequest
     public function rules()
     {
         return [
-            'file' => 'required|max:1024'
+            'file' => 'required|max:1024',
         ];
     }
 

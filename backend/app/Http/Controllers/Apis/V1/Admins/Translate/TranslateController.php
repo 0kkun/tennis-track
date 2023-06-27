@@ -7,7 +7,7 @@ use App\Http\Requests\Admins\Translate\TranslateByMihonRequest;
 use App\Http\Resources\Translate\TranslateByMihonResource;
 use App\Modules\ApplicationLogger;
 use App\Services\Interfaces\TranslateServiceInterface;
-use \League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 class TranslateController extends Controller
 {
@@ -16,8 +16,7 @@ class TranslateController extends Controller
      */
     public function __construct(
         private TranslateServiceInterface $translateService,
-    )
-    {
+    ) {
         $this->translateService = $translateService;
     }
 
@@ -25,8 +24,8 @@ class TranslateController extends Controller
      * みんなの自動翻訳APIを使用した、日本語->英語 翻訳API
      *
      * @param TranslateByMihonRequest $request
-     * @return TranslateByMihonResource
      * @throws IdentityProviderException
+     * @return TranslateByMihonResource
      */
     public function translateByMihon(TranslateByMihonRequest $request): TranslateByMihonResource
     {
@@ -42,6 +41,7 @@ class TranslateController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new TranslateByMihonResource($results);
     }
 }
