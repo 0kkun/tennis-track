@@ -1,3 +1,12 @@
+---
+name: バグ修正 (frontend)
+about: バグを整理し修正する
+assignees: 0kkun
+labels: 'frontend'
+title: '【frontendバグ】 '
+
+---
+
 ## 目的
 
 ## やること

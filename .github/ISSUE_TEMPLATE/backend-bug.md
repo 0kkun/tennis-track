@@ -1,6 +1,9 @@
 ---
-name: タスク
-about: タスクを整理する
+name: バグ修正 (backend)
+about: バグを整理し修正する
+assignees: 0kkun
+labels: 'backend'
+title: '【backendバグ】 '
 
 ---
 
@@ -8,8 +11,8 @@ about: タスクを整理する
 
 ## やること
 
-- [ ] 
-- [ ] 
+- [ ]
+- [ ]
 
 ## 影響範囲
 

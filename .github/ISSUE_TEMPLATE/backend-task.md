@@ -1,3 +1,12 @@
+---
+name: タスク (backend)
+about: タスクを整理し実装する
+assignees: 0kkun
+labels: 'backend'
+title: '【backendタスク】 '
+
+---
+
 ## 目的
 
 ## やること
