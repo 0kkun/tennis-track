@@ -1,9 +1,9 @@
 ---
-name: タスク (frontend)
+name: タスク (Frontend)
 about: タスクを整理し実装する
 assignees: 0kkun
-labels: 'frontend'
-title: '【frontendタスク】 '
+labels: Frontend
+title: "【Frontendタスク】 "
 
 ---
 

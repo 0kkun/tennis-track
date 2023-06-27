@@ -2,8 +2,8 @@
 name: バグ修正 (backend)
 about: バグを整理し修正する
 assignees: 0kkun
-labels: 'backend'
-title: '【backendバグ】 '
+labels: Backend
+title: "【backendバグ】 "
 
 ---
 

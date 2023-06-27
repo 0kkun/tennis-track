@@ -1,9 +1,9 @@
 ---
-name: バグ修正 (frontend)
+name: バグ修正 (Frontend)
 about: バグを整理し修正する
 assignees: 0kkun
-labels: 'frontend'
-title: '【frontendバグ】 '
+labels: Frontend
+title: "【Frontendバグ】 "
 
 ---
 
