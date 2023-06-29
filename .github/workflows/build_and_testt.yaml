@@ -1,0 +1,75 @@
+name: build and test
+
+on:
+  # masterブランチのみ
+  # pull_request:
+  #   branches: [ master ]
+  push:
+    # すべてのブランチを対象にする
+    branches:
+      - "**"
+
+permissions:
+  contents: read
+
+# 連続してpushすると一つ前の実行中のjobが停止される設定
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      SOURCE_DIR_NAME: "backend"
+      APP_HOST_PORT: 9000
+      NGINX_HOST_PORT: 80
+      DB_HOST_PORT: 3306
+      MYSQL_DB_NAME: "your_database_name"
+      MYSQL_USER_NAME: "your_username"
+      MYSQL_PASSWORD: "your_password"
+      MYSQL_ROOT_PASSWORD: "your_root_password"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Build and run containers
+        run: |
+          docker-compose -f docker-compose.yaml up --build -d
+
+      - name: Wait for services to start
+        run: |
+          sleep 30s
+
+      - name: Run Excec PHP Tests
+        run: |
+          docker-compose -f docker-compose.yaml exec -T app vendor/bin/phpunit
+
+# jobs:
+#   check-code:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v3
+
+#       - name: Setup PHP with PECL extension
+#         uses: shivammathur/setup-php@v2
+#         with:
+#           php-version: "8.2"
+#           extensions: "pdo_mysql, gd, imagick"
+
+#       - name: Composer install
+#         uses: "ramsey/composer-install@v2"
+#         with:
+#           working-directory: "."
+
+#       - name: Exec laravel/pint
+#         shell: bash
+#         working-directory: "."
+#         run: "./vendor/bin/pint --test"
