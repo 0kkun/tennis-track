@@ -116,6 +116,42 @@ $ php artisan command:ScrapeTennisPlayerInfo
 } 
 ```
 
+
+# ディレクトリ構成 (/backend)
+
+```
+.
+├── .docker/
+│   ├── db/
+│   │   ├── Dockerfile
+│   │   └── my.cnf
+│   ├── nginx/
+│   │   ├── Dockerfile
+│   │   └── nginx.conf
+│   └── php/
+│       ├── Dockerfile
+│       └── php.ini
+├── backend/
+│       ├── app/
+│       ├── bootstrap/
+│       ├── config/
+│       ├── database/
+│       ├── lang/
+│       ├── public/
+│       ├── resources/
+│       ├── routes/
+│       ├── storage/
+│       ├── tests/
+│       ├── .env.example
+│       ├── composer.json
+│       ├── composer.lock
+│       ├── package.json
+│       ├── package-lock.json
+.
+.
+.
+```
+
 # ディレクトリ構成 (/frontend)
 
 ```

@@ -1,0 +1,32 @@
+name: Docker Testing
+
+on:
+  pull_request:
+    paths:
+      - '.docker/*'
+
+jobs:
+  docker-testing:
+    runs-on: ubuntu-latest
+    env:
+      SOURCE_DIR_NAME: "backend"
+      APP_HOST_PORT: 9000
+      NGINX_HOST_PORT: 80
+      DB_HOST_PORT: 3306
+      MYSQL_DB_NAME: "database_name"
+      MYSQL_USER_NAME: "user_name"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "root_password"
+
+    steps:
+      - name: Checkout repository
+      - uses: actions/checkout@v2
+
+      - name: Ubuntu Version
+        run: cat /etc/os-release
+
+      - name: Docker Version
+        run: docker version
+
+      - name: Docker Compose Build
+        run: docker-compose build
