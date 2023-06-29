@@ -1,7 +1,8 @@
 import Sidebar from '@/components/layouts/Sidebar'
 import { MuiButton } from '@/components/elements/Buttons/MuiButton'
+import { FC } from 'react'
 
-export const Home = () => {
+export const Home: FC = () => {
   const test = () => {
     console.log('test')
   }

@@ -1,10 +1,11 @@
 import { LoginHeader } from '@/components/layouts/LoginHeader'
 import { Link } from 'react-router-dom'
+import { FC } from 'react'
 import { useLogin } from '@/features/users/login/hooks/useLogin'
 import { BasicTextField } from '@/components/elements/Inputs/BasicTextField'
 import { ExecuteButton } from '@/components/elements/Buttons/ExcuteButton'
 
-export const Login = () => {
+export const Login: FC = () => {
   const login = useLogin()
   const validError = login.validationErrors
 
@@ -28,12 +29,14 @@ export const Login = () => {
       <div className="ml-[auto] mr-[auto] mt-[80px] w-1/3 rounded-md border bg-white p-[50px] shadow-md">
         <div className="pb-3 text-red-500">{validationErrorContent()}</div>
         <BasicTextField
-          title="ログインID (メールアドレス)"
+          label="ログインID (メールアドレス)"
+          name="email"
           placeholder="メールアドレス"
           register={login.register('email')}
         />
         <BasicTextField
-          title="パスワード"
+          label="パスワード"
+          name="password"
           placeholder="パスワード"
           password
           register={login.register('password')}
