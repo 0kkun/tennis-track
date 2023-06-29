@@ -1,14 +1,11 @@
-name: Laravel Testing
-
-# on:
-#   pull_request:
-#     paths:
-#       - 'backend/*'
+name: Backend Testing
 
 on:
-  push:
-    branches:
-      - "**"
+  pull_request:
+    paths:
+      - 'backend/**'
+      - '.docker/**'
+      - '.github/workflows/**'
 
 # 連続してpushすると一つ前の実行中のjobが停止される設定
 concurrency:
@@ -16,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  laravel-testing:
+  backend-testing:
     runs-on: ubuntu-latest
     env:
       PROJECT_NAME: "tennis_track"
@@ -36,11 +33,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      # サードパーティ製のキャッシュアクション
-      # - name: Cache Docker Image to Layer
-      #   uses: satackey/action-docker-layer-caching@v0.0.11
-      #   continue-on-error: true
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -68,8 +60,8 @@ jobs:
       - name: migration
         run: docker-compose exec -T app php artisan migrate --seed
 
-      - name: Run Excec PHP Tests
+      - name: Execute PHP Tests
         run: docker-compose exec -T app ./vendor/bin/phpunit
 
-      - name: Run Excec Pint
+      - name: Execute Pint
         run: docker-compose exec -T app ./vendor/bin/pint --test
