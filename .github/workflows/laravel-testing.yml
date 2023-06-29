@@ -1,0 +1,56 @@
+name: Laravel Testing
+
+# on:
+#   pull_request:
+#     paths:
+#       - 'backend/*'
+
+on:
+  push:
+    branches:
+      - "**"
+
+# 連続してpushすると一つ前の実行中のjobが停止される設定
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  laravel-testing:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_NAME: "tennis_track"
+      SOURCE_DIR_NAME: "backend"
+      APP_HOST_PORT: 9000
+      APP_VITE_HOST_PORT: 5173
+      NGINX_HOST_PORT: 80
+      DB_HOST_PORT: 3306
+      REDIS_HOST_PORT: 6379
+      MYSQL_DB_NAME: "database"
+      MYSQL_USER_NAME: "username"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
+      MINIO_HOST_PORT1: 9999
+      MINIO_HOST_PORT2: 9001
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: docker-compose up
+        run: docker-compose up -d
+
+      - name: Copy Environment File
+        run: docker-compose exec -T ${PROJECT_NAME}_app cp .env.example .env
+
+      - name: Install Dependencies
+        run: docker-compose exec -T ${PROJECT_NAME}_app composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Generate key
+        run: docker-compose exec -T ${PROJECT_NAME}_app php artisan key:generate
+
+      - name: migration
+        run: docker-compose exec -T ${PROJECT_NAME}_app php artisan migrate --seed
+
+      - name: Run Excec PHP Tests
+        run: docker-compose exec -T ${PROJECT_NAME}_app ./vendor/bin/phpunit
