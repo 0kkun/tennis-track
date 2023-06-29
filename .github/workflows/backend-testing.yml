@@ -5,7 +5,7 @@ on:
     paths:
       - 'backend/**'
       - '.docker/**'
-      - '.github/workflows/**'
+      - '.github/**'
 
 # 連続してpushすると一つ前の実行中のjobが停止される設定
 concurrency:
