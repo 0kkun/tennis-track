@@ -41,16 +41,16 @@ jobs:
         run: docker-compose up -d
 
       - name: Copy Environment File
-        run: docker-compose exec -T ${PROJECT_NAME}_app cp .env.example .env
+        run: docker-compose exec -T app cp .env.example .env
 
       - name: Install Dependencies
-        run: docker-compose exec -T ${PROJECT_NAME}_app composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Generate key
-        run: docker-compose exec -T ${PROJECT_NAME}_app php artisan key:generate
+        run: docker-compose exec -T app php artisan key:generate
 
       - name: migration
-        run: docker-compose exec -T ${PROJECT_NAME}_app php artisan migrate --seed
+        run: docker-compose exec -T app php artisan migrate --seed
 
       - name: Run Excec PHP Tests
-        run: docker-compose exec -T ${PROJECT_NAME}_app ./vendor/bin/phpunit
+        run: docker-compose exec -T app ./vendor/bin/phpunit
