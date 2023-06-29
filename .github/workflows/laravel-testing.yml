@@ -58,3 +58,6 @@ jobs:
 
       - name: Run Excec PHP Tests
         run: docker-compose exec -T app ./vendor/bin/phpunit
+
+      - name: Run Excec Pint
+        run: docker-compose exec -T app ./vendor/bin/pint --test
