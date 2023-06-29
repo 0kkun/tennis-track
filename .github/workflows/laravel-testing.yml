@@ -26,12 +26,12 @@ jobs:
       NGINX_HOST_PORT: 80
       DB_HOST_PORT: 3306
       REDIS_HOST_PORT: 6379
-      MYSQL_DB_NAME: "database"
-      MYSQL_USER_NAME: "username"
-      MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "password"
       MINIO_HOST_PORT1: 9999
       MINIO_HOST_PORT2: 9001
+      MYSQL_DB_NAME: "tennis_track_db"
+      MYSQL_USER_NAME: "tennis_track_user"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
 
     steps:
       - name: Checkout repository
