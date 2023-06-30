@@ -40,7 +40,7 @@ jobs:
         with:
           path: |
             ~/.docker
-          key: ${{ runner.os }}-docker-${{ hashFiles('.docker/docker-compose.yml') }}
+          key: ${{ runner.os }}-docker-${{ hashFiles('docker-compose.yaml') }}
           restore-keys: |
             ${{ runner.os }}-docker-
 
