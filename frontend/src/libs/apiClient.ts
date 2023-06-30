@@ -68,11 +68,11 @@ class ApiClient {
     return this.instance.get(url, config)
   }
 
-  public post(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
+  public post(url: string, data?: object, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.instance.post(url, data, config)
   }
 
-  public patch(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
+  public patch(url: string, data?: object, config?: AxiosRequestConfig): Promise<AxiosResponse> {
     return this.instance.patch(url, data, config)
   }
 

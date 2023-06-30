@@ -1,12 +1,12 @@
 import { FC } from 'react'
 import { BasicTextField } from '@/components/elements/Inputs/BasicTextField'
-import { UseFormRegister } from 'react-hook-form'
+import { UseFormRegister, FieldValues } from 'react-hook-form'
 import { MuiButton } from '@/components/elements/Buttons/MuiButton'
 import { BasicSelectBoxField } from '@/components/elements/Inputs/BasicSelectBoxField'
 
 interface PlayerSearchBoxProps {
   fetchPlayers: () => void
-  register: UseFormRegister<any>
+  register: UseFormRegister<FieldValues>
 }
 
 export const PlayerSearchBox: FC<PlayerSearchBoxProps> = ({ fetchPlayers, register }) => {

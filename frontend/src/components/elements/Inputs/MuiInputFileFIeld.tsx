@@ -15,7 +15,10 @@ export const BasicFileField: FC<Props> = memo(
       <>
         <input
           accept="image/*"
-          className="hidden"
+          className={`
+            hidden
+            ${style}
+          `}
           id="file-input"
           type="file"
           {...register(name)}

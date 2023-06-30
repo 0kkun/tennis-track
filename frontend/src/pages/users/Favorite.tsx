@@ -41,7 +41,7 @@ export const Favorite: FC = () => {
       }
     }
     fetchInitialData()
-  }, [])
+  })
 
   const handleAddFavoritePlayer = async (playerId: number) => {
     await addFavoritePlayer(playerId)
