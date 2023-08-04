@@ -44,7 +44,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-docker-
 
-      - name: Docker Compose Up
+      - name: Docker Compose Build Up
         run: docker-compose up -d --build
         if: steps.cache-docker.outputs.cache-hit != 'true'
 

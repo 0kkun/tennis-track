@@ -31,10 +31,10 @@ Route::prefix('v1/')->group(function () {
         });
     });
 
-    Route::prefix('/admins')->group(function () {
-        Route::post('/register', [AdminAuthController::class, 'register']);
-        Route::post('/login', [AdminAuthController::class, 'login']);
-        Route::post('/logout', [AdminAuthController::class, 'logout']);
+    Route::prefix('/admins')->name('admins.')->group(function () {
+        Route::post('/register', [AdminAuthController::class, 'register'])->name('register');
+        Route::post('/login', [AdminAuthController::class, 'login'])->name('login');
+        Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
         Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
             Route::get('/me', [AdminAuthController::class, 'me']);
             Route::apiResource('/csv', CsvController::class)->only(['index', 'store']);
