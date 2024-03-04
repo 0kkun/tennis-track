@@ -62,7 +62,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ./backend/vendor
-          key: ${{ runner.os }}-composer-casche-${{ env.CACHE_VER }}-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-cache-${{ env.CACHE_VER }}-${{ hashFiles('backend/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-${{ env.CACHE_VER }}-
 
       - name: Docker build
@@ -83,20 +83,6 @@ jobs:
         id: docker-load
         if: steps.cache-docker.outputs.cache-hit == 'true'
         run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
-    
-      # - name: Create docker image cashe file on fullpath
-      #   run: echo "FILE_PATH=${{env.IMAGE_CACHE_DIR}}/tennis-track-latest.tar" >> "$GITHUB_ENV"
-
-      # - name: Load docker image if exist cashe
-      #   if: steps.cache-docker.outputs.cache-hit == 'true'
-      #   run: docker load --input ${{ env.FILE_PATH }}
-
-      # - name: Build and save to dir if non-exist cashe
-      #   if: steps.cache-docker.outputs.cache-hit != 'true'
-      #   run: |
-      #     mkdir -p ${{ env.IMAGE_CACHE_DIR }}
-      #     docker-compose --file docker-compose.yaml build --tag ${{ env.IMAGE_NAME }}
-      #     docker save --output ${{ env.FILE_PATH }} ${{ env.IMAGE_NAME }}
 
       # # ************* Setup *************
       - name: Docker Compose Up
@@ -105,40 +91,40 @@ jobs:
       - name: Docker Compose Process
         run: docker-compose ps -a
 
-      # - name: PHP, Composer Version
-      #   run: |
-      #     docker-compose exec -T app php --version
-      #     docker-compose exec -T app composer --version
+      - name: PHP, Composer Version
+        run: |
+          docker-compose exec -T app php --version
+          docker-compose exec -T app composer --version
 
-      # - name: Composer Install
-      #   if: steps.cache-composer.outputs.cache-hit != 'true'
-      #   run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      - name: Composer Install
+        if: steps.cache-composer.outputs.cache-hit != 'true'
+        run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
-      # - name: Composer Dump Autoload
-      #   run: docker-compose exec -T app composer dump-autoload -q
+      - name: Composer Dump Autoload
+        run: docker-compose exec -T app composer dump-autoload -q
 
-      # - name: Laravel Settings
-      #   run: |
-      #     docker-compose exec -T app cp .env.example .env
-      #     docker-compose exec -T app php artisan key:generate
-      #     docker-compose exec -T app php artisan optimize
-      #     docker-compose exec -T app chmod -R 777 storage bootstrap/cache
+      - name: Laravel Settings
+        run: |
+          docker-compose exec -T app cp .env.example .env
+          docker-compose exec -T app php artisan key:generate
+          docker-compose exec -T app php artisan optimize
+          docker-compose exec -T app chmod -R 777 storage bootstrap/cache
 
-      # - name: Laravel Version
-      #   run: docker-compose exec -T app php artisan --version
+      - name: Laravel Version
+        run: docker-compose exec -T app php artisan --version
 
-      # - name: Excute Migrate
-      #   run: docker-compose exec -T app php artisan migrate
+      - name: Excute Migrate
+        run: docker-compose exec -T app php artisan migrate
 
-      # # ************* Test *************
-      # - name: Rollback Testing
-      #   run: docker-compose exec -T app php artisan migrate:refresh
+      # ************* Test *************
+      - name: Rollback Testing
+        run: docker-compose exec -T app php artisan migrate:refresh
 
-      # - name: Seeding Testing
-      #   run: docker-compose exec -T app php artisan db:seed
+      - name: Seeding Testing
+        run: docker-compose exec -T app php artisan db:seed
 
-      # - name: PHP Testing
-      #   run: docker-compose exec -T app ./vendor/bin/phpunit
+      - name: PHP Testing
+        run: docker-compose exec -T app ./vendor/bin/phpunit
 
-      # - name: Pint Testing
-      #   run: docker-compose exec -T app ./vendor/bin/pint --test
+      - name: Pint Testing
+        run: docker-compose exec -T app ./vendor/bin/pint --test
