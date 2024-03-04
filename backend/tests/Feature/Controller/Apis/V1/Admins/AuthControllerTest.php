@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Controller\Apis\V1\Admins\Auth;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use App\Models\User;
 use Tests\TestCase;
 
 class AuthControllerTest extends TestCase
