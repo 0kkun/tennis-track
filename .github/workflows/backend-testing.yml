@@ -1,6 +1,9 @@
 name: Backend Testing
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     paths:
       - 'backend/**'
@@ -15,6 +18,7 @@ concurrency:
 jobs:
   backend-testing:
     runs-on: ubuntu-latest
+    # docker-compose用の環境変数
     env:
       PROJECT_NAME: "tennis_track"
       SOURCE_DIR_NAME: "backend"
@@ -30,56 +34,46 @@ jobs:
       MYSQL_PASSWORD: "password"
       MYSQL_ROOT_PASSWORD: "password"
 
+      IMEGE_CACHE_DIR: /tmp/docker-img
+      IMAGE_NAME: tennis-track:latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-
+      # ************* Create Cache *************
       - name: Cache Docker layers
         id: cache-docker
         uses: actions/cache@v2
         with:
-          path: |
-            ~/.docker
-          key: ${{ runner.os }}-docker-${{ hashFiles('docker-compose.yaml') }}
+          path: ${{ env.IMEGE_CACHE_DIR }}
+          key: ${{ runner.os }}-docker-image-${{ hashFiles('**/Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-docker-
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        id: composer-cache
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          path: ./backend/vendor
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
-      - name: Build and push Docker image
-        run: |
-          docker-compose build
-          docker-compose push
+      - name: Create image cashe file on fullpath
+        run: echo "FILE_PATH=${{env.IMEGE_CACHE_DIR}}/tennis-track-latest.tar" >> "$GITHUB_ENV"
+
+      - name: Load docker image if exist cashe
+        if: steps.cache-docker.outputs.cache-hit == 'true'
+        run: docker load --input ${{ env.FILE_PATH }}
+
+      - name: Build and save to dir if non-exist cashe
         if: steps.cache-docker.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ${{ env.IMEGE_CACHE_DIR }}
+          docker build . --file ./Dockerfile --tag ${{ env.IMAGE_NAME }}
+          docker save --output ${{ env.FILE_PATH }} ${{ env.IMAGE_NAME }}
 
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v1
-
-      # - name: Login to DockerHub
-      #   uses: docker/login-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # - name: Cache Docker layers
-      #   id: cache-docker
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       ~/.docker
-      #     key: ${{ runner.os }}-docker-${{ hashFiles('docker-compose.yaml') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-docker-
-
-      # - name: Docker Compose Build
-      #   run: docker-compose build
-      #   if: steps.cache-docker.outputs.cache-hit != 'true'
-
+      # # ************* Setup *************
       - name: Docker Compose Up
         run: docker-compose up -d
 
@@ -92,7 +86,7 @@ jobs:
       #     docker-compose exec -T app composer --version
 
       # - name: Composer Install
-      #   if: steps.cache-docker.outputs.cache-hit != 'true'
+      #   if: steps.composer-cache.outputs.cache-hit != 'true'
       #   run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
       # - name: Composer Dump Autoload
@@ -111,7 +105,8 @@ jobs:
       # - name: Excute Migrate
       #   run: docker-compose exec -T app php artisan migrate
 
-      # - name: Rollback
+      # # ************* Test *************
+      # - name: Rollback Testing
       #   run: docker-compose exec -T app php artisan migrate:refresh
 
       # - name: Seeding Testing
