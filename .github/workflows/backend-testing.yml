@@ -34,7 +34,7 @@ jobs:
       MYSQL_PASSWORD: "password"
       MYSQL_ROOT_PASSWORD: "password"
 
-      IMEGE_CACHE_DIR: /tmp/docker-img
+      IMAGE_CACHE_DIR: /tmp/docker-img
       IMAGE_CACHE_KEY: cache-docker-image
       IMAGE_NAME: tennis-track:latest
       CACHE_VER: 1 # キャッシュをクリアしたい時は数値に＋1する
@@ -53,7 +53,7 @@ jobs:
         id: cache-docker
         uses: actions/cache@v2
         with:
-          path: ${{ env.IMEGE_CACHE_DIR }}
+          path: ${{ env.IMAGE_CACHE_DIR }}
           key: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ env.CACHE_VER }}-${{ hashFiles('./docker/**/Dockerfile') }}
           restore-keys: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ env.CACHE_VER }}-
 
@@ -74,10 +74,10 @@ jobs:
         id: docker-tag-save
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: |
-            mkdir -p ${{ env.IMAGE_CACHE_DIR }}
-            docker image save -o ${{ env.IMAGE_CACHE_DIR }}/app.tar ${{ env.APP_IMAGE_TAG }}
-            docker image save -o ${{ env.IMAGE_CACHE_DIR }}/db.tar ${{ env.MYSQL_IMAGE_TAG }}
-            docker image save -o ${{ env.IMAGE_CACHE_DIR }}/nginx.tar ${{ env.NGINX_IMAGE_TAG }}
+          mkdir -p ${{ env.IMAGE_CACHE_DIR }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/app.tar ${{ env.APP_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/db.tar ${{ env.MYSQL_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/nginx.tar ${{ env.NGINX_IMAGE_TAG }}
 
       - name: Docker load
         id: docker-load
@@ -85,7 +85,7 @@ jobs:
         run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
     
       # - name: Create docker image cashe file on fullpath
-      #   run: echo "FILE_PATH=${{env.IMEGE_CACHE_DIR}}/tennis-track-latest.tar" >> "$GITHUB_ENV"
+      #   run: echo "FILE_PATH=${{env.IMAGE_CACHE_DIR}}/tennis-track-latest.tar" >> "$GITHUB_ENV"
 
       # - name: Load docker image if exist cashe
       #   if: steps.cache-docker.outputs.cache-hit == 'true'
@@ -94,7 +94,7 @@ jobs:
       # - name: Build and save to dir if non-exist cashe
       #   if: steps.cache-docker.outputs.cache-hit != 'true'
       #   run: |
-      #     mkdir -p ${{ env.IMEGE_CACHE_DIR }}
+      #     mkdir -p ${{ env.IMAGE_CACHE_DIR }}
       #     docker-compose --file docker-compose.yaml build --tag ${{ env.IMAGE_NAME }}
       #     docker save --output ${{ env.FILE_PATH }} ${{ env.IMAGE_NAME }}
 
