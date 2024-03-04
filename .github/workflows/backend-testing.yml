@@ -35,7 +35,14 @@ jobs:
       MYSQL_ROOT_PASSWORD: "password"
 
       IMEGE_CACHE_DIR: /tmp/docker-img
+      IMAGE_CACHE_KEY: cache-docker-image
       IMAGE_NAME: tennis-track:latest
+      CACHE_VER: 1 # キャッシュをクリアしたい時は数値に＋1する
+
+      # docker-composeのサービス名を入れる
+      APP_IMAGE_TAG: tennis-track_app:latest
+      NGINX_IMAGE_TAG: tennis-track_nginx:latest
+      MYSQL_IMAGE_TAG: tennis-track_db:latest
 
     steps:
       - name: Checkout repository
@@ -47,31 +54,49 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ env.IMEGE_CACHE_DIR }}
-          key: ${{ runner.os }}-docker-image-${{ hashFiles('./docker-compose.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-docker-
+          key: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ env.CACHE_VER }}-${{ hashFiles('./docker/**/Dockerfile') }}
+          restore-keys: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ env.CACHE_VER }}-
 
       - name: Cache Composer dependencies
-        id: composer-cache
+        id: cache-composer
         uses: actions/cache@v2
         with:
           path: ./backend/vendor
-          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+          key: ${{ runner.os }}-composer-casche-${{ env.CACHE_VER }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-${{ env.CACHE_VER }}-
 
-      - name: Create docker image cashe file on fullpath
-        run: echo "FILE_PATH=${{env.IMEGE_CACHE_DIR}}/tennis-track-latest.tar" >> "$GITHUB_ENV"
+      - name: Docker build
+        id: docker-build
+        if: steps.cache-docker.outputs.cache-hit != 'true'
+        run: docker-compose build
 
-      - name: Load docker image if exist cashe
-        if: steps.cache-docker.outputs.cache-hit == 'true'
-        run: docker load --input ${{ env.FILE_PATH }}
-
-      - name: Build and save to dir if non-exist cashe
+      - name: Docker Save
+        id: docker-tag-save
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: |
-          mkdir -p ${{ env.IMEGE_CACHE_DIR }}
-          docker-compose --file docker-compose.yaml build --tag ${{ env.IMAGE_NAME }}
-          docker save --output ${{ env.FILE_PATH }} ${{ env.IMAGE_NAME }}
+          mkdir -p ${IMAGE_CACHE_DIR}
+          docker image save -o ${IMAGE_CACHE_DIR}/api.tar ${{ env.APP_IMAGE_TAG }}
+          docker image save -o ${IMAGE_CACHE_DIR}/mysql.tar ${{ env.MYSQL_IMAGE_TAG }}
+          docker image save -o ${IMAGE_CACHE_DIR}/redis.tar ${{ env.NGINX_IMAGE_TAG }}
+
+      - name: Docker load
+        id: docker-load
+        if: steps.cache-docker.outputs.cache-hit == 'true'
+        run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
+    
+      # - name: Create docker image cashe file on fullpath
+      #   run: echo "FILE_PATH=${{env.IMEGE_CACHE_DIR}}/tennis-track-latest.tar" >> "$GITHUB_ENV"
+
+      # - name: Load docker image if exist cashe
+      #   if: steps.cache-docker.outputs.cache-hit == 'true'
+      #   run: docker load --input ${{ env.FILE_PATH }}
+
+      # - name: Build and save to dir if non-exist cashe
+      #   if: steps.cache-docker.outputs.cache-hit != 'true'
+      #   run: |
+      #     mkdir -p ${{ env.IMEGE_CACHE_DIR }}
+      #     docker-compose --file docker-compose.yaml build --tag ${{ env.IMAGE_NAME }}
+      #     docker save --output ${{ env.FILE_PATH }} ${{ env.IMAGE_NAME }}
 
       # # ************* Setup *************
       - name: Docker Compose Up
@@ -86,7 +111,7 @@ jobs:
       #     docker-compose exec -T app composer --version
 
       # - name: Composer Install
-      #   if: steps.composer-cache.outputs.cache-hit != 'true'
+      #   if: steps.cache-composer.outputs.cache-hit != 'true'
       #   run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
       # - name: Composer Dump Autoload
