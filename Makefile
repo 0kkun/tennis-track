@@ -49,6 +49,10 @@ lint:
 format:
 	$(DEI) $(PROJECT_NAME)_app npm run format
 
+.PHONY: open_frontend
+open_frontend:
+	open http://localhost:3000
+
 
 # *****************************
 # *      Laravel Command      *
