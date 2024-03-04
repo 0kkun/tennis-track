@@ -70,7 +70,7 @@ jobs:
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: |
           mkdir -p ${{ env.IMEGE_CACHE_DIR }}
-          docker-compose build . --file ./docker-compose.yaml --tag ${{ env.IMAGE_NAME }}
+          docker-compose --file docker-compose.yaml build --tag ${{ env.IMAGE_NAME }}
           docker save --output ${{ env.FILE_PATH }} ${{ env.IMAGE_NAME }}
 
       # # ************* Setup *************
