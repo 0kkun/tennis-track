@@ -44,24 +44,46 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-docker-
 
-      - name: docker-compose up
+      - name: Docker Compose Build Up
         run: docker-compose up -d --build
         if: steps.cache-docker.outputs.cache-hit != 'true'
 
-      - name: Copy Environment File
-        run: docker-compose exec -T app cp .env.example .env
+      - name: Docker Compose Process
+        run: docker-compose ps -a
 
-      - name: Install Dependencies
-        run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: PHP, Composer Version
+        run: |
+          docker-compose exec -T app php --version
+          docker-compose exec -T app composer --version
 
-      - name: Generate key
-        run: docker-compose exec -T app php artisan key:generate
+      - name: Composer Install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
-      - name: migration
-        run: docker-compose exec -T app php artisan migrate --seed
+      - name: Composer Dump Autoload
+        run: docker-compose exec -T app composer dump-autoload -q
 
-      - name: Execute PHP Tests
+      - name: Laravel Settings
+        run: |
+          docker-compose exec -T app cp .env.example .env
+          docker-compose exec -T app php artisan key:generate
+          docker-compose exec -T app php artisan optimize
+          docker-compose exec -T app chmod -R 777 storage bootstrap/cache
+
+      - name: Laravel Version
+        run: docker-compose exec -T app php artisan --version
+
+      - name: Excute Migrate
+        run: docker-compose exec -T app php artisan migrate
+
+      - name: Rollback Testing
+        run: docker-compose exec -T app php artisan migrate:refresh
+
+      - name: Seeding Testing
+        run: docker-compose exec -T app php artisan db:seed
+
+      - name: PHP Testing
         run: docker-compose exec -T app ./vendor/bin/phpunit
 
-      - name: Execute Pint
+      - name: Pint Testing
         run: docker-compose exec -T app ./vendor/bin/pint --test
