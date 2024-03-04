@@ -74,10 +74,10 @@ jobs:
         id: docker-tag-save
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: |
-          mkdir -p ${IMAGE_CACHE_DIR}
-          docker image save -o ${IMAGE_CACHE_DIR}/api.tar ${{ env.APP_IMAGE_TAG }}
-          docker image save -o ${IMAGE_CACHE_DIR}/mysql.tar ${{ env.MYSQL_IMAGE_TAG }}
-          docker image save -o ${IMAGE_CACHE_DIR}/redis.tar ${{ env.NGINX_IMAGE_TAG }}
+            mkdir -p ${{ env.IMAGE_CACHE_DIR }}
+            docker image save -o ${{ env.IMAGE_CACHE_DIR }}/app.tar ${{ env.APP_IMAGE_TAG }}
+            docker image save -o ${{ env.IMAGE_CACHE_DIR }}/db.tar ${{ env.MYSQL_IMAGE_TAG }}
+            docker image save -o ${{ env.IMAGE_CACHE_DIR }}/nginx.tar ${{ env.NGINX_IMAGE_TAG }}
 
       - name: Docker load
         id: docker-load
