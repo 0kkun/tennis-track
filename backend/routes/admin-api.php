@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1/')->group(function () {
     Route::prefix('/admins')->group(function () {
         Route::post('/register', [AuthController::class, 'register'])->name('admins.register');
-        Route::post('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/login', [AuthController::class, 'login'])->name('admins.login');
         Route::post('/logout', [AuthController::class, 'logout'])->name('admins.logout');
         Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
             Route::get('/me', [AuthController::class, 'me'])->name('admins.me');

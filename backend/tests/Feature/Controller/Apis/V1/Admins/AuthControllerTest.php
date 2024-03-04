@@ -11,24 +11,13 @@ class AuthControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private $adminUser;
-
-    public function setUp(): void
+    public function testRegister()
     {
-        parent::setUp();
-        // $this->createTestData();
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
-    /**
-     * @dataProvider registerDataProvider
-     */
-    public function testRegister(array $params)
-    {
+        $params = [
+            'name' => 'admin',
+            'email' => 'admin@example.com',
+            'password' => 'password',
+        ];
         $response = $this->post(route('admins.register'), $params);
 
         $response->assertStatus(Response::HTTP_OK);
@@ -46,21 +35,61 @@ class AuthControllerTest extends TestCase
         ]);
     }
 
-    public function registerDataProvider()
+    public function testLogin()
     {
-        return [
-            '正常系' => [
-                'params' => [
-                    'name' => 'admin',
-                    'email' => 'admin@example.com',
-                    'password' => 'password',
-                ],
-            ],
+        $adminUser = User::factory()->adminUser()->create();
+        $params = [
+            'name' => 'admin',
+            'email' => $adminUser->email,
+            'password' => 'password',
         ];
+        $response = $this->post(route('admins.login'), $params);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $result = $response->json();
+        $this->assertEquals(Response::HTTP_OK, $result['status']);
+        $this->assertEquals('Success', $result['message']);
+        $this->assertArrayHasKey('data', $result);
+        $data = $result['data'];
+        $this->assertArrayHasKey('token', $data);
+        $this->assertNotNull($data['token']);
     }
 
-    // private function createTestData()
-    // {
-    //     $this->adminUser = User::factory()->adminUser()->create();
-    // }
+    public function testLogout()
+    {
+        $adminUser = User::factory()->adminUser()->create();
+        $token = $adminUser->createToken($adminUser->email)->plainTextToken;
+        $response = $this->post(route('admins.logout'), [], [
+            'Authorization' => "Bearer $token",
+        ]);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $result = $response->json();
+        $this->assertEquals(Response::HTTP_OK, $result['status']);
+        $this->assertEquals('Success', $result['message']);
+        $this->assertDatabaseMissing('personal_access_tokens', [
+            'tokenable_id' => $adminUser->id,
+            'name' => $adminUser->email,
+        ]);
+    }
+
+    public function testMe()
+    {
+        $adminUser = User::factory()->adminUser()->create();
+        $token = $adminUser->createToken($adminUser->email)->plainTextToken;
+        $response = $this->get(route('admins.me'), [
+            'Authorization' => "Bearer $token",
+        ]);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $result = $response->json();
+        $this->assertEquals(Response::HTTP_OK, $result['status']);
+        $this->assertEquals('Success', $result['message']);
+        $this->assertArrayHasKey('data', $result);
+        $data = $result['data'];
+        $this->assertEquals($adminUser->id, $data['id']);
+        $this->assertEquals($adminUser->name, $data['name']);
+        $this->assertEquals($adminUser->email, $data['email']);
+        $this->assertEquals($adminUser->convertRoleString(), $data['role']);
+    }
 }
