@@ -99,7 +99,7 @@ test:
 pint-check:
 	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/pint --test
 
-.PHONY: pint
+.PHONY: pint-dirty
 pint-dirty:
 	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/pint --dirty
 
