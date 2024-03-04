@@ -10,7 +10,7 @@ class IndexResource extends BaseResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request): array
@@ -25,18 +25,20 @@ class IndexResource extends BaseResource
 
         $results = [];
         foreach ($this->resource as $player) {
-            $results [] = [
+            $results[] = [
                 'id' => $player->id,
                 'name_jp' => $player->name_jp,
                 'name_en' => $player->name_en,
                 'birthday' => $player->birthday,
                 'age' => $player->getAge(),
+                'country' => $player->country,
                 'gender' => $player->convertGenderString(),
                 'backhand_style' => $player->convertBackhandStyleString(),
                 'dominant_arm' => $player->convertDominantArmString(),
                 'sport_category' => $player->sportCategory->name,
             ];
         }
+
         return [
             'status' => $this->status,
             'message' => $this->message,

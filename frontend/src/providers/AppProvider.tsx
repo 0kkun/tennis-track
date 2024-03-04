@@ -10,10 +10,7 @@ const ErrorFallback = () => {
       role="alert"
     >
       <h2 className="text-lg font-semibold">エラーが発生しました。</h2>
-      <button
-        className="mt-4"
-        onClick={() => window.location.assign(window.location.origin)}
-      >
+      <button className="mt-4" onClick={() => window.location.assign(window.location.origin)}>
         Refresh
       </button>
     </div>

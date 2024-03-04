@@ -14,8 +14,8 @@ class SportCategorySeeder extends Seeder
      */
     public function run()
     {
-        SportCategory::factory()->create(['name'  => 'テニス']);
-        SportCategory::factory()->create(['name'  => 'サッカー']);
-        SportCategory::factory()->create(['name'  => '野球']);
+        SportCategory::factory()->create(['name' => 'テニス']);
+        SportCategory::factory()->create(['name' => 'サッカー']);
+        SportCategory::factory()->create(['name' => '野球']);
     }
 }

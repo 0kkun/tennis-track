@@ -13,7 +13,7 @@ class CsvImporter extends AbstractCsvImporter
      */
     public function import(array $rules = null, array $customMessages = []): array
     {
-        if (!is_null($rules)) {
+        if (! is_null($rules)) {
             $errors = $this->validateRows($rules, $customMessages);
             if (count($errors) > 0) {
                 return $errors;

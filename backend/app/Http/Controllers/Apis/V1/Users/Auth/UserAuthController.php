@@ -28,11 +28,12 @@ class UserAuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role' => User::GENERAL,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
         ]);
         $token = $user->createToken($request->token_name)->plainTextToken;
 
         $logger->success();
+
         return new SuccessResource(['token' => $token]);
     }
 
@@ -41,15 +42,15 @@ class UserAuthController extends Controller
      * 1emailにつき1つのトークンを発行する仕様
      *
      * @param LoginRequest $request
-     * @return SuccessResource
      * @throws Exception
+     * @return SuccessResource
      */
     public function login(LoginRequest $request): SuccessResource
     {
         $logger = new ApplicationLogger(__METHOD__);
         $credentials = $request->only(['email', 'password']);
         try {
-            if (!Auth::attempt($credentials)) {
+            if (! Auth::attempt($credentials)) {
                 throw ValidationException::withMessages([trans('auth.password')]);
             }
             $user = User::where('email', $request->email)->first();
@@ -60,23 +61,25 @@ class UserAuthController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new SuccessResource(['token' => $token]);
     }
 
     /**
      * ログアウト
      *
-     * @return SuccessResource
      * @throws Exception
+     * @return SuccessResource
      */
     public function logout(): SuccessResource
     {
         $logger = new ApplicationLogger(__METHOD__);
         try {
-            /** @var \App\Models\MyUserModel $user **/
+            /** @var \App\Models\MyUserModel $user * */
             $user = Auth::guard('sanctum')->user();
             if (empty($user)) {
                 $logger->success();
+
                 return new SuccessResource([trans('auth.already_logout')]);
             }
             $user->currentAccessToken()->delete();
@@ -85,20 +88,21 @@ class UserAuthController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new SuccessResource();
     }
 
     /**
      * 自身のアカウント情報を取得する
      *
-     * @return SuccessResource
      * @throws Exception
+     * @return SuccessResource
      */
     public function me(): SuccessResource
     {
         $logger = new ApplicationLogger(__METHOD__);
         try {
-            /** @var \App\Models\MyUserModel $user **/
+            /** @var \App\Models\MyUserModel $user * */
             $user = Auth::guard('sanctum')->user();
             $result = [
                 'id' => $user->id,
@@ -111,6 +115,7 @@ class UserAuthController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new SuccessResource($result);
     }
 }

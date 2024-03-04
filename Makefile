@@ -2,7 +2,7 @@ include .env
 
 MYSQL_ROOT_LOGIN_CMD = mysql -u root -p$(MYSQL_ROOT_PASSWORD)
 MYSQL_USER_LOGIN_CMD = mysql -u $(MYSQL_USER_NAME) -p$(MYSQL_PASSWORD) $(MYSQL_DB_NAME)
-DCE = docker-compose exec
+DCE = docker compose exec
 DEI = docker exec -it
 
 # *****************************
@@ -10,6 +10,7 @@ DEI = docker exec -it
 # *****************************
 .PHONY: init
 init:
+	@make down
 	@make set-up
 	@make build
 	@make up
@@ -21,9 +22,14 @@ init:
 	@make seed
 	@make test-init
 
+# .envがなければ生成する
 .PHONY: set-up
-set-up:
-	cp ${SOURCE_DIR_NAME}/.env.example ${SOURCE_DIR_NAME}/.env
+setup:
+	@if [ -e ${SOURCE_DIR_NAME}/.env ] ; then \
+		echo "${SOURCE_DIR_NAME}/.env already exists"; \
+	else \
+		cp ${SOURCE_DIR_NAME}/.env.example ${SOURCE_DIR_NAME}/.env; \
+	fi
 
 .PHONY: composer-install
 composer-install:
@@ -33,17 +39,33 @@ composer-install:
 # *****************************
 # *       For Frontend        *
 # *****************************
+# .PHONY: npm-install
+# npm-install:
+# 	$(DCE) app npm install
+
+# .PHONY: npm-run
+# npm-run:
+# 	$(DEI) $(PROJECT_NAME)_app npm run dev
+
+# .PHONY: lint
+# lint:
+# 	$(DEI) $(PROJECT_NAME)_app npm run lint
+
+# .PHONY: format
+# format:
+# 	$(DEI) $(PROJECT_NAME)_app npm run format
+
 .PHONY: npm-install
 npm-install:
-	$(DCE) app npm install
+	cd frontend; npm install
 
 .PHONY: npm-run
 npm-run:
-	$(DEI) $(PROJECT_NAME)_app npm run dev
+	cd frontend; npm run dev
 
 .PHONY: lint
 lint:
-	$(DEI) $(PROJECT_NAME)_app npm run lint
+	cd frontend; npm run lint
 
 .PHONY: format
 format:
@@ -59,11 +81,11 @@ open_frontend:
 # *****************************
 .PHONY: migrate
 migrate:
-	$(DCE) app php artisan migrate:fresh
+	$(DEI) $(PROJECT_NAME)_app php artisan migrate:fresh
 
-.PHONY: seed
+.PHONY: $(PROJECT_NAME)_seed
 seed:
-	$(DCE) app php artisan db:seed
+	$(DEI) $(PROJECT_NAME)_app php artisan db:seed
 
 .PHONY: dump
 dump:
@@ -71,30 +93,46 @@ dump:
 
 .PHONY: test
 test:
-	docker exec $(PROJECT_NAME)_app ./vendor/bin/phpunit --testdox
+	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/phpunit --testdox
+
+.PHONY: pint-check
+pint-check:
+	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/pint --test
+
+.PHONY: pint
+pint-dirty:
+	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/pint --dirty
+
+.PHONY: pint-all
+pint-all:
+	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/pint
+
+.PHONY: ide-helper
+ide-helper:
+	$(DEI) $(PROJECT_NAME)_app php artisan ide-helper:models --nowrite
 
 # *****************************
 # *     Container Controll    *
 # *****************************
 .PHONY: build_c
 build_c:
-	docker-compose build --no-cache --force-rm
+	docker compose build --no-cache --force-rm
 
 .PHONY: build
 build:
-	docker-compose build
+	docker compose build
 
 .PHONY: up
 up:
-	docker-compose up -d
+	docker compose up -d
 
 .PHONY: stop
 stop:
-	docker-compose stop
+	docker compose stop
 
 .PHONY: down
 down:
-	docker-compose down --remove-orphans
+	docker compose down --remove-orphans
 
 .PHONY: app
 app:
@@ -126,7 +164,7 @@ open-mailhog:
 # *****************************
 .PHONY: ss-run
 ss-run:
-	docker-compose run --rm schemaspy
+	docker compose run --rm schemaspy
 
 .PHONY: ss-open
 ss-open:

@@ -24,7 +24,7 @@ class SendPasswordResetMailRequest extends ApiRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'email', 'max:255', 'exists:users,email']
+            'email' => ['required', 'email', 'max:255', 'exists:users,email'],
         ];
     }
 }

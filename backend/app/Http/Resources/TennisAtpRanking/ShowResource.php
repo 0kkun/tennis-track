@@ -10,7 +10,7 @@ class ShowResource extends BaseResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request): array
@@ -37,6 +37,7 @@ class ShowResource extends BaseResource
             'backhand_style' => $this->resource->player->convertBackhandStyleString(),
             'dominant_arm' => $this->resource->player->convertDominantArmString(),
         ];
+
         return [
             'status' => $this->status,
             'message' => $this->message,

@@ -22,8 +22,9 @@ class FileUploader
         /** @var Illuminate\Filesystem\FilesystemAdapter */
         $filesystem = Storage::disk($diskName);
         $filePath = $filesystem->putFileAs($dir, $file, $fileName);
-        $path = config("filesystems.disks.{$diskName}.url") . $filePath;
-        Log::info('s3のファイルパス : ' . $path);
+        $path = config("filesystems.disks.{$diskName}.url").$filePath;
+        Log::info('s3のファイルパス : '.$path);
+
         return $path;
     }
 }

@@ -4,8 +4,8 @@ namespace App\Modules;
 
 use Illuminate\Support\Facades\Log;
 
-class ApplicationLogger {
-
+class ApplicationLogger
+{
     /**
      * ログレベル
      * @var array
@@ -29,27 +29,29 @@ class ApplicationLogger {
 
     /**
      * 処理開始時間(loggerがnewされた時間)
-     * @var integer
+     * @var int
      */
     private $start = 0;
 
     /**
      * 処理のステータス
      *
-     * @var boolean
+     * @var bool
      */
     private $status = false;
 
     /**
      * @param string $className
-     * @param boolean $isStartLog
+     * @param bool $isStartLog
      */
     public function __construct(string $className, bool $isStartLog = true)
     {
         $this->prefix = "[{$className}] ";
         $this->start = microtime(true);
 
-        if ($isStartLog) $this->start();
+        if ($isStartLog) {
+            $this->start();
+        }
     }
 
     /**
@@ -97,7 +99,7 @@ class ApplicationLogger {
      * 第三引数は処理時間(startからの経過時間)を出力するかどうかのフラグ
      * @param string $message
      * @param string $level
-     * @param boolean $t
+     * @param bool $t
      * @return void
      */
     public function write($message, $level = 'info', $t = false): void
@@ -108,7 +110,7 @@ class ApplicationLogger {
             $time = " : {$t}秒";
         }
 
-        if(in_array($level, self::LEVEL)) {
+        if (in_array($level, self::LEVEL)) {
             Log::$level($this->prefix.$message.$time);
         }
     }
@@ -121,7 +123,7 @@ class ApplicationLogger {
     public function exception(\Throwable $e): void
     {
         $this->write(
-            $e->getMessage() . ' FILE:' . $e->getFile() . ' LINE:' . $e->getLine() . ' ERROR:' . $e->getTraceAsString(),
+            $e->getMessage().' FILE:'.$e->getFile().' LINE:'.$e->getLine().' ERROR:'.$e->getTraceAsString(),
             'error'
         );
     }

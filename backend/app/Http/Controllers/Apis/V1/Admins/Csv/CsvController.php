@@ -17,8 +17,7 @@ class CsvController extends Controller
      */
     public function __construct(
         private AdminCsvServiceInterface $adminCsvService,
-    )
-    {
+    ) {
         $this->adminCsvService = $adminCsvService;
     }
 
@@ -32,6 +31,7 @@ class CsvController extends Controller
     {
         $logger = new ApplicationLogger(__METHOD__);
         $logger->success();
+
         return new SuccessResource(['success']);
     }
 
@@ -48,6 +48,7 @@ class CsvController extends Controller
         try {
             $this->adminCsvService->importCsv($request->file('file'));
             $logger->success();
+
             return new CreatedResource();
         } catch (\Exception $e) {
             $logger->exception($e);

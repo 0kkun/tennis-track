@@ -6,11 +6,11 @@ use App\Http\Resources\Common\ErrorResource;
 use App\Http\Resources\Common\InvalidResource;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
@@ -79,7 +79,7 @@ class Handler extends ExceptionHandler
             || $e instanceof AccessDeniedHttpException
         ) {
             return new ErrorResource([
-                $messages[Response::HTTP_UNAUTHORIZED]
+                $messages[Response::HTTP_UNAUTHORIZED],
             ], Response::HTTP_UNAUTHORIZED);
         }
 
@@ -97,7 +97,8 @@ class Handler extends ExceptionHandler
                 'class' => get_class($e),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
-            ],true));
+            ], true));
+
             return match ($statusCode) {
                 400 => new ErrorResource([$messages[Response::HTTP_BAD_REQUEST]], Response::HTTP_BAD_REQUEST),
                 403 => new ErrorResource([$messages[Response::HTTP_FORBIDDEN]], Response::HTTP_FORBIDDEN),
@@ -115,7 +116,7 @@ class Handler extends ExceptionHandler
                 'class' => get_class($e),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
-            ]
+            ],
         ]);
     }
 }

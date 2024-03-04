@@ -17,7 +17,7 @@ class EloquentTennisAtpRankingRepository implements TennisAtpRankingRepositoryIn
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getLatestUpdatedRecord(): ?TennisAtpRanking
     {
@@ -27,7 +27,7 @@ class EloquentTennisAtpRankingRepository implements TennisAtpRankingRepositoryIn
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function insert(array $params): void
     {
@@ -36,21 +36,21 @@ class EloquentTennisAtpRankingRepository implements TennisAtpRankingRepositoryIn
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    public function fetchByParams(?array $searchParams = []): ?Collection
+    public function fetchWithPlayerByParams(?array $searchParams = []): ?Collection
     {
         return $this->tennisAtpRanking
             ->with('player')
-            ->when(!empty($searchParams) && !empty($searchParams['name']), function ($query) use ($searchParams) {
-                $query->where('name_en', 'like', $searchParams['name'] . '%');
+            ->when(! empty($searchParams) && ! empty($searchParams['name']), function ($query) use ($searchParams) {
+                $query->where('name_en', 'like', $searchParams['name'].'%');
             })
             ->limit(TennisAtpRanking::ITEM_PER_PAGE)
             ->get();
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getById(int $id): TennisAtpRanking
     {

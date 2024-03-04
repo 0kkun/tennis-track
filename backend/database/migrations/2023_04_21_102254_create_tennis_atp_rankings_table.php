@@ -24,7 +24,7 @@ return new class extends Migration
                 ->constrained('players')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->unique(['player_id','updated_ymd']);
+            $table->unique(['player_id', 'updated_ymd']);
             $table->timestamps();
         });
     }

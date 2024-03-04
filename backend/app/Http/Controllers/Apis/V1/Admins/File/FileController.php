@@ -17,8 +17,7 @@ class FileController extends Controller
      */
     public function __construct(
         private AdminFileServiceInterface $adminFileService,
-    )
-    {
+    ) {
         $this->adminFileService = $adminFileService;
     }
 
@@ -32,6 +31,7 @@ class FileController extends Controller
     {
         $logger = new ApplicationLogger(__METHOD__);
         $logger->success();
+
         return new SuccessResource(['success']);
     }
 
@@ -48,6 +48,7 @@ class FileController extends Controller
         try {
             $this->adminFileService->uploadFile($request->file('file'));
             $logger->success();
+
             return new CreatedResource();
         } catch (\Exception $e) {
             $logger->exception($e);

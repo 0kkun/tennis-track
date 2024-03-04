@@ -63,7 +63,7 @@ class UpdateRequest extends ApiRequest
             'gender' => $this->input('gender'),
             'backhand_style' => $this->input('backhand_style'),
             'dominant_arm' => $this->input('dominant_arm'),
-            'sport_category_id' => $this->input('sport_category_id')
+            'sport_category_id' => $this->input('sport_category_id'),
         ];
     }
 

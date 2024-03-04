@@ -4,9 +4,9 @@ return [
     'response_format' => [
         'status' => '',
         'message' => '',
-        'data' => ''
+        'data' => '',
     ],
-    /**
+    /*
      * APIのレスポンスステータスコード
      */
     'result_status' => [
@@ -22,7 +22,7 @@ return [
         'server_error' => 500, // サーバ内部にエラーが発生した場合。予期しないサーバー処理のエラー。
         'service_unavailable' => 503, // 一時的にサービス提供ができない場合。（メンテナンス等）
     ],
-    /**
+    /*
      * ステータスコードに基づくエラーメッセージ
      */
     'messages' => [

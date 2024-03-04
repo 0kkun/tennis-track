@@ -24,7 +24,7 @@ class StoreRequest extends ApiRequest
     public function rules()
     {
         return [
-            'file' => 'required|mimes:csv,txt|max:1024'
+            'file' => 'required|mimes:csv,txt|max:1024',
         ];
     }
 

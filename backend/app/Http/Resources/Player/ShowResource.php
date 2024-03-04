@@ -10,7 +10,7 @@ class ShowResource extends BaseResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request): array
@@ -35,6 +35,7 @@ class ShowResource extends BaseResource
             'dominant_arm' => $this->resource->convertDominantArmString(),
             'sport_category' => $this->resource->sportCategory->name,
         ];
+
         return [
             'status' => $this->status,
             'message' => $this->message,

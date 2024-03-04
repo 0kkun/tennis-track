@@ -4,20 +4,19 @@ namespace App\Http\Controllers\Apis\V1\Admins\Player;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admins\Player\DestroyRequest;
-use App\Http\Requests\Admins\Player\StoreRequest;
-use App\Http\Requests\Admins\Player\ShowRequest;
+use App\Http\Requests\Admins\Player\ImportRequest;
 use App\Http\Requests\Admins\Player\IndexRequest;
+use App\Http\Requests\Admins\Player\ShowRequest;
+use App\Http\Requests\Admins\Player\StoreRequest;
 use App\Http\Requests\Admins\Player\UpdateRequest;
 use App\Http\Resources\Common\CreatedResource;
 use App\Http\Resources\Common\DestroyResource;
 use App\Http\Resources\Common\UpdatedResource;
+use App\Http\Resources\Player\ExportResource;
 use App\Http\Resources\Player\IndexResource;
 use App\Http\Resources\Player\ShowResource;
 use App\Modules\ApplicationLogger;
 use App\Repositories\Interfaces\PlayerRepositoryInterface;
-use App\Http\Requests\Admins\Player\ImportRequest;
-use App\Http\Resources\Common\SuccessResource;
-use App\Http\Resources\Player\ExportResource;
 use App\Services\Interfaces\AdminCsvServiceInterface;
 
 class AdminPlayerController extends Controller
@@ -29,8 +28,7 @@ class AdminPlayerController extends Controller
     public function __construct(
         private PlayerRepositoryInterface $playerRepository,
         private AdminCsvServiceInterface $adminCsvService,
-    )
-    {
+    ) {
         $this->playerRepository = $playerRepository;
         $this->adminCsvService = $adminCsvService;
     }
@@ -38,15 +36,15 @@ class AdminPlayerController extends Controller
     /**
      * 選手一覧取得
      *
-     * @return IndexResource
      * @throws Exception
+     * @return IndexResource
      */
     public function index(IndexRequest $request): IndexResource
     {
         $logger = new ApplicationLogger(__METHOD__);
         try {
             $logger->write('選手一覧取得開始');
-            $logger->write('[Request Params]' . print_r($request->all(), true));
+            $logger->write('[Request Params]'.print_r($request->all(), true));
             $searchParams = $request->getParams();
             $players = $this->playerRepository->fetchByParams($searchParams);
         } catch (\Exception $e) {
@@ -54,6 +52,7 @@ class AdminPlayerController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new IndexResource($players);
     }
 
@@ -68,7 +67,7 @@ class AdminPlayerController extends Controller
         $logger = new ApplicationLogger(__METHOD__);
         try {
             $logger->write('選手一覧詳細取得開始');
-            $logger->write('[Request Params]' . print_r($request->all(), true));
+            $logger->write('[Request Params]'.print_r($request->all(), true));
             $playerId = $request->id;
             $this->playerRepository->getById($playerId);
         } catch (\Exception $e) {
@@ -76,6 +75,7 @@ class AdminPlayerController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new ShowResource();
     }
 
@@ -90,7 +90,7 @@ class AdminPlayerController extends Controller
         $logger = new ApplicationLogger(__METHOD__);
         try {
             $logger->write('選手一覧1件登録開始');
-            $logger->write('[Request Params]' . print_r($request->all(), true));
+            $logger->write('[Request Params]'.print_r($request->all(), true));
             $player = $request->getParams();
             $this->playerRepository->create($player);
         } catch (\Exception $e) {
@@ -98,6 +98,7 @@ class AdminPlayerController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new CreatedResource();
     }
 
@@ -112,7 +113,7 @@ class AdminPlayerController extends Controller
         $logger = new ApplicationLogger(__METHOD__);
         try {
             $logger->write('選手一覧1件更新開始');
-            $logger->write('[Request Params]' . print_r($request->all(), true));
+            $logger->write('[Request Params]'.print_r($request->all(), true));
             $player = $request->getParams();
             $this->playerRepository->update($player['id'], $player);
         } catch (\Exception $e) {
@@ -120,6 +121,7 @@ class AdminPlayerController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new UpdatedResource();
     }
 
@@ -134,7 +136,7 @@ class AdminPlayerController extends Controller
         $logger = new ApplicationLogger(__METHOD__);
         try {
             $logger->write('選手一覧1件削除開始');
-            $logger->write('[Request Params]' . print_r($request->all(), true));
+            $logger->write('[Request Params]'.print_r($request->all(), true));
             $playerId = $request->input('id');
             $this->playerRepository->destroy($playerId);
         } catch (\Exception $e) {
@@ -142,6 +144,7 @@ class AdminPlayerController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new DestroyResource();
     }
 
@@ -156,20 +159,21 @@ class AdminPlayerController extends Controller
         $logger = new ApplicationLogger(__METHOD__);
         try {
             $data = $this->adminCsvService->playerImportCsv($request->file('file'));
-            $logger->write('[Csv Outputed]' . print_r($data, true));
+            $logger->write('[Csv Outputed]'.print_r($data, true));
         } catch (\Exception $e) {
             $logger->exception($e);
             throw $e;
         }
         $logger->success();
+
         return new CreatedResource();
     }
 
     /**
      * 選手情報をCSVエクスポートする
      *
-     * @return ExportResource
      * @throws \Exception
+     * @return ExportResource
      */
     public function export(): ExportResource
     {
@@ -181,6 +185,7 @@ class AdminPlayerController extends Controller
             throw $e;
         }
         $logger->success();
+
         return new ExportResource($path);
     }
 }

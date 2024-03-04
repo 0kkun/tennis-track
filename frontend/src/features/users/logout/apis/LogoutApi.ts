@@ -1,18 +1,13 @@
 import { AxiosError } from 'axios'
-import { LoginRequest } from '../types/login'
 import apiClient from '@/libs/apiClient'
+import { ApiErrorResponse } from '@/libs/apiClient'
 
-export type ApiErrorResponse = {
-  status: number
-  message: string
-  data?: object
-}
-
-export const sendLogin = async (request: LoginRequest): Promise<void> => {
+export const sendLogout = async (): Promise<void> => {
   await apiClient
-    .post('/api/v1/users/login', request)
+    .post('/api/v1/users/logout')
     .then((res) => {
       console.log(res.data)
+      apiClient.unsetAuthToken()
     })
     .catch((e: AxiosError<ApiErrorResponse>) => {
       if (e.response) {
