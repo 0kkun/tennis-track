@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  backend-build:
+  backend-testing:
     runs-on: ubuntu-latest
     # docker-compose用の環境変数
     env:
