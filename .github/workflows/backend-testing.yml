@@ -42,14 +42,17 @@ jobs:
       APP_IMAGE_TAG: tennis-track_app
       NGINX_IMAGE_TAG: tennis-track_nginx
       MYSQL_IMAGE_TAG: tennis-track_db
-      REDIS_IMAGE_TAG: tennis-track_redis
       QUEUE_WORKER_IMAGE_TAG: tennis-track_queue_worker
-      MAILHOG_IMAGE_TAG: tennis-track_mailhog
-      MINIO_IMAGE_TAG: tennis-track_minio
+      REDIS_IMAGE_TAG: redis
+      MAILHOG_IMAGE_TAG: mailhog/mailhog
+      MINIO_IMAGE_TAG: minio/minio
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Delete Cache
+        run: rm -rf ${{ env.IMAGE_CACHE_DIR }}
 
       # ************* Create Cache *************
       - name: Cache Docker layers
