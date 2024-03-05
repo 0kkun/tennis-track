@@ -44,8 +44,8 @@ jobs:
       MYSQL_IMAGE_TAG: tennis-track_db
       QUEUE_WORKER_IMAGE_TAG: tennis-track_queue_worker
       REDIS_IMAGE_TAG: redis:6.0.5
-      MAILHOG_IMAGE_TAG: mailhog/mailhog
-      MINIO_IMAGE_TAG: minio/minio
+      MAILHOG_IMAGE_TAG: tennis-track_mailhog
+      MINIO_IMAGE_TAG: tennis-track_minio
 
     steps:
       - name: Checkout repository
