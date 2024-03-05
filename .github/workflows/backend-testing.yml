@@ -43,9 +43,6 @@ jobs:
       NGINX_IMAGE_TAG: tennis-track_nginx
       MYSQL_IMAGE_TAG: tennis-track_db
       QUEUE_WORKER_IMAGE_TAG: tennis-track_queue_worker
-      REDIS_IMAGE_TAG: redis:6.0.5
-      MAILHOG_IMAGE_TAG: tennis-track_mailhog
-      MINIO_IMAGE_TAG: tennis-track_minio
 
     steps:
       - name: Checkout repository
@@ -98,11 +95,11 @@ jobs:
       - name: Check Docker Compose Images
         run: docker images
 
-      # - name: Docker Compose Up
-      #   run: docker-compose up -d
+      - name: Docker Compose Up
+        run: docker-compose up -d
 
-      # - name: Docker Compose Process
-      #   run: docker-compose ps -a
+      - name: Docker Compose Process
+        run: docker-compose ps -a
 
       # - name: PHP, Composer Version
       #   run: |
