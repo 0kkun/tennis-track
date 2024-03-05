@@ -8,15 +8,15 @@ use App\Http\Controllers\Apis\V1\Users\TennisAtpRanking\TennisAtpRankingControll
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1/')->group(function () {
-    Route::prefix('/users')->group(function () {
-        Route::post('/register', [AuthController::class, 'register']);
-        Route::post('/login', [AuthController::class, 'login']);
-        Route::post('/logout', [AuthController::class, 'logout']);
+    Route::prefix('/users')->name('users.')->group(function () {
+        Route::post('/register', [AuthController::class, 'register'])->name('register');
+        Route::post('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         Route::post('/reset/send', [UserPasswordResetController::class, 'sendResetLinkEmail'])->name('password.reset.send');
         Route::patch('/reset', [UserPasswordResetController::class, 'reset'])->name('password.reset');
 
         Route::middleware(['auth:sanctum', 'can:general'])->group(function () {
-            Route::get('/me', [AuthController::class, 'me'])->name('users.me');
+            Route::get('/me', [AuthController::class, 'me'])->name('me');
             Route::as('users.')->group(function () {
                 Route::patch('reset/{id}', [UserPasswordResetController::class, 'reset'])->name('password.reset');
             });

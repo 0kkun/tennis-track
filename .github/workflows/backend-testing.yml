@@ -46,10 +46,10 @@ jobs:
       QUEUE_WORKER_IMAGE_TAG: tennis-track_queue_worker
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Cache Docker layers
+      - name: Cache Docker Layers
         id: cache-docker
         uses: actions/cache@v2
         with:
@@ -57,7 +57,7 @@ jobs:
           key: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ env.CACHE_VER }}-${{ hashFiles('docker-compose.yaml') }}
           restore-keys: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ env.CACHE_VER }}-
 
-      - name: Cache Composer dependencies
+      - name: Cache Composer Dependencies
         id: cache-composer
         uses: actions/cache@v2
         with:
@@ -65,12 +65,12 @@ jobs:
           key: ${{ runner.os }}-composer-cache-${{ env.CACHE_VER }}-${{ hashFiles('backend/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-${{ env.CACHE_VER }}-
 
-      - name: Docker compose build
+      - name: Docker Compose Build
         id: docker-build
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: docker-compose build
 
-      - name: Docker image save
+      - name: Docker Image Save
         id: docker-tag-save
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: |
@@ -80,7 +80,7 @@ jobs:
           docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_nginx.tar ${{ env.NGINX_IMAGE_TAG }}
           docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_queue_worker.tar ${{ env.QUEUE_WORKER_IMAGE_TAG }}
 
-      - name: Docker load
+      - name: Docker Load
         id: docker-load
         if: steps.cache-docker.outputs.cache-hit == 'true'
         run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
@@ -90,6 +90,9 @@ jobs:
 
       - name: Docker Compose Process
         run: docker-compose ps -a
+
+      - name: Clear Routes Cache
+        run: docker-compose exec -T app php artisan route:clear
 
       - name: PHP, Composer Version
         run: |
