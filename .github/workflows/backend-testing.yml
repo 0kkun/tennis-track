@@ -90,11 +90,11 @@ jobs:
       - name: Check Docker Compose Images
         run: docker images
 
-      # - name: Docker Compose Up
-      #   run: docker-compose up -d
+      - name: Docker Compose Up
+        run: docker-compose up -d
 
-      # - name: Docker Compose Process
-      #   run: docker-compose ps -a
+      - name: Docker Compose Process
+        run: docker-compose ps -a
 
       # - name: PHP, Composer Version
       #   run: |
