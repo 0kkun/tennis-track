@@ -34,14 +34,14 @@ jobs:
       MYSQL_PASSWORD: "password"
       MYSQL_ROOT_PASSWORD: "password"
 
-      IMAGE_CACHE_DIR: /tmp/docker-img
+      IMAGE_CACHE_DIR: /tmp/docker-img/tennis_track
       IMAGE_CACHE_KEY: cache-docker-image
-      CACHE_VER: 3 # キャッシュをクリアしたい時は数値に＋1する
+      CACHE_VER: 1 # キャッシュをクリアしたい時は数値に＋1する
 
       # docker-composeのサービス名を入れる
-      APP_IMAGE_TAG: app:latest
-      NGINX_IMAGE_TAG: nginx:latest
-      MYSQL_IMAGE_TAG: db:latest
+      APP_IMAGE_TAG: tennis_track_app
+      NGINX_IMAGE_TAG: tennis_track_nginx
+      MYSQL_IMAGE_TAG: tennis_track_db
 
     steps:
       - name: Checkout repository
