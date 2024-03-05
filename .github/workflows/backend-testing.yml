@@ -1,6 +1,9 @@
 name: Backend Testing
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     paths:
       - 'backend/**'
@@ -15,8 +18,9 @@ concurrency:
 jobs:
   backend-testing:
     runs-on: ubuntu-latest
+    # docker-compose用の環境変数
     env:
-      PROJECT_NAME: "tennis_track"
+      PROJECT_NAME: "tennis-track"
       SOURCE_DIR_NAME: "backend"
       APP_HOST_PORT: 9000
       APP_VITE_HOST_PORT: 5173
@@ -30,6 +34,17 @@ jobs:
       MYSQL_PASSWORD: "password"
       MYSQL_ROOT_PASSWORD: "password"
 
+      IMAGE_CACHE_DIR: /tmp/docker-img
+      IMAGE_CACHE_KEY: cache-docker-image
+      CACHE_VER: 4 # キャッシュをクリアしたい時は数値に＋1する
+
+      # docker-composeのサービス名を入れる
+      # dockerhubの既存imageのものはそのまま使う
+      APP_IMAGE_TAG: tennis-track_app
+      NGINX_IMAGE_TAG: tennis-track_nginx
+      MYSQL_IMAGE_TAG: tennis-track_db
+      QUEUE_WORKER_IMAGE_TAG: tennis-track_queue_worker
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -38,15 +53,40 @@ jobs:
         id: cache-docker
         uses: actions/cache@v2
         with:
-          path: |
-            ~/.docker
-          key: ${{ runner.os }}-docker-${{ hashFiles('docker-compose.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-docker-
+          path: ${{ env.IMAGE_CACHE_DIR }}
+          key: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ env.CACHE_VER }}-${{ hashFiles('docker-compose.yaml') }}
+          restore-keys: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ env.CACHE_VER }}-
 
-      - name: Docker Compose Build Up
-        run: docker-compose up -d --build
+      - name: Cache Composer dependencies
+        id: cache-composer
+        uses: actions/cache@v2
+        with:
+          path: ./backend/vendor
+          key: ${{ runner.os }}-composer-cache-${{ env.CACHE_VER }}-${{ hashFiles('backend/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-${{ env.CACHE_VER }}-
+
+      - name: Docker compose build
+        id: docker-build
         if: steps.cache-docker.outputs.cache-hit != 'true'
+        run: docker-compose build
+
+      - name: Docker image save
+        id: docker-tag-save
+        if: steps.cache-docker.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ${{ env.IMAGE_CACHE_DIR }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_app.tar ${{ env.APP_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_db.tar ${{ env.MYSQL_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_nginx.tar ${{ env.NGINX_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_queue_worker.tar ${{ env.QUEUE_WORKER_IMAGE_TAG }}
+
+      - name: Docker load
+        id: docker-load
+        if: steps.cache-docker.outputs.cache-hit == 'true'
+        run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
+
+      - name: Docker Compose Up
+        run: docker-compose up -d
 
       - name: Docker Compose Process
         run: docker-compose ps -a
@@ -57,7 +97,7 @@ jobs:
           docker-compose exec -T app composer --version
 
       - name: Composer Install
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cache-composer.outputs.cache-hit != 'true'
         run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
       - name: Composer Dump Autoload

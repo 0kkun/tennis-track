@@ -69,7 +69,12 @@ lint:
 
 .PHONY: format
 format:
-	cd frontend; npm run format
+	$(DEI) $(PROJECT_NAME)_app npm run format
+
+.PHONY: open_frontend
+open_frontend:
+	open http://localhost:3000
+
 
 # *****************************
 # *      Laravel Command      *
@@ -90,11 +95,16 @@ dump:
 test:
 	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/phpunit --testdox
 
+.PHONY: test-single
+test-single:
+	@read -p "Enter a test file path or class name: " TESTPATH; \
+	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/phpunit --filter $$TESTPATH --testdox
+
 .PHONY: pint-check
 pint-check:
 	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/pint --test
 
-.PHONY: pint
+.PHONY: pint-dirty
 pint-dirty:
 	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/pint --dirty
 

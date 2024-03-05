@@ -30,7 +30,7 @@ class UserAuthController extends Controller
             'role' => User::GENERAL,
             'password' => Hash::make($request->password),
         ]);
-        $token = $user->createToken($request->token_name)->plainTextToken;
+        $token = $user->createToken($request->email)->plainTextToken;
 
         $logger->success();
 

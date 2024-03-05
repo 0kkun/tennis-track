@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-class AdminAuthController extends Controller
+class AuthController extends Controller
 {
     /**
      * ユーザー新規登録
@@ -30,7 +30,7 @@ class AdminAuthController extends Controller
             'role' => User::ADMIN,
             'password' => Hash::make($request->password),
         ]);
-        $token = $user->createToken($request->token_name)->plainTextToken;
+        $token = $user->createToken($request->email)->plainTextToken;
 
         $logger->success();
 
