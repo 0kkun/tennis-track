@@ -39,9 +39,9 @@ jobs:
       CACHE_VER: 2 # キャッシュをクリアしたい時は数値に＋1する
 
       # docker-composeのサービス名を入れる
-      APP_IMAGE_TAG: tennis_track_app:latest
-      NGINX_IMAGE_TAG: tennis_track_nginx:latest
-      MYSQL_IMAGE_TAG: tennis_track_db:latest
+      APP_IMAGE_TAG: app:latest
+      NGINX_IMAGE_TAG: nginx:latest
+      MYSQL_IMAGE_TAG: db:latest
 
     steps:
       - name: Checkout repository
