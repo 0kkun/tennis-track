@@ -16,7 +16,7 @@ Route::prefix('v1/')->group(function () {
         Route::patch('/reset', [UserPasswordResetController::class, 'reset'])->name('password.reset');
 
         Route::middleware(['auth:sanctum', 'can:general'])->group(function () {
-            Route::get('/me', [UserAuthController::class, 'me']);
+            Route::get('/me', [UserAuthController::class, 'me'])->name('users.me');
             Route::as('users.')->group(function () {
                 Route::patch('reset/{id}', [UserPasswordResetController::class, 'reset'])->name('password.reset');
             });
