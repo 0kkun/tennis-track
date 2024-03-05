@@ -36,7 +36,7 @@ jobs:
 
       IMAGE_CACHE_DIR: /tmp/docker-img
       IMAGE_CACHE_KEY: cache-docker-image
-      CACHE_VER: 1 # キャッシュをクリアしたい時は数値に＋1する
+      CACHE_VER: 2 # キャッシュをクリアしたい時は数値に＋1する
 
       # docker-composeのサービス名を入れる
       APP_IMAGE_TAG: tennis_track_app:latest
