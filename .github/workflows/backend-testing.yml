@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  backend-testing:
+  backend-build:
     runs-on: ubuntu-latest
     # docker-compose用の環境変数
     env:
@@ -39,6 +39,7 @@ jobs:
       CACHE_VER: 3 # キャッシュをクリアしたい時は数値に＋1する
 
       # docker-composeのサービス名を入れる
+      # dockerhubの既存imageのものはそのまま使う
       APP_IMAGE_TAG: tennis-track_app
       NGINX_IMAGE_TAG: tennis-track_nginx
       MYSQL_IMAGE_TAG: tennis-track_db
@@ -48,7 +49,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # ************* Create Cache *************
       - name: Cache Docker layers
         id: cache-docker
         uses: actions/cache@v2
@@ -65,15 +65,12 @@ jobs:
           key: ${{ runner.os }}-composer-cache-${{ env.CACHE_VER }}-${{ hashFiles('backend/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-${{ env.CACHE_VER }}-
 
-      - name: Check Docker Compose Images
-        run: docker images
-
-      - name: Docker build
+      - name: Docker compose build
         id: docker-build
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: docker-compose build
 
-      - name: Docker Save
+      - name: Docker image save
         id: docker-tag-save
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: |
@@ -88,53 +85,45 @@ jobs:
         if: steps.cache-docker.outputs.cache-hit == 'true'
         run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
 
-      # # ************* Setup *************
-      # - name: Docker Compose Pull
-      #   run: docker-compose pull
-
-      - name: Check Docker Compose Images
-        run: docker images
-
       - name: Docker Compose Up
         run: docker-compose up -d
 
       - name: Docker Compose Process
         run: docker-compose ps -a
 
-      # - name: PHP, Composer Version
-      #   run: |
-      #     docker-compose exec -T app php --version
-      #     docker-compose exec -T app composer --version
+      - name: PHP, Composer Version
+        run: |
+          docker-compose exec -T app php --version
+          docker-compose exec -T app composer --version
 
-      # - name: Composer Install
-      #   if: steps.cache-composer.outputs.cache-hit != 'true'
-      #   run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      - name: Composer Install
+        if: steps.cache-composer.outputs.cache-hit != 'true'
+        run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
-      # - name: Composer Dump Autoload
-      #   run: docker-compose exec -T app composer dump-autoload -q
+      - name: Composer Dump Autoload
+        run: docker-compose exec -T app composer dump-autoload -q
 
-      # - name: Laravel Settings
-      #   run: |
-      #     docker-compose exec -T app cp .env.example .env
-      #     docker-compose exec -T app php artisan key:generate
-      #     docker-compose exec -T app php artisan optimize
-      #     docker-compose exec -T app chmod -R 777 storage bootstrap/cache
+      - name: Laravel Settings
+        run: |
+          docker-compose exec -T app cp .env.example .env
+          docker-compose exec -T app php artisan key:generate
+          docker-compose exec -T app php artisan optimize
+          docker-compose exec -T app chmod -R 777 storage bootstrap/cache
 
-      # - name: Laravel Version
-      #   run: docker-compose exec -T app php artisan --version
+      - name: Laravel Version
+        run: docker-compose exec -T app php artisan --version
 
-      # - name: Excute Migrate
-      #   run: docker-compose exec -T app php artisan migrate
+      - name: Excute Migrate
+        run: docker-compose exec -T app php artisan migrate
 
-      # # ************* Test *************
-      # - name: Rollback Testing
-      #   run: docker-compose exec -T app php artisan migrate:refresh
+      - name: Rollback Testing
+        run: docker-compose exec -T app php artisan migrate:refresh
 
-      # - name: Seeding Testing
-      #   run: docker-compose exec -T app php artisan db:seed
+      - name: Seeding Testing
+        run: docker-compose exec -T app php artisan db:seed
 
-      # - name: PHP Testing
-      #   run: docker-compose exec -T app ./vendor/bin/phpunit
+      - name: PHP Testing
+        run: docker-compose exec -T app ./vendor/bin/phpunit
 
-      # - name: Pint Testing
-      #   run: docker-compose exec -T app ./vendor/bin/pint --test
+      - name: Pint Testing
+        run: docker-compose exec -T app ./vendor/bin/pint --test
