@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     # docker-compose用の環境変数
     env:
-      PROJECT_NAME: "tennis_track"
+      PROJECT_NAME: "tennis-track"
       SOURCE_DIR_NAME: "backend"
       APP_HOST_PORT: 9000
       APP_VITE_HOST_PORT: 5173
@@ -34,14 +34,14 @@ jobs:
       MYSQL_PASSWORD: "password"
       MYSQL_ROOT_PASSWORD: "password"
 
-      IMAGE_CACHE_DIR: /tmp/docker-img/tennis_track
+      IMAGE_CACHE_DIR: /tmp/docker-img
       IMAGE_CACHE_KEY: cache-docker-image
       CACHE_VER: 1 # キャッシュをクリアしたい時は数値に＋1する
 
       # docker-composeのサービス名を入れる
-      APP_IMAGE_TAG: tennis_track_app
-      NGINX_IMAGE_TAG: tennis_track_nginx
-      MYSQL_IMAGE_TAG: tennis_track_db
+      APP_IMAGE_TAG: tennis-track_app
+      NGINX_IMAGE_TAG: tennis-track_nginx
+      MYSQL_IMAGE_TAG: tennis-track_db
 
     steps:
       - name: Checkout repository
