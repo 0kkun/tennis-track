@@ -71,35 +71,32 @@ jobs:
       - name: Check Docker Compose Images
         run: docker images
 
-      # - name: Docker build
-      #   id: docker-build
-      #   if: steps.cache-docker.outputs.cache-hit != 'true'
-      #   run: docker-compose build
+      - name: Docker build
+        id: docker-build
+        if: steps.cache-docker.outputs.cache-hit != 'true'
+        run: docker-compose build
 
-      # - name: Docker Save
-      #   id: docker-tag-save
-      #   if: steps.cache-docker.outputs.cache-hit != 'true'
-      #   run: |
-      #     mkdir -p ${{ env.IMAGE_CACHE_DIR }}
-      #     docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_app.tar ${{ env.APP_IMAGE_TAG }}
-      #     docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_db.tar ${{ env.MYSQL_IMAGE_TAG }}
-      #     docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_nginx.tar ${{ env.NGINX_IMAGE_TAG }}
-      #     docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_queue_worker.tar ${{ env.QUEUE_WORKER_IMAGE_TAG }}
-      #     docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_mailhog.tar ${{ env.MAILHOG_IMAGE_TAG }}
-      #     docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_minio.tar ${{ env.MINIO_IMAGE_TAG }}
-      #     docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_redis.tar ${{ env.REDIS_IMAGE_TAG }}
+      - name: Docker Save
+        id: docker-tag-save
+        if: steps.cache-docker.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ${{ env.IMAGE_CACHE_DIR }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_app.tar ${{ env.APP_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_db.tar ${{ env.MYSQL_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_nginx.tar ${{ env.NGINX_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_queue_worker.tar ${{ env.QUEUE_WORKER_IMAGE_TAG }}
 
-      # - name: Docker load
-      #   id: docker-load
-      #   if: steps.cache-docker.outputs.cache-hit == 'true'
-      #   run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
+      - name: Docker load
+        id: docker-load
+        if: steps.cache-docker.outputs.cache-hit == 'true'
+        run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
 
       # # ************* Setup *************
       # - name: Docker Compose Pull
       #   run: docker-compose pull
 
-      # - name: Check Docker Compose Images
-      #   run: docker images
+      - name: Check Docker Compose Images
+        run: docker images
 
       # - name: Docker Compose Up
       #   run: docker-compose up -d
