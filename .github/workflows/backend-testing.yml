@@ -36,23 +36,20 @@ jobs:
 
       IMAGE_CACHE_DIR: /tmp/docker-img
       IMAGE_CACHE_KEY: cache-docker-image
-      CACHE_VER: 2 # キャッシュをクリアしたい時は数値に＋1する
+      CACHE_VER: 3 # キャッシュをクリアしたい時は数値に＋1する
 
       # docker-composeのサービス名を入れる
       APP_IMAGE_TAG: tennis-track_app
       NGINX_IMAGE_TAG: tennis-track_nginx
       MYSQL_IMAGE_TAG: tennis-track_db
       QUEUE_WORKER_IMAGE_TAG: tennis-track_queue_worker
-      REDIS_IMAGE_TAG: redis
+      REDIS_IMAGE_TAG: redis:6.0.5
       MAILHOG_IMAGE_TAG: mailhog/mailhog
       MINIO_IMAGE_TAG: minio/minio
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Delete Cache
-        run: rm -rf ${{ env.IMAGE_CACHE_DIR }}
 
       # ************* Create Cache *************
       - name: Cache Docker layers
@@ -84,10 +81,10 @@ jobs:
           docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_app.tar ${{ env.APP_IMAGE_TAG }}
           docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_db.tar ${{ env.MYSQL_IMAGE_TAG }}
           docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_nginx.tar ${{ env.NGINX_IMAGE_TAG }}
-          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_redis.tar ${{ env.REDIS_IMAGE_TAG }}
           docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_queue_worker.tar ${{ env.QUEUE_WORKER_IMAGE_TAG }}
           docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_mailhog.tar ${{ env.MAILHOG_IMAGE_TAG }}
           docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_minio.tar ${{ env.MINIO_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_redis.tar ${{ env.REDIS_IMAGE_TAG }}
 
       - name: Docker load
         id: docker-load
