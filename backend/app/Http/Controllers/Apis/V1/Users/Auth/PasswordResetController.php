@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class UserPasswordResetController extends Controller
+class PasswordResetController extends Controller
 {
     /**
      * パスワードリセット用のメールを送信する
