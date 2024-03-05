@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-class UserAuthController extends Controller
+class AuthController extends Controller
 {
     /**
      * ユーザー新規登録
