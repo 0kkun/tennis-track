@@ -36,7 +36,6 @@ jobs:
 
       IMAGE_CACHE_DIR: /tmp/docker-img
       IMAGE_CACHE_KEY: cache-docker-image
-      IMAGE_NAME: tennis-track:latest
       CACHE_VER: 1 # キャッシュをクリアしたい時は数値に＋1する
 
       # docker-composeのサービス名を入れる
@@ -85,46 +84,52 @@ jobs:
         run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
 
       # # ************* Setup *************
-      - name: Docker Compose Up
-        run: docker-compose up -d
+      - name: Docker Compose Pull
+        run: docker-compose pull
 
-      - name: Docker Compose Process
-        run: docker-compose ps -a
+      - name: Check Docker Compose Images
+        run: docker images
 
-      - name: PHP, Composer Version
-        run: |
-          docker-compose exec -T app php --version
-          docker-compose exec -T app composer --version
+      # - name: Docker Compose Up
+      #   run: docker-compose up -d
 
-      - name: Composer Install
-        if: steps.cache-composer.outputs.cache-hit != 'true'
-        run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      # - name: Docker Compose Process
+      #   run: docker-compose ps -a
 
-      - name: Composer Dump Autoload
-        run: docker-compose exec -T app composer dump-autoload -q
+      # - name: PHP, Composer Version
+      #   run: |
+      #     docker-compose exec -T app php --version
+      #     docker-compose exec -T app composer --version
 
-      - name: Laravel Settings
-        run: |
-          docker-compose exec -T app cp .env.example .env
-          docker-compose exec -T app php artisan key:generate
-          docker-compose exec -T app php artisan optimize
-          docker-compose exec -T app chmod -R 777 storage bootstrap/cache
+      # - name: Composer Install
+      #   if: steps.cache-composer.outputs.cache-hit != 'true'
+      #   run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
-      - name: Laravel Version
-        run: docker-compose exec -T app php artisan --version
+      # - name: Composer Dump Autoload
+      #   run: docker-compose exec -T app composer dump-autoload -q
 
-      - name: Excute Migrate
-        run: docker-compose exec -T app php artisan migrate
+      # - name: Laravel Settings
+      #   run: |
+      #     docker-compose exec -T app cp .env.example .env
+      #     docker-compose exec -T app php artisan key:generate
+      #     docker-compose exec -T app php artisan optimize
+      #     docker-compose exec -T app chmod -R 777 storage bootstrap/cache
 
-      # ************* Test *************
-      - name: Rollback Testing
-        run: docker-compose exec -T app php artisan migrate:refresh
+      # - name: Laravel Version
+      #   run: docker-compose exec -T app php artisan --version
 
-      - name: Seeding Testing
-        run: docker-compose exec -T app php artisan db:seed
+      # - name: Excute Migrate
+      #   run: docker-compose exec -T app php artisan migrate
 
-      - name: PHP Testing
-        run: docker-compose exec -T app ./vendor/bin/phpunit
+      # # ************* Test *************
+      # - name: Rollback Testing
+      #   run: docker-compose exec -T app php artisan migrate:refresh
 
-      - name: Pint Testing
-        run: docker-compose exec -T app ./vendor/bin/pint --test
+      # - name: Seeding Testing
+      #   run: docker-compose exec -T app php artisan db:seed
+
+      # - name: PHP Testing
+      #   run: docker-compose exec -T app ./vendor/bin/phpunit
+
+      # - name: Pint Testing
+      #   run: docker-compose exec -T app ./vendor/bin/pint --test
