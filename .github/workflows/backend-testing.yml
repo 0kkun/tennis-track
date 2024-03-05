@@ -84,8 +84,8 @@ jobs:
         run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
 
       # # ************* Setup *************
-      - name: Docker Compose Pull
-        run: docker-compose pull
+      # - name: Docker Compose Pull
+      #   run: docker-compose pull
 
       - name: Check Docker Compose Images
         run: docker images
