@@ -20,26 +20,18 @@ class ResetPasswordController extends Controller
      */
     public function __invoke(ResetPasswordRequest $request): SuccessResource
     {
-        $logger = new ApplicationLogger(__METHOD__);
+        $credentials = request()->only(['email', 'token', 'password']);
 
-        try {
-            $credentials = request()->only(['email', 'token', 'password']);
+        $status = Password::reset($credentials, function (User $user, string $password) {
+            $user->password = bcrypt($password);
+            $user->save();
+        });
 
-            $status = Password::reset($credentials, function (User $user, string $password) {
-                $user->password = bcrypt($password);
-                $user->save();
-            });
-
-            if ($status !== Password::PASSWORD_RESET) {
-                throw ValidationException::withMessages([
-                    'email' => trans($status),
-                ]);
-            }
-        } catch (\Exception $e) {
-            $logger->exception($e);
-            throw $e;
+        if ($status !== Password::PASSWORD_RESET) {
+            throw ValidationException::withMessages([
+                'email' => trans($status),
+            ]);
         }
-        $logger->success();
 
         return new SuccessResource([
             'message' => trans($status),
