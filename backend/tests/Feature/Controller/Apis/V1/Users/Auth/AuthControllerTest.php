@@ -57,7 +57,7 @@ class AuthControllerTest extends TestCase
 
     public function testLogout()
     {
-        $user = User::factory()->adminUser()->create();
+        $user = User::factory()->generalUser()->create();
         $token = $user->createToken($user->email)->plainTextToken;
         $response = $this->post(route('users.logout'), [], [
             'Authorization' => "Bearer $token",
