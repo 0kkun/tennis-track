@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     # docker-compose用の環境変数
     env:
-      PROJECT_NAME: "tennis-track"
+      PROJECT_NAME: "tennis_track"
       SOURCE_DIR_NAME: "backend"
       APP_HOST_PORT: 9000
       APP_VITE_HOST_PORT: 5173
@@ -36,14 +36,14 @@ jobs:
 
       IMAGE_CACHE_DIR: /tmp/docker-img
       IMAGE_CACHE_KEY: cache-docker-image
-      CACHE_VER: 4 # キャッシュをクリアしたい時は数値に＋1する
+      CACHE_VER: 5 # キャッシュをクリアしたい時は数値に＋1する
 
       # docker-composeのサービス名を入れる
       # dockerhubの既存imageのものはそのまま使う
-      APP_IMAGE_TAG: tennis-track_app
-      NGINX_IMAGE_TAG: tennis-track_nginx
-      MYSQL_IMAGE_TAG: tennis-track_db
-      QUEUE_WORKER_IMAGE_TAG: tennis-track_queue_worker
+      APP_IMAGE_TAG: tennis_track_app
+      NGINX_IMAGE_TAG: tennis_track_nginx
+      MYSQL_IMAGE_TAG: tennis_track_db
+      QUEUE_WORKER_IMAGE_TAG: tennis_track_queue_worker
 
     steps:
       - name: Checkout Repository
@@ -75,10 +75,10 @@ jobs:
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: |
           mkdir -p ${{ env.IMAGE_CACHE_DIR }}
-          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_app.tar ${{ env.APP_IMAGE_TAG }}
-          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_db.tar ${{ env.MYSQL_IMAGE_TAG }}
-          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_nginx.tar ${{ env.NGINX_IMAGE_TAG }}
-          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_queue_worker.tar ${{ env.QUEUE_WORKER_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis_track_app.tar ${{ env.APP_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis_track_db.tar ${{ env.MYSQL_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis_track_nginx.tar ${{ env.NGINX_IMAGE_TAG }}
+          docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis_track_queue_worker.tar ${{ env.QUEUE_WORKER_IMAGE_TAG }}
 
       - name: Docker Load
         id: docker-load
