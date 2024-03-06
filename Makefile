@@ -1,7 +1,7 @@
 include .env
 
-MYSQL_ROOT_LOGIN_CMD = mysql -u root -p$(MYSQL_ROOT_PASSWORD)
-MYSQL_USER_LOGIN_CMD = mysql -u $(MYSQL_USER_NAME) -p$(MYSQL_PASSWORD) $(MYSQL_DB_NAME)
+MYSQL_ROOT_LOGIN_CMD = mysql -u root -p'$(MYSQL_ROOT_PASSWORD)'
+MYSQL_USER_LOGIN_CMD = mysql -u $(MYSQL_USER_NAME) -p'$(MYSQL_PASSWORD)' $(MYSQL_DB_NAME)
 DCE = docker compose exec
 DEI = docker exec -it
 
@@ -10,6 +10,7 @@ DEI = docker exec -it
 # *****************************
 .PHONY: init
 init:
+ifdef PROJECT_NAME
 	@make down
 	@make set-up
 	@make build
@@ -21,6 +22,10 @@ init:
 	@make migrate
 	@make seed
 	@make test-init
+else
+	@echo "ERROR: PROJECT_NAME is not set. Please set PROJECT_NAME in your .env file."
+	@exit 1
+endif
 
 # .envがなければ生成する
 .PHONY: set-up
@@ -81,6 +86,10 @@ open_frontend:
 # *****************************
 .PHONY: migrate
 migrate:
+	$(DEI) $(PROJECT_NAME)_app php artisan migrate
+
+.PHONY: migrate-fresh
+migrate-fresh:
 	$(DEI) $(PROJECT_NAME)_app php artisan migrate:fresh
 
 .PHONY: $(PROJECT_NAME)_seed
@@ -197,7 +206,7 @@ show-dbuser:
 
 .PHONY: show-dbgrants
 show-dbgrants:
-	$(DEI) $(PROJECT_NAME)_db $(MYSQL_USER_LOGIN_CMD) --execute="SHOW GRANTS"
+	$(DEI) $(PROJECT_NAME)_db $(MYSQL_USER_LOGIN_CMD) --execute="SHOW GRANTS;"
 
 .PHONY: show-databases
 show-databases:
@@ -205,28 +214,32 @@ show-databases:
 
 .PHONY: grant-testdbuser
 grant-testdbuser:
-	$(DEI) $(PROJECT_NAME)_db $(MYSQL_ROOT_LOGIN_CMD) --execute="GRANT ALL ON $(MYSQL_DB_NAME)_testing.* TO $(MYSQL_USER_NAME)"
+	$(DEI) $(PROJECT_NAME)_db $(MYSQL_ROOT_LOGIN_CMD) --execute="USE $(MYSQL_DB_NAME)_testing; GRANT ALL ON `$(MYSQL_DB_NAME)_testing`.* TO `$(MYSQL_USER_NAME)`"
 
 .PHONY: create-testdb
 create-testdb:
-	$(DEI) $(PROJECT_NAME)_db $(MYSQL_ROOT_LOGIN_CMD) --execute="CREATE DATABASE $(PROJECT_NAME)_db_testing"
+	$(DEI) $(PROJECT_NAME)_db $(MYSQL_ROOT_LOGIN_CMD) --execute="CREATE DATABASE `$(PROJECT_NAME)_db_testing`;"
 
 # Sequero Ace接続用
 .PHONY: create-localuser
 create-localuser:
-	$(DEI) $(PROJECT_NAME)_db $(MYSQL_ROOT_LOGIN_CMD) --execute="CREATE USER '$(MYSQL_USER_NAME)_user'@'127.0.0.1' IDENTIFIED BY 'password'"
+	$(DEI) $(PROJECT_NAME)_db $(MYSQL_ROOT_LOGIN_CMD) --execute="CREATE USER $(MYSQL_USER_NAME)'@'127.0.0.1' IDENTIFIED BY 'password';"
 
 .PHONY: grant-dbuser
 grant-dbuser:
-	$(DEI) $(PROJECT_NAME)_db $(MYSQL_ROOT_LOGIN_CMD) --execute="GRANT ALL PRIVILEGES ON $(MYSQL_DB_NAME).* TO '$(MYSQL_USER_NAME)_user'@'127.0.0.1'"
+	$(DEI) $(PROJECT_NAME)_db $(MYSQL_ROOT_LOGIN_CMD) --execute="GRANT ALL PRIVILEGES ON $(MYSQL_DB_NAME).* TO '$(MYSQL_USER_NAME)'@'127.0.0.1';"
 
 .PHONY: test-init
 test-init:
+ifdef PROJECT_NAME
 	@make create-testdb
 	@make grant-testdbuser
 	@make show-dbgrants
 	@make show-databases
-
+else
+	@echo "ERROR: PROJECT_NAME is not set. Please set PROJECT_NAME in your .env file."
+	@exit 1
+endif
 
 # *****************************
 # *          Others           *
