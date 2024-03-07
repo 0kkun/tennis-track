@@ -26,15 +26,15 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
+        // $this->registerPolicies();
 
-        // 管理者ユーザー
-        Gate::define('admin', function (User $user) {
-            return $user->role === User::ADMIN;
-        });
-        // 一般ユーザー
-        Gate::define('general', function (User $user) {
-            return $user->role === User::GENERAL;
-        });
+        // // 管理者ユーザー
+        // Gate::define('admin', function (User $user) {
+        //     return $user->role === User::ADMIN;
+        // });
+        // // 一般ユーザー
+        // Gate::define('general', function (User $user) {
+        //     return $user->role === User::GENERAL;
+        // });
     }
 }

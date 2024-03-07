@@ -14,7 +14,7 @@ class ResetPasswordControllerTest extends TestCase
 
     public function testSuccess()
     {
-        $user = User::factory()->generalUser()->create();
+        $user = User::factory()->create();
         $token = Password::createToken($user);
         $params = [
             'email' => $user->email,
@@ -31,7 +31,7 @@ class ResetPasswordControllerTest extends TestCase
 
     public function testInvalidToken()
     {
-        $user = User::factory()->generalUser()->create();
+        $user = User::factory()->create();
         $params = [
             'email' => $user->email,
             'password' => 'new_password',

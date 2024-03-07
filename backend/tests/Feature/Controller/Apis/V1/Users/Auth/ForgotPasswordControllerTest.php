@@ -17,7 +17,7 @@ class ForgotPasswordControllerTest extends TestCase
     {
         Notification::fake();
 
-        $user = User::factory()->generalUser()->create();
+        $user = User::factory()->create();
         $params = [
             'email' => $user->email,
         ];

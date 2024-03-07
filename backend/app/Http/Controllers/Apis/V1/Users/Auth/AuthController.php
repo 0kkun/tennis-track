@@ -9,6 +9,7 @@ use App\Http\Resources\Common\SuccessResource;
 use App\Models\User;
 use App\Modules\ApplicationLogger;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -26,7 +27,6 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'role' => User::GENERAL,
             'password' => bcrypt($request->password),
         ]);
         $token = $user->createToken($request->email)->plainTextToken;
@@ -47,14 +47,13 @@ class AuthController extends Controller
     public function login(LoginRequest $request): SuccessResource
     {
         $logger = new ApplicationLogger(__METHOD__);
-        $credentials = $request->only(['email', 'password']);
+        $user = User::where('email', $request->email)->first();
         try {
-            if (! Auth::attempt($credentials)) {
+            if (! $user || ! Hash::check($request->password, $user->password)) {
                 throw ValidationException::withMessages([trans('auth.password')]);
             }
-            $user = User::where('email', $request->email)->first();
             $user->tokens()->where('name', $request->email)->delete();
-            $token = $request->user()->createToken($request->email)->plainTextToken;
+            $token = $user->createToken($request->email)->plainTextToken;
         } catch (\Exception $e) {
             $logger->exception($e);
             throw $e;
@@ -75,7 +74,7 @@ class AuthController extends Controller
         $logger = new ApplicationLogger(__METHOD__);
         try {
             /** @var \App\Models\MyUserModel $user * */
-            $user = Auth::guard('sanctum')->user();
+            $user = Auth::guard('user-api')->user();
             if (empty($user)) {
                 $logger->success();
 
@@ -102,12 +101,11 @@ class AuthController extends Controller
         $logger = new ApplicationLogger(__METHOD__);
         try {
             /** @var \App\Models\MyUserModel $user * */
-            $user = Auth::guard('sanctum')->user();
+            $user = Auth::guard('user-api')->user();
             $result = [
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'role' => $user->convertRoleString(),
             ];
         } catch (\Exception $e) {
             $logger->exception($e);

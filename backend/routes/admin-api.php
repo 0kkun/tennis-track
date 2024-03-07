@@ -11,9 +11,10 @@ Route::prefix('v1/')->group(function () {
     Route::prefix('/admins')->name('admins.')->group(function () {
         Route::post('/register', [AuthController::class, 'register'])->name('register');
         Route::post('/login', [AuthController::class, 'login'])->name('login');
-        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-        Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {
+
+        Route::middleware(['auth:sanctum', 'scope.admin'])->group(function () {
             Route::get('/me', [AuthController::class, 'me'])->name('me');
+            Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
             Route::apiResource('/csv', CsvController::class)->only(['index', 'store']);
             Route::apiResource('/file', FileController::class)->only(['index', 'store']);
             Route::post('/players/imports', [AdminPlayerController::class, 'import']);

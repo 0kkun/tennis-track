@@ -31,19 +31,17 @@ class AuthControllerTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => $params['name'],
             'email' => $params['email'],
-            'role' => User::GENERAL,
         ]);
     }
 
     public function testLogin()
     {
-        $adminUser = User::factory()->generalUser()->create();
+        $user = User::factory()->create();
         $params = [
-            'name' => 'user',
-            'email' => $adminUser->email,
+            'email' => $user->email,
             'password' => 'password',
         ];
-        $response = $this->post(route('admins.login'), $params);
+        $response = $this->post(route('users.login'), $params);
 
         $response->assertStatus(Response::HTTP_OK);
         $result = $response->json();
@@ -57,7 +55,7 @@ class AuthControllerTest extends TestCase
 
     public function testLogout()
     {
-        $user = User::factory()->generalUser()->create();
+        $user = User::factory()->create();
         $token = $user->createToken($user->email)->plainTextToken;
         $response = $this->post(route('users.logout'), [], [
             'Authorization' => "Bearer $token",
@@ -75,7 +73,7 @@ class AuthControllerTest extends TestCase
 
     public function testMe()
     {
-        $user = User::factory()->generalUser()->create();
+        $user = User::factory()->create();
         $token = $user->createToken($user->email)->plainTextToken;
         $response = $this->get(route('users.me'), [
             'Authorization' => "Bearer $token",
@@ -90,6 +88,5 @@ class AuthControllerTest extends TestCase
         $this->assertEquals($user->id, $data['id']);
         $this->assertEquals($user->name, $data['name']);
         $this->assertEquals($user->email, $data['email']);
-        $this->assertEquals($user->convertRoleString(), $data['role']);
     }
 }

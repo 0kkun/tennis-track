@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Controller\Apis\V1\Admins\Auth;
 
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
@@ -28,16 +28,15 @@ class AuthControllerTest extends TestCase
         $data = $result['data'];
         $this->assertArrayHasKey('token', $data);
         $this->assertNotNull($data['token']);
-        $this->assertDatabaseHas('users', [
+        $this->assertDatabaseHas('admins', [
             'name' => $params['name'],
             'email' => $params['email'],
-            'role' => User::ADMIN,
         ]);
     }
 
     public function testLogin()
     {
-        $adminUser = User::factory()->adminUser()->create();
+        $adminUser = Admin::factory()->create();
         $params = [
             'name' => 'admin',
             'email' => $adminUser->email,
@@ -57,8 +56,8 @@ class AuthControllerTest extends TestCase
 
     public function testLogout()
     {
-        $adminUser = User::factory()->adminUser()->create();
-        $token = $adminUser->createToken($adminUser->email)->plainTextToken;
+        $adminUser = Admin::factory()->create();
+        $token = $adminUser->createToken($adminUser->email, ['admin'])->plainTextToken;
         $response = $this->post(route('admins.logout'), [], [
             'Authorization' => "Bearer $token",
         ]);
@@ -75,8 +74,8 @@ class AuthControllerTest extends TestCase
 
     public function testMe()
     {
-        $adminUser = User::factory()->adminUser()->create();
-        $token = $adminUser->createToken($adminUser->email)->plainTextToken;
+        $adminUser = Admin::factory()->create();
+        $token = $adminUser->createToken($adminUser->email, ['admin'])->plainTextToken;
         $response = $this->get(route('admins.me'), [
             'Authorization' => "Bearer $token",
         ]);
@@ -90,6 +89,5 @@ class AuthControllerTest extends TestCase
         $this->assertEquals($adminUser->id, $data['id']);
         $this->assertEquals($adminUser->name, $data['name']);
         $this->assertEquals($adminUser->email, $data['email']);
-        $this->assertEquals($adminUser->convertRoleString(), $data['role']);
     }
 }
