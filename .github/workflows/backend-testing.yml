@@ -29,27 +29,27 @@ jobs:
       REDIS_HOST_PORT: 6379
       MINIO_HOST_PORT1: 9999
       MINIO_HOST_PORT2: 9001
-      MYSQL_DB_NAME: "tennis_track_db"
-      MYSQL_USER_NAME: "tennis_track_user"
+      MYSQL_DB_NAME: "tennis-track_db"
+      MYSQL_USER_NAME: "tennis-track_user"
       MYSQL_PASSWORD: "password"
       MYSQL_ROOT_PASSWORD: "password"
 
       IMAGE_CACHE_DIR: /tmp/docker-img
       IMAGE_CACHE_KEY: cache-docker-image
-      CACHE_VER: 4 # キャッシュをクリアしたい時は数値に＋1する
+      CACHE_VER: 1 # キャッシュをクリアしたい時は数値に＋1する
 
-      # docker-composeのサービス名を入れる
       # dockerhubの既存imageのものはそのまま使う
+      # 自作のimageはdocker-compose.yamlのservice名と同じにする
       APP_IMAGE_TAG: tennis-track_app
       NGINX_IMAGE_TAG: tennis-track_nginx
       MYSQL_IMAGE_TAG: tennis-track_db
       QUEUE_WORKER_IMAGE_TAG: tennis-track_queue_worker
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Cache Docker layers
+      - name: Cache Docker Layers
         id: cache-docker
         uses: actions/cache@v2
         with:
@@ -57,7 +57,7 @@ jobs:
           key: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ env.CACHE_VER }}-${{ hashFiles('docker-compose.yaml') }}
           restore-keys: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ env.CACHE_VER }}-
 
-      - name: Cache Composer dependencies
+      - name: Cache Composer Dependencies
         id: cache-composer
         uses: actions/cache@v2
         with:
@@ -65,12 +65,12 @@ jobs:
           key: ${{ runner.os }}-composer-cache-${{ env.CACHE_VER }}-${{ hashFiles('backend/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-${{ env.CACHE_VER }}-
 
-      - name: Docker compose build
+      - name: Docker Compose Build
         id: docker-build
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: docker-compose build
 
-      - name: Docker image save
+      - name: Docker Image Save
         id: docker-tag-save
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: |
@@ -80,7 +80,7 @@ jobs:
           docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_nginx.tar ${{ env.NGINX_IMAGE_TAG }}
           docker image save -o ${{ env.IMAGE_CACHE_DIR }}/tennis-track_queue_worker.tar ${{ env.QUEUE_WORKER_IMAGE_TAG }}
 
-      - name: Docker load
+      - name: Docker Load
         id: docker-load
         if: steps.cache-docker.outputs.cache-hit == 'true'
         run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
@@ -99,6 +99,9 @@ jobs:
       - name: Composer Install
         if: steps.cache-composer.outputs.cache-hit != 'true'
         run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+
+      - name: Clear Routes Cache
+        run: docker-compose exec -T app php artisan route:clear
 
       - name: Composer Dump Autoload
         run: docker-compose exec -T app composer dump-autoload -q

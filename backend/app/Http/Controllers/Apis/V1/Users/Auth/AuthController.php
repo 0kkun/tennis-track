@@ -9,10 +9,9 @@ use App\Http\Resources\Common\SuccessResource;
 use App\Models\User;
 use App\Modules\ApplicationLogger;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
-class UserAuthController extends Controller
+class AuthController extends Controller
 {
     /**
      * ユーザー新規登録
@@ -28,7 +27,7 @@ class UserAuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role' => User::GENERAL,
-            'password' => Hash::make($request->password),
+            'password' => bcrypt($request->password),
         ]);
         $token = $user->createToken($request->email)->plainTextToken;
 

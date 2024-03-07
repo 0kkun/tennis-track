@@ -9,7 +9,6 @@ use App\Http\Resources\Common\SuccessResource;
 use App\Models\User;
 use App\Modules\ApplicationLogger;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -28,7 +27,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role' => User::ADMIN,
-            'password' => Hash::make($request->password),
+            'password' => bcrypt($request->password),
         ]);
         $token = $user->createToken($request->email)->plainTextToken;
 
