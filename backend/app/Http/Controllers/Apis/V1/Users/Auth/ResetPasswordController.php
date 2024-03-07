@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\Auth\ResetPasswordRequest;
 use App\Http\Resources\Common\SuccessResource;
 use App\Models\User;
-use App\Modules\ApplicationLogger;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 

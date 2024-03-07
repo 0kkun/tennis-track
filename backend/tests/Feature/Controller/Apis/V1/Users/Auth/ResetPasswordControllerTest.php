@@ -4,8 +4,8 @@ namespace Tests\Feature\Controller\Apis\V1\Users\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Password;
 use Tests\TestCase;
 
 class ResetPasswordControllerTest extends TestCase
