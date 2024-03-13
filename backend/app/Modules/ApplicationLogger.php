@@ -115,6 +115,19 @@ class ApplicationLogger
         }
     }
 
+    public function writeArray(array $array, $level = 'info', $t = false): void
+    {
+        $time = '';
+        if ($t === true) {
+            $t = microtime(true) - $this->start;
+            $time = " : {$t}秒";
+        }
+
+        if (in_array($level, self::LEVEL)) {
+            Log::$level($this->prefix.print_r($array, true).$time);
+        }
+    }
+
     /**
      * エラーの出力
      * @param \Throwable $e
