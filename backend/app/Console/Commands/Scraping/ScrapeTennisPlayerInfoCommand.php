@@ -8,11 +8,12 @@ use App\Services\Interfaces\TennisScrapingServiceInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
+// TODO: 取得した選手データをcsvに出力する
 class ScrapeTennisPlayerInfoCommand extends Command
 {
     protected $signature = 'command:ScrapeTennisPlayerInfo';
 
-    protected $description = 'テニスの選手データ詳細をスクレイピングで取得するコマンド';
+    protected $description = 'apt_rankingsテーブルに入っているテニスの選手の詳細データをスクレイピングで取得するコマンド';
 
     /* 進捗表示バー用 */
     private const PROCESS_COUNT = 150;

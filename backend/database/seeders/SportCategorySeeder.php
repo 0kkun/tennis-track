@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\SportCategory;
+use App\Eloquents\EloquentSportCategory;
 use Illuminate\Database\Seeder;
 
 class SportCategorySeeder extends Seeder
@@ -14,8 +14,8 @@ class SportCategorySeeder extends Seeder
      */
     public function run()
     {
-        SportCategory::factory()->create(['name' => 'テニス']);
-        SportCategory::factory()->create(['name' => 'サッカー']);
-        SportCategory::factory()->create(['name' => '野球']);
+        EloquentSportCategory::factory()->create(['name' => 'テニス']);
+        EloquentSportCategory::factory()->create(['name' => 'サッカー']);
+        EloquentSportCategory::factory()->create(['name' => '野球']);
     }
 }

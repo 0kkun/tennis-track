@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\Auth\LoginRequest;
 use App\Http\Requests\Users\Auth\RegisterRequest;
 use App\Http\Resources\Common\SuccessResource;
-use App\Models\User;
+use App\Eloquents\EloquentUser;
 use App\Modules\ApplicationLogger;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +24,7 @@ class AuthController extends Controller
     {
         $logger = new ApplicationLogger(__METHOD__);
 
-        $user = User::create([
+        $user = EloquentUser::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
@@ -47,7 +47,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request): SuccessResource
     {
         $logger = new ApplicationLogger(__METHOD__);
-        $user = User::where('email', $request->email)->first();
+        $user = EloquentUser::where('email', $request->email)->first();
         try {
             if (! $user || ! Hash::check($request->password, $user->password)) {
                 throw ValidationException::withMessages([trans('auth.password')]);
@@ -73,7 +73,7 @@ class AuthController extends Controller
     {
         $logger = new ApplicationLogger(__METHOD__);
         try {
-            /** @var \App\Models\MyUserModel $user * */
+            /** @var \App\EloquentUser\MyUserModel $user * */
             $user = Auth::guard('user-api')->user();
             if (empty($user)) {
                 $logger->success();
@@ -100,7 +100,7 @@ class AuthController extends Controller
     {
         $logger = new ApplicationLogger(__METHOD__);
         try {
-            /** @var \App\Models\MyUserModel $user * */
+            /** @var \App\EloquentUser\MyUserModel $user * */
             $user = Auth::guard('user-api')->user();
             $result = [
                 'id' => $user->id,

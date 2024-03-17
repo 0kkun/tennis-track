@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Interfaces;
 
-use App\Models\TennisAtpRanking;
+use App\Eloquents\EloquentTennisAtpRanking;
 use Illuminate\Support\Collection;
 
 interface TennisAtpRankingRepositoryInterface
@@ -10,9 +10,9 @@ interface TennisAtpRankingRepositoryInterface
     /**
      * ランキングの最終更新日が最も直近のものを1件取得する
      *
-     * @return TennisAtpRanking|null
+     * @return EloquentTennisAtpRanking|null
      */
-    public function getLatestUpdatedRecord(): ?TennisAtpRanking;
+    public function getLatestUpdatedRecord(): ?EloquentTennisAtpRanking;
 
     /**
      * テニスのATPランキングのinsertを行う。
@@ -34,7 +34,7 @@ interface TennisAtpRankingRepositoryInterface
      * idでランキングを1件取得する
      *
      * @param int $id
-     * @return TennisAtpRanking
+     * @return EloquentTennisAtpRanking
      */
-    public function getById(int $id): TennisAtpRanking;
+    public function getById(int $id): EloquentTennisAtpRanking;
 }

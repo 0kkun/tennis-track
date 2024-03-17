@@ -36,11 +36,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Eloquents\EloquentUser::class,
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => App\Eloquents\EloquentAdmin::class,
         ],
     ],
 

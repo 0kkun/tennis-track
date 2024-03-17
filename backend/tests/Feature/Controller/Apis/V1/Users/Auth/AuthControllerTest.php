@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Controller\Apis\V1\Users\Auth;
 
-use App\Models\User;
+use App\Eloquents\EloquentUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
@@ -36,7 +36,7 @@ class AuthControllerTest extends TestCase
 
     public function testLogin()
     {
-        $user = User::factory()->create();
+        $user = EloquentUser::factory()->create();
         $params = [
             'email' => $user->email,
             'password' => 'password',
@@ -55,7 +55,7 @@ class AuthControllerTest extends TestCase
 
     public function testLogout()
     {
-        $user = User::factory()->create();
+        $user = EloquentUser::factory()->create();
         $token = $user->createToken($user->email)->plainTextToken;
         $response = $this->post(route('users.logout'), [], [
             'Authorization' => "Bearer $token",
@@ -73,7 +73,7 @@ class AuthControllerTest extends TestCase
 
     public function testMe()
     {
-        $user = User::factory()->create();
+        $user = EloquentUser::factory()->create();
         $token = $user->createToken($user->email)->plainTextToken;
         $response = $this->get(route('users.me'), [
             'Authorization' => "Bearer $token",

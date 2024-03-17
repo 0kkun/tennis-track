@@ -1,14 +1,17 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Eloquents;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Eloquents\EloquentSportCategory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Player>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Eloquents\EloquentPlayer>
  */
-class SportCategoryFactory extends Factory
+class EloquentSportCategoryFactory extends Factory
 {
+    protected $model = EloquentSportCategory::class;
+
     /**
      * Define the model's default state.
      *

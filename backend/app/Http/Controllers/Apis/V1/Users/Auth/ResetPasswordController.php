@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Apis\V1\Users\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\Auth\ResetPasswordRequest;
 use App\Http\Resources\Common\SuccessResource;
-use App\Models\User;
+use App\Eloquents\EloquentUser;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 
@@ -21,7 +21,7 @@ class ResetPasswordController extends Controller
     {
         $credentials = request()->only(['email', 'token', 'password']);
 
-        $status = Password::reset($credentials, function (User $user, string $password) {
+        $status = Password::reset($credentials, function (EloquentUser $user, string $password) {
             $user->password = bcrypt($password);
             $user->save();
         });

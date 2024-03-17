@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\SportCategory;
+use App\Eloquents\EloquentSportCategory;
 use App\Repositories\Interfaces\SportCategoryRepositoryInterface;
 use Illuminate\Support\Collection;
 
 class EloquentSportCategoryRepository implements SportCategoryRepositoryInterface
 {
     /**
-     * @param SportCategory $sportCategory
+     * @param EloquentSportCategory $sportCategory
      */
-    public function __construct(private SportCategory $sportCategory)
+    public function __construct(private EloquentSportCategory $sportCategory)
     {
         $this->sportCategory = $sportCategory;
     }

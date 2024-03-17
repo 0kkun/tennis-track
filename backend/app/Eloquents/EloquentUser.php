@@ -1,15 +1,20 @@
 <?php
+declare(strict_types=1);
 
-namespace App\Models;
+namespace App\Eloquents;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\Auth\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Admin extends Authenticatable
+class EloquentUser extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $table = 'users';
 
     public $timestamps = true;
 
@@ -42,4 +47,14 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * カスタマイズしたリセット通知を送信する
+     * @param string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
 }

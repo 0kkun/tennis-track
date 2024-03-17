@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Controller\Apis\V1\Admins\Auth;
 
-use App\Models\Admin;
+use App\Eloquents\EloquentAdmin;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
@@ -36,7 +36,7 @@ class AuthControllerTest extends TestCase
 
     public function testLogin()
     {
-        $adminUser = Admin::factory()->create();
+        $adminUser = EloquentAdmin::factory()->create();
         $params = [
             'name' => 'admin',
             'email' => $adminUser->email,
@@ -56,7 +56,7 @@ class AuthControllerTest extends TestCase
 
     public function testLogout()
     {
-        $adminUser = Admin::factory()->create();
+        $adminUser = EloquentAdmin::factory()->create();
         $token = $adminUser->createToken($adminUser->email, ['admin'])->plainTextToken;
         $response = $this->post(route('admins.logout'), [], [
             'Authorization' => "Bearer $token",
@@ -74,7 +74,7 @@ class AuthControllerTest extends TestCase
 
     public function testMe()
     {
-        $adminUser = Admin::factory()->create();
+        $adminUser = EloquentAdmin::factory()->create();
         $token = $adminUser->createToken($adminUser->email, ['admin'])->plainTextToken;
         $response = $this->get(route('admins.me'), [
             'Authorization' => "Bearer $token",

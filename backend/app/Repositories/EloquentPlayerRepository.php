@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\Player;
+use App\Eloquents\EloquentPlayer;
 use App\Repositories\Interfaces\PlayerRepositoryInterface;
 use Illuminate\Support\Collection;
 
 class EloquentPlayerRepository implements PlayerRepositoryInterface
 {
     /**
-     * @param Player $player
+     * @param EloquentPlayer $player
      */
-    public function __construct(private Player $player)
+    public function __construct(private EloquentPlayer $player)
     {
         $this->player = $player;
     }
@@ -41,7 +41,7 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
             ->when(! empty($searchParams['backhand_style']), function ($query) use ($searchParams) {
                 $query->where('backhand_style', $searchParams['backhand_style']);
             })
-            ->limit(Player::ITEM_PER_PAGE)
+            ->limit(EloquentPlayer::ITEM_PER_PAGE)
             ->get();
     }
 
@@ -56,7 +56,7 @@ class EloquentPlayerRepository implements PlayerRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function getById(int $id): Player
+    public function getById(int $id): EloquentPlayer
     {
         return $this->player
             ->with('sportCategory')

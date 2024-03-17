@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Player;
-use App\Models\TennisAtpRanking;
+use App\Eloquents\EloquentPlayer;
+use App\Eloquents\EloquentTennisAtpRanking;
 use App\Modules\CharacterConverter;
 use App\Modules\HeightConverter;
 use App\Repositories\Interfaces\PlayerRepositoryInterface;
@@ -185,10 +185,13 @@ class TennisScrapingService implements TennisScrapingServiceInterface
         $progressBar->start();
         Log::info('テニス選手詳細 - スクレイピング開始');
         $atpRankings = $this->tennisAtpRankingRepository->fetchWithPlayerByParams();
-
+        if (empty($atpRankings)) {
+            throw new \Exception('[Error]:テニス選手のランキングがテーブルに存在しません.');
+        }
         $scrapedPlayers = [];
 
         foreach ($atpRankings as $atpRanking) {
+            dd($atpRanking->player->link);
             $crawler = $this->client->request('GET', $atpRanking->player->link);
             $statusCode = $this->client->getResponse()->getStatusCode();
             if ($statusCode !== 200) {
@@ -215,12 +218,14 @@ class TennisScrapingService implements TennisScrapingServiceInterface
 
                     $progressBar->advance(1);
 
+                    dd($result);
+
                     return [
                         'id' => $atpRanking->player->id,
                         'name_en' => $atpRanking->player->name_en,
                         'country' => $atpRanking->player->country,
                         'sport_category_id' => $atpRanking->player->sport_category_id,
-                        'dominant_arm' => ! is_null($result['dominant_arm']) ? Player::getDominantArmInt(str_replace('Plays: ', '', $result['dominant_arm'])) : null,
+                        'dominant_arm' => ! is_null($result['dominant_arm']) ? EloquentPlayer::getDominantArmInt(str_replace('Plays: ', '', $result['dominant_arm'])) : null,
                         'turn_to_pro_year' => ! is_null($result['turn_to_pro_year']) ? str_replace('Turned Pro: ', '', $result['turn_to_pro_year']) : null,
                         'birthday' => ! is_null($result['birthday']) ? $this->convertFormattedDate($result['birthday']) : null,
                         'height' => ! is_null($result['height']) ? $this->convertHeightToCm($result['height']) : null,
@@ -315,11 +320,11 @@ class TennisScrapingService implements TennisScrapingServiceInterface
     /**
      * スクレイピングしてきた更新日を比較し、最新かどうかチェックする
      *
-     * @param TennisAtpRanking|null $latestTennisRanking
+     * @param EloquentTennisAtpRanking|null $latestTennisRanking
      * @param string $lastUpdated
      * @return bool
      */
-    private function isRankingAlreadyNew(?TennisAtpRanking $latestTennisRanking, string $lastUpdated): bool
+    private function isRankingAlreadyNew(?EloquentTennisAtpRanking $latestTennisRanking, string $lastUpdated): bool
     {
         // テーブル内にランキングがそもそも存在しないならスクレイピングしたものは最新である
         if (! isset($latestTennisRanking->updated_ymd)) {

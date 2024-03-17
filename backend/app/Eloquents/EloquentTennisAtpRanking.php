@@ -1,13 +1,16 @@
 <?php
+declare(strict_types=1);
 
-namespace App\Models;
+namespace App\Eloquents;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TennisAtpRanking extends Model
+class EloquentTennisAtpRanking extends Model
 {
     use HasFactory;
+
+    protected $table = 'tennis_atp_rankings';
 
     public $timestamps = true;
 
@@ -19,6 +22,6 @@ class TennisAtpRanking extends Model
 
     public function player()
     {
-        return $this->belongsTo(Player::class);
+        return $this->belongsTo(EloquentPlayer::class);
     }
 }

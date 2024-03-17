@@ -1,14 +1,17 @@
 <?php
+declare(strict_types=1);
 
-namespace App\Models;
+namespace App\Eloquents;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Player extends Model
+class EloquentPlayer extends Model
 {
     use HasFactory;
+
+    protected $table = 'players';
 
     public $timestamps = true;
 
@@ -125,6 +128,6 @@ class Player extends Model
 
     public function sportCategory()
     {
-        return $this->belongsTo(SportCategory::class);
+        return $this->belongsTo(EloquentSportCategory::class);
     }
 }
