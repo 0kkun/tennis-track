@@ -2,9 +2,9 @@
 
 namespace Database\Factories\Eloquents;
 
+use App\Eloquents\EloquentUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Eloquents\EloquentUser;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Eloquents\EloquentUser>

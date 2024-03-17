@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Apis\V1\Admins\Auth;
 
+use App\Eloquents\EloquentAdmin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admins\Auth\LoginRequest;
 use App\Http\Requests\Admins\Auth\RegisterRequest;
 use App\Http\Resources\Common\SuccessResource;
-use App\Eloquents\EloquentAdmin;
 use App\Modules\ApplicationLogger;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;

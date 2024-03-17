@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Eloquents;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Eloquents\EloquentSportCategory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Eloquents\EloquentPlayer>

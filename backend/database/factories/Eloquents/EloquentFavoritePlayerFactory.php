@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Eloquents;
 
-use App\Eloquents\EloquentPlayer;
 use App\Eloquents\EloquentFavoritePlayer;
+use App\Eloquents\EloquentPlayer;
 use App\Eloquents\EloquentUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

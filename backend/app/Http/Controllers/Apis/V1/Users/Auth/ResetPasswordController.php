@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Apis\V1\Users\Auth;
 
+use App\Eloquents\EloquentUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\Auth\ResetPasswordRequest;
 use App\Http\Resources\Common\SuccessResource;
-use App\Eloquents\EloquentUser;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 

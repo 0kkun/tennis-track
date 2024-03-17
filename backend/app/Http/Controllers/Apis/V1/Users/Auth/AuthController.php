@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Apis\V1\Users\Auth;
 
+use App\Eloquents\EloquentUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\Auth\LoginRequest;
 use App\Http\Requests\Users\Auth\RegisterRequest;
 use App\Http\Resources\Common\SuccessResource;
-use App\Eloquents\EloquentUser;
 use App\Modules\ApplicationLogger;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
