@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Models;
+declare(strict_types=1);
+
+namespace App\Eloquents;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FavoritePlayer extends Model
+class EloquentFavoritePlayer extends Model
 {
     use HasFactory;
+
+    protected $table = 'favorite_players';
 
     public $timestamps = true;
 
@@ -17,11 +21,11 @@ class FavoritePlayer extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(EloquentUser::class);
     }
 
     public function player()
     {
-        return $this->belongsTo(Player::class);
+        return $this->belongsTo(EloquentPlayer::class);
     }
 }

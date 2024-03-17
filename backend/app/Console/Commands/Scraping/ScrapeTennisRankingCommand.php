@@ -18,6 +18,7 @@ class ScrapeTennisRankingCommand extends Command
 
     /**
      * @param TennisScrapingServiceInterface $tennisScrapingService
+     * @param TennisAtpRankingRepositoryInterface $tennisAtpRankingRepository
      */
     public function __construct(
         private TennisScrapingServiceInterface $tennisScrapingService,

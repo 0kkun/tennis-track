@@ -92,6 +92,15 @@ migrate:
 migrate-fresh:
 	$(DEI) $(PROJECT_NAME)_app php artisan migrate:fresh
 
+.PHONY: migrate-rollback
+migrate-rollback:
+	$(DEI) $(PROJECT_NAME)_app php artisan migrate:rollback
+
+.PHONY: migrate-status
+migrate-status:
+	$(DEI) $(PROJECT_NAME)_app php artisan migrate:status
+
+
 .PHONY: $(PROJECT_NAME)_seed
 seed:
 	$(DEI) $(PROJECT_NAME)_app php artisan db:seed

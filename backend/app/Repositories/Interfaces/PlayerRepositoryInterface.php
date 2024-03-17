@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Interfaces;
 
-use App\Models\Player;
+use App\Eloquents\EloquentPlayer;
 use Illuminate\Support\Collection;
 
 interface PlayerRepositoryInterface
@@ -27,9 +27,9 @@ interface PlayerRepositoryInterface
      * 選手を1件取得する
      *
      * @param int $id
-     * @return Player
+     * @return EloquentPlayer
      */
-    public function getById(int $id): Player;
+    public function getById(int $id): EloquentPlayer;
 
     /**
      * 選手を1件登録する

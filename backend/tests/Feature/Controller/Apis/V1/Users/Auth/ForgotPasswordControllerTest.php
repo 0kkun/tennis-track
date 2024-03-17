@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Controller\Apis\V1\Users\Auth;
 
-use App\Models\User;
+use App\Eloquents\EloquentUser;
 use App\Notifications\Auth\ResetPasswordNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
@@ -17,7 +17,7 @@ class ForgotPasswordControllerTest extends TestCase
     {
         Notification::fake();
 
-        $user = User::factory()->generalUser()->create();
+        $user = EloquentUser::factory()->create();
         $params = [
             'email' => $user->email,
         ];

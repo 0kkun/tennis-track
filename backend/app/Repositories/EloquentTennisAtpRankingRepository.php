@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\TennisAtpRanking;
+use App\Eloquents\EloquentTennisAtpRanking;
 use App\Repositories\Interfaces\TennisAtpRankingRepositoryInterface;
 use Illuminate\Support\Collection;
 
 class EloquentTennisAtpRankingRepository implements TennisAtpRankingRepositoryInterface
 {
     /**
-     * @param TennisAtpRanking $tennisAtpRanking
+     * @param EloquentTennisAtpRanking $tennisAtpRanking
      */
-    public function __construct(private TennisAtpRanking $tennisAtpRanking)
+    public function __construct(private EloquentTennisAtpRanking $tennisAtpRanking)
     {
         $this->tennisAtpRanking = $tennisAtpRanking;
     }
@@ -19,7 +19,7 @@ class EloquentTennisAtpRankingRepository implements TennisAtpRankingRepositoryIn
     /**
      * {@inheritDoc}
      */
-    public function getLatestUpdatedRecord(): ?TennisAtpRanking
+    public function getLatestUpdatedRecord(): ?EloquentTennisAtpRanking
     {
         return $this->tennisAtpRanking
             ->latest('updated_ymd')
@@ -45,14 +45,14 @@ class EloquentTennisAtpRankingRepository implements TennisAtpRankingRepositoryIn
             ->when(! empty($searchParams) && ! empty($searchParams['name']), function ($query) use ($searchParams) {
                 $query->where('name_en', 'like', $searchParams['name'].'%');
             })
-            ->limit(TennisAtpRanking::ITEM_PER_PAGE)
+            ->limit(EloquentTennisAtpRanking::ITEM_PER_PAGE)
             ->get();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getById(int $id): TennisAtpRanking
+    public function getById(int $id): EloquentTennisAtpRanking
     {
         return $this->tennisAtpRanking
             ->with('player')

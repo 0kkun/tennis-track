@@ -15,7 +15,7 @@ Route::prefix('v1/')->group(function () {
         Route::post('/forgot-password', ForgotPasswordController::class)->name('password.forgot');
         Route::post('/reset-password', ResetPasswordController::class)->name('password.reset');
 
-        Route::middleware(['auth:sanctum', 'can:general'])->group(function () {
+        Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/me', [AuthController::class, 'me'])->name('users.me');
             Route::post('/logout', [AuthController::class, 'logout'])->name('users.logout');
             Route::as('users.')->group(function () {

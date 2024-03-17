@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Controller\Apis\V1\Users\Auth;
 
-use App\Models\User;
+use App\Eloquents\EloquentUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Password;
@@ -14,7 +14,7 @@ class ResetPasswordControllerTest extends TestCase
 
     public function testSuccess()
     {
-        $user = User::factory()->generalUser()->create();
+        $user = EloquentUser::factory()->create();
         $token = Password::createToken($user);
         $params = [
             'email' => $user->email,
@@ -31,7 +31,7 @@ class ResetPasswordControllerTest extends TestCase
 
     public function testInvalidToken()
     {
-        $user = User::factory()->generalUser()->create();
+        $user = EloquentUser::factory()->create();
         $params = [
             'email' => $user->email,
             'password' => 'new_password',

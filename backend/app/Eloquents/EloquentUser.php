@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models;
+declare(strict_types=1);
+
+namespace App\Eloquents;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\Auth\ResetPasswordNotification;
@@ -9,17 +11,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class EloquentUser extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'users';
+
     public $timestamps = true;
-
-    // 管理者ユーザー
-    public const ADMIN = 0;
-
-    // 一般ユーザー
-    public const GENERAL = 1;
 
     /**
      * The attributes that are mass assignable.
@@ -30,7 +28,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
     ];
 
     /**
@@ -51,19 +48,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * role値をテキストに変換する
-     *
-     * @return string
-     */
-    public function convertRoleString(): string
-    {
-        return match ($this->role) {
-            self::ADMIN => 'admin',
-            self::GENERAL => 'general',
-        };
-    }
 
     /**
      * カスタマイズしたリセット通知を送信する

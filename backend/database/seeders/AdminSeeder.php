@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class UserSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,10 +17,10 @@ class UserSeeder extends Seeder
     {
         $now = Carbon::today();
 
-        DB::table('users')->insert([
+        DB::table('admins')->insert([
             [
-                'name' => 'user',
-                'email' => 'user@example.com',
+                'name' => 'admin',
+                'email' => 'admin@example.com',
                 'password' => bcrypt('password'),
                 'created_at' => $now,
                 'updated_at' => $now,

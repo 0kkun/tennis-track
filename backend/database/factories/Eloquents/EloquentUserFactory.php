@@ -1,16 +1,18 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Eloquents;
 
-use App\Models\User;
+use App\Eloquents\EloquentUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Eloquents\EloquentUser>
  */
-class UserFactory extends Factory
+class EloquentUserFactory extends Factory
 {
+    protected $model = EloquentUser::class;
+
     /**
      * Define the model's default state.
      *
@@ -26,7 +28,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
-            'role' => rand(0, 1),
         ];
     }
 
@@ -39,20 +40,6 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
-        ]);
-    }
-
-    public function adminUser()
-    {
-        return $this->state(fn () => [
-            'role' => User::ADMIN,
-        ]);
-    }
-
-    public function generalUser()
-    {
-        return $this->state(fn () => [
-            'role' => User::GENERAL,
         ]);
     }
 }

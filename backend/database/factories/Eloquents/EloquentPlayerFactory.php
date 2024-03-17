@@ -1,15 +1,17 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Eloquents;
 
-use App\Models\SportCategory;
+use App\Eloquents\EloquentSportCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Player>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Eloquents\EloquentPlayer>
  */
-class PlayerFactory extends Factory
+class EloquentPlayerFactory extends Factory
 {
+    protected $model = EloquentSportCategory::class;
+
     /**
      * Define the model's default state.
      *
@@ -30,7 +32,7 @@ class PlayerFactory extends Factory
             'height' => $faker->height(),
             'dominant_arm' => rand(0, 1),
             'backhand_style' => rand(0, 1),
-            'sport_category_id' => SportCategory::first()->id,
+            'sport_category_id' => EloquentSportCategory::first()->id,
         ];
     }
 }

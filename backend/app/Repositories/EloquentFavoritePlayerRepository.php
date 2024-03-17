@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\FavoritePlayer;
+use App\Eloquents\EloquentFavoritePlayer;
 use App\Repositories\Interfaces\FavoritePlayerRepositoryInterface;
 use Illuminate\Support\Collection;
 
 class EloquentFavoritePlayerRepository implements FavoritePlayerRepositoryInterface
 {
     /**
-     * @param FavoritePlayer $favoritePlayer
+     * @param EloquentFavoritePlayer $favoritePlayer
      */
-    public function __construct(private FavoritePlayer $favoritePlayer)
+    public function __construct(private EloquentFavoritePlayer $favoritePlayer)
     {
         $this->favoritePlayer = $favoritePlayer;
     }
