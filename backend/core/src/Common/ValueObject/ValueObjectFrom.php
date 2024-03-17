@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace core\Common\ValueObject;
+namespace TennisTrack\Common\ValueObject;
 
 trait ValueObjectFrom
 {
@@ -13,6 +14,7 @@ trait ValueObjectFrom
         if ($value instanceof static) {
             return $value;
         }
+
         return new self($value);
     }
 

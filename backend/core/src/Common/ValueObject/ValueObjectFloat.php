@@ -3,35 +3,27 @@ declare(strict_types=1);
 
 namespace TennisTrack\Common\ValueObject;
 
-trait ValueObjectInt
+trait ValueObjectFloat
 {
     use ValueObjectFrom;
 
-    /** @var int */
-    private int $value;
+    /** @var float */
+    private $value;
 
     /**
-     * @param int $value
+     * @param float $value
      */
-    public function __construct(int $value = 0)
+    private function __construct(float $value = 0.0)
     {
         $this->value = $value;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function toInt(): int
+    public function toFloat(): float
     {
         return $this->value;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isZero(): bool
-    {
-        return $this->value === 0;
     }
 
     /**
@@ -40,7 +32,7 @@ trait ValueObjectInt
      */
     public function equals(self $valueObject): bool
     {
-        return $this->value === $valueObject->toInt();
+        return $this->value === $valueObject->toFloat();
     }
 
     /**
@@ -55,7 +47,7 @@ trait ValueObjectInt
         if ($value instanceof self) {
             return $value;
         }
-        if (is_int($value)) {
+        if (is_float($value)) {
             return new self($value);
         }
         throw self::createInvalidArgumentException($value);
