@@ -12,6 +12,8 @@ info:
 servers:
   - url: 'http://localhost:4010/'
     description: Local Server
+  - url: 'https://tennis-track.com/'
+    description: Production Server
 tags:
   - name: Auth
     description: ユーザー管理
