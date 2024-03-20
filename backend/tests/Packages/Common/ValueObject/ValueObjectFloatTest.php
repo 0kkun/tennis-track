@@ -53,7 +53,7 @@ class ValueObjectFloatTest extends TestCase
 
     public function testFloatFromInvalidValue(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         ValueObjectFloatTestDummy::from('not a float');
     }
 }

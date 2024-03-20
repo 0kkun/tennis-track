@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace TennisTrack\Common\ValueObject;
 
+use TennisTrack\Common\Exceptions\InvalidArgumentException;
+
 trait ValueObjectFrom
 {
     /**
@@ -21,11 +23,11 @@ trait ValueObjectFrom
 
     /**
      * @param mixed $value
-     * @return \InvalidArgumentException
+     * @return InvalidArgumentException
      */
-    private static function createInvalidArgumentException($value): \InvalidArgumentException
+    private static function createInvalidArgumentException($value): InvalidArgumentException
     {
-        return new \InvalidArgumentException(
+        return new InvalidArgumentException(
             sprintf(
                 'The value "%s" is not valid for this object',
                 is_scalar($value) ? $value : gettype($value)
