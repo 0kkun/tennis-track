@@ -86,21 +86,21 @@ services:
       - "1025:1025"
       - "8025:8025"
 
-  queue_worker:
-    container_name: ${PROJECT_NAME}_queue_worker
-    build:
-      context: ./.docker/php
-    command: >
-      php artisan queue:work --tries=3
-    depends_on:
-      - db
-      - redis
-      - app
-      - nginx
-    volumes:
-      - ./${SOURCE_DIR_NAME}:/var/www
-      - /${SOURCE_DIR_NAME}/node_modules
-      - /${SOURCE_DIR_NAME}/vendor
+  # queue_worker:
+  #   container_name: ${PROJECT_NAME}_queue_worker
+  #   build:
+  #     context: ./.docker/php
+  #   command: >
+  #     php artisan queue:work --tries=3
+  #   depends_on:
+  #     - db
+  #     - redis
+  #     - app
+  #     - nginx
+  #   volumes:
+  #     - ./${SOURCE_DIR_NAME}:/var/www
+  #     - /${SOURCE_DIR_NAME}/node_modules
+  #     - /${SOURCE_DIR_NAME}/vendor
 
   # DB作成後、ER図作成したい時以外は一旦コメントアウトしておく
   # schemaspy:
