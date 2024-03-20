@@ -140,4 +140,13 @@ class ApplicationLogger
             'error'
         );
     }
+
+    /**
+     * @return void
+     */
+    public function failure(): void
+    {
+        $this->status = false;
+        $this->write('処理に失敗しました', 'error');
+    }
 }
