@@ -4,33 +4,49 @@ info:
   description: テニス情報サイト
   version: '1.0'
   contact:
-    name: xxx
-    url: 'https://www.example.com'
-    email: xxx@example.jp
+    name: Shinji Okumoto
+    email: shinji.okumoto.0@gmail.com
   license:
-    name: xxx
-    url: 'https://www.example.com'
+    name: Tennis Track
+    url: 'https://www.tennis-track.com'
 servers:
-  - url: 'http://localhost'
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:4010/'
+    description: Local Server
 tags:
-  - name: 選手管理
+  - name: Auth
+    description: ユーザー管理
+  - name: Player
     description: 選手管理
 
 paths:
+  '/api/v1/users/login':
+    $ref: './paths/v1/user/auth/login.yaml'
+  '/api/v1/users/me':
+    $ref: './paths/v1/user/auth/me.yaml'
   '/api/v1/users/players':
-    $ref: './paths/v1/players/players.yaml'
-  # '/api/v1/users/players/{id}':
-  #   $ref: './paths/v1/players/players_id.yaml'
+    $ref: './paths/v1/user/player/players.yaml'
 
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearerトークンを使用した認証
   schemas:
     Response:
-      $ref: "./schemas/Response.yaml"
-    Player:
-      $ref: './schemas/Player.yaml'
-    # PlayerId:
-    #   $ref: './schemas/PlayerId.yaml'
+      $ref: "./schemas/common/response.yaml"
+    user:
+      Player:
+        $ref: './schemas/user/player/player.yaml'
+      PostPlayer:
+        $ref: './schemas/user/player/post_player.yaml'
+      User:
+        $ref: './schemas/user/auth/user.yaml'
+      PostLogin:
+        $ref: './schemas/user/auth/post_login.yaml'
+      Token:
+        $ref: './schemas/user/auth/token.yaml'
 
   responses:
     200OkDataEmpty:

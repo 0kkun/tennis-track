@@ -9,7 +9,7 @@ content:
               type: object
           required:
             - data
-        - $ref: '../schemas/Response.yaml'
+        - $ref: '../schemas/common/Response.yaml'
     examples:
       Validation Error:
         value:

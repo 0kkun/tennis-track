@@ -1,0 +1,10 @@
+title: Token
+type: object
+description: トークン
+properties:
+  token:
+    type: string
+    description: トークン
+    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+required:
+  - token

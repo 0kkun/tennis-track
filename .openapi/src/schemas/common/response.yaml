@@ -5,13 +5,15 @@ properties:
   status:
     type: integer
     description: ステータスコード
+    example: 200
   message:
     type: string
     description: メッセージ
+    example: success
+  data:
+    type: object
+    description: レスポンスデータ
 required:
   - status
   - message
-x-examples:
-  Ok:
-    status: 200
-    message: "success"
+  - data

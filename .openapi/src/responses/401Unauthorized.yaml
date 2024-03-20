@@ -9,11 +9,13 @@ content:
               type: object
           required:
             - data
-        - $ref: '../schemas/Response.yaml'
+        - $ref: '../schemas/common/Response.yaml'
     examples:
       Unauthorized:
         value:
           data:
-            password: パスワードが不正です。
+            errors:
+              name: 指名は必須です
+              password: パスワードは必須です
           status: 401
           message: Unauthorized error.
