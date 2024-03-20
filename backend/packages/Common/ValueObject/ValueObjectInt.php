@@ -8,13 +8,10 @@ trait ValueObjectInt
 {
     use ValueObjectFrom;
 
-    /** @var int */
-    private int $value;
-
     /**
      * @param int $value
      */
-    public function __construct(int $value = 0)
+    public function __construct(private int $value = 0)
     {
         $this->value = $value;
     }
