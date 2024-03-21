@@ -20,17 +20,18 @@ final class Endpoint
      * @param LanguageCode|null $languageCode
      * @param Category|null $category
      * @param Format|null $format
+     * @param Path|null $path
      */
     public function __construct(
         private ApiName $apiName,
-        private string $playerIdMain,
-        private string $playerIdSub,
-        private AccessLevel $accessLevel,
-        private Version $version,
-        private LanguageCode $languageCode,
-        private Category $category,
-        private Format $format,
-        private Path $path
+        private ?string $playerIdMain,
+        private ?string $playerIdSub,
+        private ?AccessLevel $accessLevel,
+        private ?Version $version,
+        private ?LanguageCode $languageCode,
+        private ?Category $category,
+        private ?Format $format,
+        private ?Path $path
     ) {
         $this->apiName = $apiName;
         $this->playerIdMain = $playerIdMain;
