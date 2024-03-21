@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace TennisTrack\SportRadar\Domain\Models;
 
-use TennisTrack\Common\ValueObject\ValueObjectString;
 use TennisTrack\Common\Exceptions\InvalidArgumentException;
+use TennisTrack\Common\ValueObject\ValueObjectString;
 
 final class Category
 {
@@ -12,6 +13,7 @@ final class Category
 
     /** @var string */
     private const PLAYERS = 'players';
+
     /** @var string */
     private const TOURNAMENTS = 'tournaments';
 
@@ -25,7 +27,7 @@ final class Category
      */
     public function __construct(private string $value)
     {
-        if (!in_array($value, self::VALUES, true)) {
+        if (! in_array($value, self::VALUES, true)) {
             throw new InvalidArgumentException('Invalid category');
         }
 

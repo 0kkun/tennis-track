@@ -1,11 +1,13 @@
 <?php
+
 namespace Tests\Packages\SportRadar\Models;
 
-use TennisTrack\Common\ValueObject\ValueObjectString;
-use TennisTrack\Common\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use TennisTrack\Common\Exceptions\InvalidArgumentException;
+use TennisTrack\Common\ValueObject\ValueObjectString;
 
-class ValueObjectStringTestDummy {
+class ValueObjectStringTestDummy
+{
     use ValueObjectString;
 }
 

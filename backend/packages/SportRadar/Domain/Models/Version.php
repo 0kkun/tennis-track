@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace TennisTrack\SportRadar\Domain\Models;
 
-use TennisTrack\Common\ValueObject\ValueObjectString;
 use TennisTrack\Common\Exceptions\InvalidArgumentException;
+use TennisTrack\Common\ValueObject\ValueObjectString;
 
 final class Version
 {
@@ -12,8 +13,10 @@ final class Version
 
     /** @var string */
     private const V1 = 'v1';
+
     /** @var string */
     private const V2 = 'v2';
+
     /** @var string */
     private const V3 = 'v3';
 
@@ -28,7 +31,7 @@ final class Version
      */
     public function __construct(private string $value)
     {
-        if (!in_array($value, self::VALUES, true)) {
+        if (! in_array($value, self::VALUES, true)) {
             throw new InvalidArgumentException('Invalid version');
         }
 

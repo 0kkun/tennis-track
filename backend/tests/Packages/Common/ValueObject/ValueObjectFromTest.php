@@ -1,10 +1,12 @@
 <?php
+
 namespace Tests\Packages\SportRadar\Models;
 
-use TennisTrack\Common\ValueObject\ValueObjectFrom;
 use PHPUnit\Framework\TestCase;
+use TennisTrack\Common\ValueObject\ValueObjectFrom;
 
-class ValueObjectFromTestDummy {
+class ValueObjectFromTestDummy
+{
     use ValueObjectFrom;
 }
 

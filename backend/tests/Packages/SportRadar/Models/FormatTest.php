@@ -1,9 +1,10 @@
 <?php
+
 namespace Tests\Packages\SportRadar\Models;
 
-use TennisTrack\SportRadar\Domain\Models\Format;
-use TennisTrack\Common\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use TennisTrack\Common\Exceptions\InvalidArgumentException;
+use TennisTrack\SportRadar\Domain\Models\Format;
 
 class FormatTest extends TestCase
 {

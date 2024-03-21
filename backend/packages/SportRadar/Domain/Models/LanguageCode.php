@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace TennisTrack\SportRadar\Domain\Models;
 
-use TennisTrack\Common\ValueObject\ValueObjectString;
 use TennisTrack\Common\Exceptions\InvalidArgumentException;
+use TennisTrack\Common\ValueObject\ValueObjectString;
 
 final class LanguageCode
 {
@@ -12,6 +13,7 @@ final class LanguageCode
 
     /** @var string */
     private const EN = 'en';
+
     /** @var string */
     private const JA = 'ja';
 
@@ -25,7 +27,7 @@ final class LanguageCode
      */
     public function __construct(private string $value = 'en')
     {
-        if (!in_array($value, self::VALUES, true)) {
+        if (! in_array($value, self::VALUES, true)) {
             throw new InvalidArgumentException('Invalid language code');
         }
 

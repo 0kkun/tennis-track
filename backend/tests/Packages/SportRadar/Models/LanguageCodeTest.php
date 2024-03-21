@@ -1,9 +1,10 @@
 <?php
+
 namespace Tests\Packages\SportRadar\Models;
 
-use TennisTrack\SportRadar\Domain\Models\LanguageCode;
-use TennisTrack\Common\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use TennisTrack\Common\Exceptions\InvalidArgumentException;
+use TennisTrack\SportRadar\Domain\Models\LanguageCode;
 
 class LanguageCodeTest extends TestCase
 {

@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace TennisTrack\SportRadar\Domain\Models;
+
 use TennisTrack\Common\Exceptions\InvalidArgumentException;
 
 final class Endpoint
@@ -51,6 +53,7 @@ final class Endpoint
         $languageCode = array_key_exists('language_code', $data) ? LanguageCode::from($data['language_code']) : LanguageCode::ja();
         $category = array_key_exists('category', $data) ? Category::from($data['category']) : Category::players();
         $format = array_key_exists('format', $data) ? Format::from($data['format']) : Format::json();
+
         return new self(
             $apiName,
             $data['player_id_main'] ?? '',

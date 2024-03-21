@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace TennisTrack\SportRadar\Domain\Models;
 
-use TennisTrack\Common\ValueObject\ValueObjectString;
 use TennisTrack\Common\Exceptions\InvalidArgumentException;
+use TennisTrack\Common\ValueObject\ValueObjectString;
 
 final class Format
 {
@@ -12,6 +13,7 @@ final class Format
 
     /** @var string */
     private const JSON = 'json';
+
     /** @var string */
     private const XML = 'xml';
 
@@ -25,7 +27,7 @@ final class Format
      */
     public function __construct(private string $value = self::JSON)
     {
-        if (!in_array($value, self::VALUES, true)) {
+        if (! in_array($value, self::VALUES, true)) {
             throw new InvalidArgumentException('Invalid format');
         }
 

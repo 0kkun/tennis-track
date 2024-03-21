@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace TennisTrack\SportRadar\Domain\Models;
 
-use TennisTrack\Common\ValueObject\ValueObjectString;
 use TennisTrack\Common\Exceptions\InvalidArgumentException;
+use TennisTrack\Common\ValueObject\ValueObjectString;
 
 final class AccessLevel
 {
@@ -12,6 +13,7 @@ final class AccessLevel
 
     /** @var string */
     private const TRIAL = 'trial';
+
     /** @var string */
     private const PRODUCTION = 'production';
 
@@ -25,7 +27,7 @@ final class AccessLevel
      */
     public function __construct(string $value)
     {
-        if (!in_array($value, self::VALUES, true)) {
+        if (! in_array($value, self::VALUES, true)) {
             throw new InvalidArgumentException('Invalid access level');
         }
 

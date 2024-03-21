@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace TennisTrack\Common\Exceptions;
@@ -7,7 +8,7 @@ final class NotFoundException extends \Exception implements DomainExceptionInter
 {
     /**
      * @param string $message
-     * @param integer $code
+     * @param int $code
      * @param \Throwable|null $previous
      */
     public function __construct(
