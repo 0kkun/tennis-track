@@ -15,7 +15,7 @@ class EndpointTest extends TestCase
         $endpoint = Endpoint::fromArray([
             'api_name' => $apiName,
         ]);
-        $this->assertIsString($endpoint->path());
+        $this->assertIsString($endpoint->path()->toString());
     }
 
     public function testPathProfile()
@@ -25,7 +25,7 @@ class EndpointTest extends TestCase
             'api_name' => $apiName,
             'player_id_main' => '1234',
         ]);
-        $this->assertIsString($endpoint->path());
+        $this->assertIsString($endpoint->path()->toString());
     }
 
     public function testPathRaceRankings()
@@ -34,7 +34,7 @@ class EndpointTest extends TestCase
         $endpoint = Endpoint::fromArray([
             'api_name' => $apiName,
         ]);
-        $this->assertIsString($endpoint->path());
+        $this->assertIsString($endpoint->path()->toString());
     }
 
     public function testPathHeadToHead()
@@ -45,7 +45,7 @@ class EndpointTest extends TestCase
             'player_id_main' => '1234',
             'player_id_sub' => '5678',
         ]);
-        $this->assertIsString($endpoint->path());
+        $this->assertIsString($endpoint->path()->toString());
     }
 
     public function testPathInvalidException()

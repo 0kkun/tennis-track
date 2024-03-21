@@ -113,8 +113,8 @@ dump:
 test:
 	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/phpunit --testdox
 
-.PHONY: test-single
-test-single:
+.PHONY: single-test
+single-test:
 	@read -p "Enter a test file path or class name: " TESTPATH; \
 	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/phpunit --filter $$TESTPATH --testdox
 

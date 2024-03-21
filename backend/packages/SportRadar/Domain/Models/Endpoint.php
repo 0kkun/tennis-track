@@ -29,7 +29,8 @@ final class Endpoint
         private Version $version,
         private LanguageCode $languageCode,
         private Category $category,
-        private Format $format
+        private Format $format,
+        private Path $path
     ) {
         $this->apiName = $apiName;
         $this->playerIdMain = $playerIdMain;
@@ -39,6 +40,7 @@ final class Endpoint
         $this->languageCode = $languageCode ?? LanguageCode::ja();
         $this->category = $category ?? Category::players();
         $this->format = $format ?? Format::json();
+        $this->path = $path ?? Path::from('');
     }
 
     /**
@@ -53,6 +55,7 @@ final class Endpoint
         $languageCode = array_key_exists('language_code', $data) ? LanguageCode::from($data['language_code']) : LanguageCode::ja();
         $category = array_key_exists('category', $data) ? Category::from($data['category']) : Category::players();
         $format = array_key_exists('format', $data) ? Format::from($data['format']) : Format::json();
+        $path = array_key_exists('path', $data) ? Path::from($data['path']) : Path::from('');
 
         return new self(
             $apiName,
@@ -63,19 +66,20 @@ final class Endpoint
             $languageCode,
             $category,
             $format,
+            $path,
         );
     }
 
     /**
-     * @return string
+     * @return Path
      */
-    public function path(): string
+    public function path(): Path
     {
         return match ($this->apiName->toString()) {
-            'player_profile' => $this->getUrlForPlayerProfile(),
-            'player_rankings' => $this->getUrlForPlayerRankings(),
-            'player_race_rankings' => $this->getUrlForPlayerRaceRankings(),
-            'player_head_to_head' => $this->getUrlForPlayerHeadToHead(),
+            'player_profile' => Path::from($this->getUrlForPlayerProfile()),
+            'player_rankings' => Path::from($this->getUrlForPlayerRankings()),
+            'player_race_rankings' => Path::from($this->getUrlForPlayerRaceRankings()),
+            'player_head_to_head' => Path::from($this->getUrlForPlayerHeadToHead()),
             default => throw new InvalidArgumentException('Invalid api name'),
         };
     }
