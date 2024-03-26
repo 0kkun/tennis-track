@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Packages\SportRadar\Models;
+namespace Tests\Packages\SportRadar\Domain\Models;
 
 use PHPUnit\Framework\TestCase;
 use TennisTrack\SportRadar\Domain\Models\Path;
