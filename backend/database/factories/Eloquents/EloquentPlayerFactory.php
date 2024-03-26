@@ -22,16 +22,20 @@ class EloquentPlayerFactory extends Factory
         $faker = $this->faker;
 
         return [
+            'id' => $faker->unique()->uuid(),
             'name_en' => $faker->unique()->name(),
-            'name_jp' => $faker->name(),
+            'name_ja' => $faker->name(),
             'gender' => rand(0, 1),
-            'link' => $faker->url(),
             'birthday' => $faker->date(),
             'country' => $faker->country(),
-            'turn_to_pro_year' => $faker->year(),
+            'country_code' => $faker->country(),
+            'pro_year' => $faker->year(),
             'height' => $faker->height(),
-            'dominant_arm' => rand(0, 1),
-            'backhand_style' => rand(0, 1),
+            'weight' => $faker->weight(),
+            'handedness' => rand(0, 1),
+            'highest_singles_ranking' => rand(1, 100),
+            'highest_doubles_ranking' => rand(1, 100),
+            'abbreviation' => $faker->name(),
             'sport_category_id' => EloquentSportCategory::first()->id,
         ];
     }
