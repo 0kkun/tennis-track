@@ -4,11 +4,13 @@ post:
   description: ユーザーログインを行う
   tags:
     - Auth
+  parameters:
+    - $ref: '../../../../index.yaml#/components/userAgent'
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/user/PostLogin'
+          $ref: '../../../../index.yaml#/components/schemas/UserPostLogin'
   responses:
     '200':
       description: OK
@@ -22,9 +24,9 @@ post:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/user/Token'
+                      $ref: '../../../../index.yaml#/components/schemas/UserToken'
     '401':
-      $ref: '#/components/responses/401Unauthorized'
+      $ref: '../../../../index.yaml#/components/responses/401Unauthorized'
     '422':
       $ref: '#/components/responses/422InvalidRequest'
     '500':

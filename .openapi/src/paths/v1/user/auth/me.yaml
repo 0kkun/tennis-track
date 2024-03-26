@@ -6,6 +6,8 @@ get:
     - Auth
   security:
     - BearerAuth: []
+  parameters:
+    - $ref: '../../../../index.yaml#/components/userAgent'
   responses:
     '200':
       description: OK
@@ -19,10 +21,10 @@ get:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/user/User'
+                      $ref: '#/components/schemas/User'
     '401':
-      $ref: '#/components/responses/401Unauthorized'
+      $ref: '../../../../index.yaml#/components/responses/401Unauthorized'
     '422':
-      $ref: '#/components/responses/422InvalidRequest'
+      $ref: '../../../../index.yaml#/components/responses/422InvalidRequest'
     '500':
-      $ref: '#/components/responses/500InternalServerError'
+      $ref: '../../../../index.yaml#/components/responses/500InternalServerError'

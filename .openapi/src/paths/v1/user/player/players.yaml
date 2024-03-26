@@ -5,6 +5,7 @@ get:
   tags:
     - Player
   parameters:
+    - $ref: '../../../../index.yaml#/components/userAgent'
     - schema:
         type: string
       in: query
@@ -48,7 +49,7 @@ get:
                   data:
                     type: array
                     items:
-                      $ref: '../../../../index.yaml#/components/schemas/user/Player'
+                      $ref: '../../../../index.yaml#/components/schemas/UserPlayer'
     '204':
       $ref: '../../../../index.yaml#/components/responses/204NoContent'
     '401':
@@ -70,7 +71,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../../index.yaml#/components/schemas/user/PostPlayer'
+          $ref: '../../../../index.yaml#/components/schemas/UserPostPlayer'
   responses:
     '201':
       $ref: '../../../../index.yaml#/components/responses/201DataCreated'
