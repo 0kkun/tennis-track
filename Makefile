@@ -114,12 +114,24 @@ dump:
 
 .PHONY: test
 test:
-	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/phpunit --testdox
+	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/phpunit
 
 .PHONY: single-test
 single-test:
 	@read -p "Enter a test file path or class name: " TESTPATH; \
 	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/phpunit --filter $$TESTPATH --testdox
+
+.PHONY: package-test
+package-test:
+	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/phpunit --testdox --filter Packages
+
+.PHONY: unit-test
+unit-test:
+	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/phpunit --testdox --filter Unit
+
+.PHONY: feature-test
+feature-test:
+	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/phpunit --testdox --filter Feature
 
 .PHONY: pint-check
 pint-check:
