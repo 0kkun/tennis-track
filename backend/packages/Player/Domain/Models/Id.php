@@ -6,14 +6,15 @@ namespace TennisTrack\Player\Domain\Models;
 
 use TennisTrack\Common\ValueObject\ValueObjectString;
 
-final class NameJa
+final class Id
 {
     use ValueObjectString;
 
     /**
-     * @param string|null $value
+     * CompetitorId
+     * @param string $value
      */
-    public function __construct(private ?string $value)
+    public function __construct(string $value)
     {
         $this->value = $value;
     }

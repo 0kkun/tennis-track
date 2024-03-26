@@ -6,15 +6,14 @@ namespace TennisTrack\Player\Domain\Models;
 
 use TennisTrack\Common\ValueObject\ValueObjectString;
 
-final class Id
+final class CountryCode
 {
     use ValueObjectString;
 
     /**
-     * CompetitorId
-     * @param string $value
+     * @param string|null $value
      */
-    public function __construct(private string $value)
+    public function __construct(?string $value)
     {
         $this->value = $value;
     }

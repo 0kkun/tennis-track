@@ -7,26 +7,26 @@ namespace TennisTrack\Player\Domain\Models;
 use TennisTrack\Common\Exceptions\InvalidArgumentException;
 use TennisTrack\Common\ValueObject\ValueObjectString;
 
-final class Gender
+final class Handedness
 {
     use ValueObjectString;
 
-    private const MALE = 'male';
+    private const RIGHT = 'right';
 
-    private const FEMALE = 'female';
+    private const LEFT = 'left';
 
     private const VALUES = [
-        self::MALE,
-        self::FEMALE,
+        self::RIGHT,
+        self::LEFT,
     ];
 
     /**
      * @param string|null $value
      */
-    public function __construct(private ?string $value)
+    public function __construct(?string $value)
     {
         if (! is_null($value) && ! in_array($value, self::VALUES, true)) {
-            throw new InvalidArgumentException('Invalid Gender Value');
+            throw new InvalidArgumentException('Invalid Handedness Value');
         }
         $this->value = $value;
     }

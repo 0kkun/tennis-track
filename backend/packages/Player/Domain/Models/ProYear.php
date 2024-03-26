@@ -13,7 +13,7 @@ final class ProYear
     /**
      * @param int|null $value
      */
-    public function __construct(private ?int $value)
+    public function __construct(?int $value)
     {
         $this->value = $value;
     }

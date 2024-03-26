@@ -36,18 +36,18 @@ final class Player
         private ?Height $height,
         private ?Weight $weight,
         private ?HighestSinglesRanking $highestSinglesRanking,
-        private ?HighestDoublesRanking $highestDoublesRanking,
+        private ?HighestDoublesRanking $highestDoublesRanking
     ) {
         $this->id = $id;
-        $this->nameEn = $nameEn ?? NameEn::from(null);
-        $this->nameJa = $nameJa ?? NameJa::from(null);
-        $this->country = $country ?? Country::from(null);
-        $this->countryCode = $countryCode ?? CountryCode::from(null);
-        $this->abbreviation = $abbreviation ?? Abbreviation::from(null);
-        $this->gender = $gender ?? Gender::from(null);
+        $this->nameEn = $nameEn ?? NameEn::from('');
+        $this->nameJa = $nameJa ?? NameJa::from('');
+        $this->country = $country ?? Country::from('');
+        $this->countryCode = $countryCode ?? CountryCode::from('');
+        $this->abbreviation = $abbreviation ?? Abbreviation::from('');
+        $this->gender = $gender ?? Gender::from('');
         $this->birthday = $birthday ?? Birthday::from(null);
         $this->proYear = $proYear ?? ProYear::from(null);
-        $this->handedness = $handedness ?? Handedness::from(null);
+        $this->handedness = $handedness ?? Handedness::from('');
         $this->height = $height ?? Height::from(null);
         $this->weight = $weight ?? Weight::from(null);
         $this->highestSinglesRanking = $highestSinglesRanking ?? HighestSinglesRanking::from(null);
@@ -132,7 +132,7 @@ final class Player
     {
         return new self(
             Id::from($data['id']),
-            NameEn::from($data['name_en']),
+            array_key_exists('name_en', $data) ? NameEn::from($data['name_en']) : NameEn::from(''),
             NameJa::from($data['name_ja']),
             Country::from($data['country']),
             CountryCode::from($data['country_code']),

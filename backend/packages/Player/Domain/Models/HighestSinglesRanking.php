@@ -14,7 +14,7 @@ final class HighestSinglesRanking
     /**
      * @param int|null $value
      */
-    public function __construct(private ?int $value)
+    public function __construct(?int $value)
     {
         if ($value !== null && ($value < 0 || $value > 1000)) {
             throw new InvalidArgumentException('Invalid highest singles ranking');
