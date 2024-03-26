@@ -14,9 +14,9 @@ final class Weight
     /**
      * @param int|null $value
      */
-    public function __construct(?int $value)
+    private function __construct(?int $value = null)
     {
-        if ($value !== null && ($value < 0 || $value > 200)) {
+        if (! is_null($value) && ($value < 0 || $value > 200)) {
             throw new InvalidArgumentException('Invalid weight');
         }
         $this->value = $value;

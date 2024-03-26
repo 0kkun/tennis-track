@@ -9,18 +9,21 @@ trait ValueObjectInt
     use ValueObjectFrom;
 
     /**
-     * @param int $value
+     * @param int|null $value
      */
-    public function __construct(private int $value = 0)
+    private function __construct(private ?int $value = null)
     {
         $this->value = $value;
     }
 
     /**
-     * @return int
+     * @return integer|null
      */
-    public function toInt(): int
+    public function toInt(): ?int
     {
+        if (is_null($this->value)) {
+            return null;
+        }
         return $this->value;
     }
 

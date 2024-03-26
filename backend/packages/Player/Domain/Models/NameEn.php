@@ -13,7 +13,7 @@ final class NameEn
     /**
      * @param string|null $value
      */
-    public function __construct(?string $value)
+    private function __construct(?string $value = null)
     {
         $this->value = $value;
     }

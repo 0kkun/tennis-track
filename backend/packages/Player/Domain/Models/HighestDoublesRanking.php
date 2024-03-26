@@ -14,9 +14,9 @@ final class HighestDoublesRanking
     /**
      * @param int|null $value
      */
-    public function __construct(?int $value)
+    private function __construct(?int $value = null)
     {
-        if ($value !== null && ($value < 0 || $value > 1000)) {
+        if (! is_null($value) && ($value < 0 || $value > 1000)) {
             throw new InvalidArgumentException('Invalid highest doubles ranking');
         }
         $this->value = $value;

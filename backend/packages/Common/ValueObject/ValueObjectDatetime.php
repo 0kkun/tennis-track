@@ -36,6 +36,14 @@ trait ValueObjectDatetime
     }
 
     /**
+     * @return bool
+     */
+    public function isNull(): bool
+    {
+        return is_null($this->value);
+    }
+
+    /**
      * @return string
      */
     public function toDateString(): string

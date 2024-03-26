@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace TennisTrack\Player\Domain\Models;
 
+use Carbon\Carbon;
+
 final class Player
 {
     /**
@@ -22,7 +24,7 @@ final class Player
      * @param HighestSinglesRanking|null $highestSinglesRanking
      * @param HighestDoublesRanking|null $highestDoublesRanking
      */
-    public function __construct(
+    private function __construct(
         private Id $id,
         private ?NameEn $nameEn,
         private ?NameJa $nameJa,
@@ -54,71 +56,113 @@ final class Player
         $this->highestDoublesRanking = $highestDoublesRanking ?? HighestDoublesRanking::from(null);
     }
 
+    /**
+     * @return Id
+     */
     public function id(): Id
     {
         return $this->id;
     }
 
+    /**
+     * @return NameEn
+     */
     public function nameEn(): NameEn
     {
         return $this->nameEn;
     }
 
+    /**
+     * @return NameJa
+     */
     public function nameJa(): NameJa
     {
         return $this->nameJa;
     }
 
+    /**
+     * @return Country
+     */
     public function country(): Country
     {
         return $this->country;
     }
 
+    /**
+     * @return CountryCode
+     */
     public function countryCode(): CountryCode
     {
         return $this->countryCode;
     }
 
+    /**
+     * @return Abbreviation
+     */
     public function abbreviation(): Abbreviation
     {
         return $this->abbreviation;
     }
 
+    /**
+     * @return Gender
+     */
     public function gender(): Gender
     {
         return $this->gender;
     }
 
+    /**
+     * @return Birthday
+     */
     public function birthday(): Birthday
     {
         return $this->birthday;
     }
 
+    /**
+     * @return ProYear
+     */
     public function proYear(): ProYear
     {
         return $this->proYear;
     }
 
+    /**
+     * @return Handedness
+     */
     public function handedness(): Handedness
     {
         return $this->handedness;
     }
 
+    /**
+     * @return Height
+     */
     public function height(): Height
     {
         return $this->height;
     }
 
+    /**
+     * @return Weight
+     */
     public function weight(): Weight
     {
         return $this->weight;
     }
 
+    /**
+     * @return HighestSinglesRanking
+     */
     public function highestSinglesRanking(): HighestSinglesRanking
     {
         return $this->highestSinglesRanking;
     }
 
+    /**
+     * @return HighestDoublesRanking
+     */
     public function highestDoublesRanking(): HighestDoublesRanking
     {
         return $this->highestDoublesRanking;
@@ -131,20 +175,51 @@ final class Player
     public static function fromArray(array $data): self
     {
         return new self(
-            Id::from($data['id']),
-            array_key_exists('name_en', $data) ? NameEn::from($data['name_en']) : NameEn::from(''),
-            NameJa::from($data['name_ja']),
-            Country::from($data['country']),
-            CountryCode::from($data['country_code']),
-            Abbreviation::from($data['abbreviation']),
-            Gender::from($data['gender']),
-            Birthday::from($data['birthday']),
-            ProYear::from($data['pro_year']),
-            Handedness::from($data['handedness']),
-            Height::from($data['height']),
-            Weight::from($data['weight']),
-            HighestSinglesRanking::from($data['highest_singles_ranking']),
-            HighestDoublesRanking::from($data['highest_doubles_ranking']),
+            Id::from($data['id'] ?? ''),
+            NameEn::from($data['name_en'] ?? null),
+            NameJa::from($data['name_ja'] ?? null),
+            Country::from($data['country'] ?? null),
+            CountryCode::from($data['country_code'] ?? null),
+            Abbreviation::from($data['abbreviation'] ?? null),
+            Gender::from($data['gender'] ?? null),
+            Birthday::from($data['birthday'] ?? null),
+            ProYear::from($data['pro_year'] ?? null),
+            Handedness::from($data['handedness'] ?? null),
+            Height::from($data['height'] ?? null),
+            Weight::from($data['weight'] ?? null),
+            HighestSinglesRanking::from($data['highest_singles_ranking'] ?? null),
+            HighestDoublesRanking::from($data['highest_doubles_ranking'] ?? null),
         );
+    }
+
+    /**
+     * @return int
+     */
+    public function age(Carbon $now): int
+    {
+        return $this->birthday->age($now);
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id->toString(),
+            'name_en' => $this->nameEn->toString(),
+            'name_ja' => $this->nameJa->toString(),
+            'country' => $this->country->toString(),
+            'country_code' => $this->countryCode->toString(),
+            'abbreviation' => $this->abbreviation->toString(),
+            'gender' => $this->gender->toInt(),
+            'birthday' => $this->birthday->format('Y-m-d'),
+            'pro_year' => $this->proYear->toInt(),
+            'handedness' => $this->handedness->toInt(),
+            'height' => $this->height->toInt(),
+            'weight' => $this->weight->toInt(),
+            'highest_singles_ranking' => $this->highestSinglesRanking->toInt(),
+            'highest_doubles_ranking' => $this->highestDoublesRanking->toInt(),
+        ];
     }
 }

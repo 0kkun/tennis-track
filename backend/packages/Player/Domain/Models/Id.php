@@ -14,8 +14,16 @@ final class Id
      * CompetitorId
      * @param string $value
      */
-    public function __construct(string $value)
+    private function __construct(string $value = '')
     {
         $this->value = $value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function exists(): bool
+    {
+        return empty($this->value);
     }
 }

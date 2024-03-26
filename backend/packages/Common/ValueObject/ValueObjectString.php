@@ -9,18 +9,21 @@ trait ValueObjectString
     use ValueObjectFrom;
 
     /**
-     * @param string $value
+     * @param string|null $value
      */
-    private function __construct(private string $value = '')
+    private function __construct(private ?string $value = null)
     {
         $this->value = $value;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function toString(): string
+    public function toString(): ?string
     {
+        if (is_null($this->value)) {
+            return null;
+        }
         return $this->value;
     }
 

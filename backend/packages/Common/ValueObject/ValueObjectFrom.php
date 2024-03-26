@@ -12,7 +12,7 @@ trait ValueObjectFrom
      * @param mixed $value
      * @return self
      */
-    public static function from($value): self
+    public static function from($value = null): self
     {
         if ($value instanceof static) {
             return $value;

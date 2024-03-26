@@ -14,9 +14,9 @@ final class Height
     /**
      * @param int|null $value
      */
-    public function __construct(?int $value)
+    private function __construct(?int $value = null)
     {
-        if ($value !== null && ($value < 0 || $value > 300)) {
+        if (! is_null($value) && ($value < 0 || $value > 300)) {
             throw new InvalidArgumentException('Invalid hight');
         }
         $this->value = $value;
