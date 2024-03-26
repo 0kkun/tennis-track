@@ -20,8 +20,10 @@ return new class extends Migration
             $table->integer('rank_change')->length(6)->commnet('前回ランクからの変化');
             $table->unsignedInteger('current_point')->comment('現在の所持ポイント');
             $table->date('updated_ymd')->comment('ランキングが更新された日');
-            $table->foreignId('player_id')
-                ->constrained('players')
+            $table->string('player_id')->comment('選手ID');
+            $table->foreign('player_id')
+                ->references('id')
+                ->on('players')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->unique(['player_id', 'updated_ymd']);
