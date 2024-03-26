@@ -8,52 +8,37 @@ use Carbon\Carbon;
 
 final class Player
 {
-    /**
-     * @param Id $id
-     * @param NameEn|null $nameEn
-     * @param NameJa|null $nameJa
-     * @param Country|null $country
-     * @param CountryCode|null $countryCode
-     * @param Abbreviation|null $abbreviation
-     * @param Gender|null $gender
-     * @param Birthday|null $birthday
-     * @param ProYear|null $proYear
-     * @param Handedness|null $handedness
-     * @param Height|null $height
-     * @param Weight|null $weight
-     * @param HighestSinglesRanking|null $highestSinglesRanking
-     * @param HighestDoublesRanking|null $highestDoublesRanking
-     */
+
     private function __construct(
         private Id $id,
-        private ?NameEn $nameEn,
-        private ?NameJa $nameJa,
-        private ?Country $country,
-        private ?CountryCode $countryCode,
-        private ?Abbreviation $abbreviation,
-        private ?Gender $gender,
-        private ?Birthday $birthday,
-        private ?ProYear $proYear,
-        private ?Handedness $handedness,
-        private ?Height $height,
-        private ?Weight $weight,
-        private ?HighestSinglesRanking $highestSinglesRanking,
-        private ?HighestDoublesRanking $highestDoublesRanking
+        private NameEn $nameEn,
+        private NameJa $nameJa,
+        private Country $country,
+        private CountryCode $countryCode,
+        private Abbreviation $abbreviation,
+        private Gender $gender,
+        private Birthday $birthday,
+        private ProYear $proYear,
+        private Handedness $handedness,
+        private Height $height,
+        private Weight $weight,
+        private HighestSinglesRanking $highestSinglesRanking,
+        private HighestDoublesRanking $highestDoublesRanking
     ) {
         $this->id = $id;
-        $this->nameEn = $nameEn ?? NameEn::from('');
-        $this->nameJa = $nameJa ?? NameJa::from('');
-        $this->country = $country ?? Country::from('');
-        $this->countryCode = $countryCode ?? CountryCode::from('');
-        $this->abbreviation = $abbreviation ?? Abbreviation::from('');
-        $this->gender = $gender ?? Gender::from('');
-        $this->birthday = $birthday ?? Birthday::from(null);
-        $this->proYear = $proYear ?? ProYear::from(null);
-        $this->handedness = $handedness ?? Handedness::from('');
-        $this->height = $height ?? Height::from(null);
-        $this->weight = $weight ?? Weight::from(null);
-        $this->highestSinglesRanking = $highestSinglesRanking ?? HighestSinglesRanking::from(null);
-        $this->highestDoublesRanking = $highestDoublesRanking ?? HighestDoublesRanking::from(null);
+        $this->nameEn = $nameEn;
+        $this->nameJa = $nameJa;
+        $this->country = $country;
+        $this->countryCode = $countryCode;
+        $this->abbreviation = $abbreviation;
+        $this->gender = $gender;
+        $this->birthday = $birthday;
+        $this->proYear = $proYear;
+        $this->handedness = $handedness;
+        $this->height = $height;
+        $this->weight = $weight;
+        $this->highestSinglesRanking = $highestSinglesRanking;
+        $this->highestDoublesRanking = $highestDoublesRanking;
     }
 
     /**

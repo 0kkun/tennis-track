@@ -25,7 +25,7 @@ final class AccessLevel
     /**
      * @param string $value
      */
-    public function __construct(string $value)
+    private function __construct(string $value)
     {
         if (! in_array($value, self::VALUES, true)) {
             throw new InvalidArgumentException('Invalid access level');

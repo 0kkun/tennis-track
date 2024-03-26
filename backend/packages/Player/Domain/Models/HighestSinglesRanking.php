@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace TennisTrack\Player\Domain\Models;
 
 use TennisTrack\Common\Exceptions\InvalidArgumentException;
-use TennisTrack\Common\ValueObject\ValueObjectInt;
+use TennisTrack\Common\ValueObject\ValueObjectIntNull;
 
 final class HighestSinglesRanking
 {
-    use ValueObjectInt;
+    use ValueObjectIntNull;
 
     /**
      * @param int|null $value

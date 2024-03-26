@@ -10,14 +10,14 @@ class FormatTest extends TestCase
 {
     public function testFormat()
     {
-        $format = new Format('json');
+        $format = Format::from('json');
         $this->assertEquals('json', $format->toString());
     }
 
     public function testFormatInvalid()
     {
         $this->expectException(InvalidArgumentException::class);
-        new Format('invalid');
+        Format::from('invalid');
     }
 
     public function testFormatJson()

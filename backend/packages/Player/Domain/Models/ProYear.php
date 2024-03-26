@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace TennisTrack\Player\Domain\Models;
 
-use TennisTrack\Common\ValueObject\ValueObjectInt;
+use TennisTrack\Common\ValueObject\ValueObjectIntNull;
 
 final class ProYear
 {
-    use ValueObjectInt;
+    use ValueObjectIntNull;
 
     /**
      * @param int|null $value

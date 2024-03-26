@@ -4,32 +4,27 @@ declare(strict_types=1);
 
 namespace TennisTrack\Common\ValueObject;
 
-trait ValueObjectInt
+trait ValueObjectStringNull
 {
     use ValueObjectFrom;
 
     /**
-     * @param int $value
+     * @param string|null $value
      */
-    private function __construct(private int $value = 0)
+    private function __construct(private ?string $value = null)
     {
         $this->value = $value;
     }
 
     /**
-     * @return integer
+     * @return string|null
      */
-    public function toInt(): int
+    public function toString(): ?string
     {
+        if (is_null($this->value)) {
+            return null;
+        }
         return $this->value;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isZero(): bool
-    {
-        return $this->value === 0;
     }
 
     /**
@@ -38,7 +33,7 @@ trait ValueObjectInt
      */
     public function equals(self $valueObject): bool
     {
-        return $this->value === $valueObject->toInt();
+        return $this->value === $valueObject->toString();
     }
 
     /**
@@ -53,7 +48,7 @@ trait ValueObjectInt
         if ($value instanceof self) {
             return $value;
         }
-        if (is_int($value)) {
+        if (is_string($value)) {
             return new self($value);
         }
         throw self::createInvalidArgumentException($value);

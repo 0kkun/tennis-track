@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace TennisTrack\Player\Domain\Models;
 
-use TennisTrack\Common\ValueObject\ValueObjectString;
+use TennisTrack\Common\ValueObject\ValueObjectStringNull;
 
 final class NameEn
 {
-    use ValueObjectString;
+    use ValueObjectStringNull;
 
     /**
      * @param string|null $value

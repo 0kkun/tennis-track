@@ -13,7 +13,7 @@ final class Path
     /**
      * @param string $value
      */
-    public function __construct(private string $value)
+    private function __construct(private string $value)
     {
         $this->value = $value;
     }

@@ -11,7 +11,7 @@ class BirthdayTest extends TestCase
 {
     public function testBirthdayAge()
     {
-        $birthday = new Birthday(Carbon::parse('1990-01-01'));
+        $birthday = Birthday::from(Carbon::parse('1990-01-01'));
         $now = Carbon::parse('2024-03-26');
         $this->assertEquals(34, $birthday->age($now));
     }

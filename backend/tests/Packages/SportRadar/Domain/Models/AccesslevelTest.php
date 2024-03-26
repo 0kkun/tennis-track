@@ -23,6 +23,6 @@ class AccessLevelTest extends TestCase
     public function testAccessLevelInvalid()
     {
         $this->expectException(InvalidArgumentException::class);
-        new AccessLevel('invalid');
+        AccessLevel::from('invalid');
     }
 }

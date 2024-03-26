@@ -22,7 +22,7 @@ final class Endpoint
      * @param Format|null $format
      * @param Path|null $path
      */
-    public function __construct(
+    private function __construct(
         private ApiName $apiName,
         private ?string $playerIdMain,
         private ?string $playerIdSub,

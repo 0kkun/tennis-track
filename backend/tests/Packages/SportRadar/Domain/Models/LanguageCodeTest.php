@@ -10,14 +10,14 @@ class LanguageCodeTest extends TestCase
 {
     public function testLanguageCode()
     {
-        $languageCode = new LanguageCode('en');
+        $languageCode = LanguageCode::from('en');
         $this->assertEquals('en', $languageCode->toString());
     }
 
     public function testLanguageCodeInvalid()
     {
         $this->expectException(InvalidArgumentException::class);
-        new LanguageCode('invalid');
+        LanguageCode::from('invalid');
     }
 
     public function testLanguageCodeEn()

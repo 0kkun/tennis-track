@@ -25,7 +25,7 @@ final class LanguageCode
     /**
      * @param string $value
      */
-    public function __construct(private string $value = 'en')
+    private function __construct(private string $value = 'en')
     {
         if (! in_array($value, self::VALUES, true)) {
             throw new InvalidArgumentException('Invalid language code');

@@ -10,14 +10,14 @@ class CategoryTest extends TestCase
 {
     public function testCategory()
     {
-        $category = new Category('players');
+        $category = Category::from('players');
         $this->assertEquals('players', $category->toString());
     }
 
     public function testCategoryInvalid()
     {
         $this->expectException(InvalidArgumentException::class);
-        new Category('invalid');
+        Category::from('invalid');
     }
 
     public function testCategoryPlayers()

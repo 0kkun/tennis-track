@@ -4,23 +4,26 @@ declare(strict_types=1);
 
 namespace TennisTrack\Common\ValueObject;
 
-trait ValueObjectInt
+trait ValueObjectIntNull
 {
     use ValueObjectFrom;
 
     /**
-     * @param int $value
+     * @param int|null $value
      */
-    private function __construct(private int $value = 0)
+    private function __construct(private ?int $value = null)
     {
         $this->value = $value;
     }
 
     /**
-     * @return integer
+     * @return integer|null
      */
-    public function toInt(): int
+    public function toInt(): ?int
     {
+        if (is_null($this->value)) {
+            return null;
+        }
         return $this->value;
     }
 

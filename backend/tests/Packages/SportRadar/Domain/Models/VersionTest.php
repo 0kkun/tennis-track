@@ -10,14 +10,14 @@ class VersionTest extends TestCase
 {
     public function testVersion()
     {
-        $version = new Version('v1');
+        $version = Version::from('v1');
         $this->assertEquals('v1', $version->toString());
     }
 
     public function testVersionInvalid()
     {
         $this->expectException(InvalidArgumentException::class);
-        new Version('invalid');
+        Version::from('invalid');
     }
 
     public function testVersionV1()

@@ -25,7 +25,7 @@ final class Format
     /**
      * @param [type] $value
      */
-    public function __construct(private string $value = self::JSON)
+    private function __construct(private string $value = self::JSON)
     {
         if (! in_array($value, self::VALUES, true)) {
             throw new InvalidArgumentException('Invalid format');

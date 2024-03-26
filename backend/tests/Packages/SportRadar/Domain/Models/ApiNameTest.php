@@ -10,14 +10,14 @@ class ApiNameTest extends TestCase
 {
     public function testApiNameValid()
     {
-        $apiName = new ApiName('player_profile');
+        $apiName = ApiName::from('player_profile');
         $this->assertEquals('player_profile', $apiName->toString());
     }
 
     public function testApiNameInvalid()
     {
         $this->expectException(InvalidArgumentException::class);
-        new ApiName('invalid');
+        ApiName::from('invalid');
     }
 
     public function testPlayerProfile()

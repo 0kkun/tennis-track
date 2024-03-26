@@ -22,7 +22,7 @@ final class ApiName
     /**
      * @param string $value
      */
-    public function __construct(private string $value)
+    private function __construct(private string $value)
     {
         if (! in_array($value, self::VALUES, true)) {
             throw new InvalidArgumentException('Invalid api name');

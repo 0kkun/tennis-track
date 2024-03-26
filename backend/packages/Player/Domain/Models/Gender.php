@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace TennisTrack\Player\Domain\Models;
 
 use TennisTrack\Common\Exceptions\InvalidArgumentException;
-use TennisTrack\Common\ValueObject\ValueObjectString;
+use TennisTrack\Common\ValueObject\ValueObjectStringNull;
 
 final class Gender
 {
-    use ValueObjectString;
+    use ValueObjectStringNull;
 
     /**
      * @var string
