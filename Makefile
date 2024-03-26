@@ -100,6 +100,9 @@ migrate-rollback:
 migrate-status:
 	$(DEI) $(PROJECT_NAME)_app php artisan migrate:status
 
+.PHONY: migrate-reset
+migrate-reset:
+	$(DEI) $(PROJECT_NAME)_app php artisan migrate:reset
 
 .PHONY: $(PROJECT_NAME)_seed
 seed:
