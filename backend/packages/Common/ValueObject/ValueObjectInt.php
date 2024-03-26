@@ -17,7 +17,7 @@ trait ValueObjectInt
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function toInt(): int
     {

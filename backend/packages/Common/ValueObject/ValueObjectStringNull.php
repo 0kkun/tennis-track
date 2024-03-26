@@ -24,6 +24,7 @@ trait ValueObjectStringNull
         if (is_null($this->value)) {
             return null;
         }
+
         return $this->value;
     }
 

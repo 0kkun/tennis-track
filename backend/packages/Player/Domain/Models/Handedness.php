@@ -64,6 +64,7 @@ final class Handedness
         if (is_null($this->value)) {
             return null;
         }
+
         return array_search($this->value, self::VALUES, true);
     }
 

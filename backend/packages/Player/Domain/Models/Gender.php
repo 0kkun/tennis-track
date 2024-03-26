@@ -57,13 +57,14 @@ final class Gender
     }
 
     /**
-     * @return integer|null
+     * @return int|null
      */
     public function toInt(): ?int
     {
         if (is_null($this->value)) {
             return null;
         }
+
         return array_search($this->value, self::VALUES, true);
     }
 

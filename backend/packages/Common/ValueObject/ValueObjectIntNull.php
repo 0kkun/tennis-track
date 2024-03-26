@@ -17,13 +17,14 @@ trait ValueObjectIntNull
     }
 
     /**
-     * @return integer|null
+     * @return int|null
      */
     public function toInt(): ?int
     {
         if (is_null($this->value)) {
             return null;
         }
+
         return $this->value;
     }
 

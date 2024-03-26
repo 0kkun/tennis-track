@@ -8,7 +8,6 @@ use Carbon\Carbon;
 
 final class Player
 {
-
     private function __construct(
         private Id $id,
         private NameEn $nameEn,

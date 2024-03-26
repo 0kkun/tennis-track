@@ -28,6 +28,7 @@ final class Birthday
         if ($this->value === null) {
             throw new RuntimeException('Birthday is not set.');
         }
+
         return $now->diffInYears($this->value);
     }
 }
