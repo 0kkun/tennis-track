@@ -22,7 +22,8 @@ final class Player
         private Height $height,
         private Weight $weight,
         private HighestSinglesRanking $highestSinglesRanking,
-        private HighestDoublesRanking $highestDoublesRanking
+        private HighestDoublesRanking $highestDoublesRanking,
+        private int $sportCategoryId = 1
     ) {
         $this->id = $id;
         $this->nameEn = $nameEn;
@@ -38,6 +39,7 @@ final class Player
         $this->weight = $weight;
         $this->highestSinglesRanking = $highestSinglesRanking;
         $this->highestDoublesRanking = $highestDoublesRanking;
+        $this->sportCategoryId = $sportCategoryId;
     }
 
     /**
@@ -152,6 +154,11 @@ final class Player
         return $this->highestDoublesRanking;
     }
 
+    public function sportCategoryId(): int
+    {
+        return 1;
+    }
+
     /**
      * @param array $data
      * @return self
@@ -173,6 +180,7 @@ final class Player
             Weight::from($data['weight'] ?? null),
             HighestSinglesRanking::from($data['highest_singles_ranking'] ?? null),
             HighestDoublesRanking::from($data['highest_doubles_ranking'] ?? null),
+            $data['sport_category_id'] ?? 1,
         );
     }
 
@@ -197,13 +205,14 @@ final class Player
             'country_code' => $this->countryCode->toString(),
             'abbreviation' => $this->abbreviation->toString(),
             'gender' => $this->gender->toInt(),
-            'birthday' => $this->birthday->format('Y-m-d'),
+            'birthday' => $this->birthday->get(),
             'pro_year' => $this->proYear->toInt(),
             'handedness' => $this->handedness->toInt(),
             'height' => $this->height->toInt(),
             'weight' => $this->weight->toInt(),
             'highest_singles_ranking' => $this->highestSinglesRanking->toInt(),
             'highest_doubles_ranking' => $this->highestDoublesRanking->toInt(),
+            'sport_category_id' => $this->sportCategoryId,
         ];
     }
 }
