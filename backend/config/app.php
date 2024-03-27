@@ -198,6 +198,7 @@ return [
         // Add
         App\Providers\ServiceClassProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\AdapterServiceProvider::class,
     ],
 
     /*
