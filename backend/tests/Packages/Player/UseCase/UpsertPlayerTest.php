@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Packages\Player\UseCase;
 
+use PHPUnit\Framework\TestCase;
 use TennisTrack\Player\Domain\Models\Player;
 use TennisTrack\Player\Domain\Models\Players;
 use TennisTrack\Player\UseCase\Ports\PlayerAdapterCommandPort;
 use TennisTrack\Player\UseCase\UpsertPlayer;
-use PHPUnit\Framework\TestCase;
 
 class UpsertPlayerTest extends TestCase
 {

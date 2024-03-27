@@ -6,10 +6,10 @@ namespace Tests\Unit\Adapter\Player;
 
 use App\Adapter\Player\PlayerAdapterCommand;
 use App\Eloquents\EloquentPlayer;
+use App\Eloquents\EloquentSportCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use TennisTrack\Player\Domain\Models\Player;
 use TennisTrack\Player\Domain\Models\Players;
-use App\Eloquents\EloquentSportCategory;
 use Tests\TestCase;
 
 class PlayerAdapterCommandTest extends TestCase

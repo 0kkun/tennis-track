@@ -20,7 +20,7 @@ class PlayerAdapterCommand implements PlayerAdapterCommandPort
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function upsertByIds(Players $players): void
     {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace TennisTrack\Player\UseCase;
 
-use TennisTrack\Player\UseCase\Ports\PlayerAdapterCommandPort;
 use TennisTrack\Player\Domain\Models\Players;
+use TennisTrack\Player\UseCase\Ports\PlayerAdapterCommandPort;
 
 final class UpsertPlayer
 {
