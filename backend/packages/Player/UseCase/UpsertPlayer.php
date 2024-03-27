@@ -24,6 +24,6 @@ final class UpsertPlayer
      */
     public function execute(Players $players): void
     {
-        $this->playerAdapterCommand->upsertByIds($players);
+        $this->playerAdapterCommand->upsertById($players);
     }
 }

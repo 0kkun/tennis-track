@@ -22,7 +22,7 @@ class PlayerAdapterCommand implements PlayerAdapterCommandPort
     /**
      * {@inheritDoc}
      */
-    public function upsertByIds(Players $players): void
+    public function upsertById(Players $players): void
     {
         $playersArray = $players->toArray();
         $this->eloquentPlayer->upsert($playersArray, ['id']);

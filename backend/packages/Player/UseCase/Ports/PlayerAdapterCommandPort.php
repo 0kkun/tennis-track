@@ -47,5 +47,5 @@ interface PlayerAdapterCommandPort
      * @param Players $players
      * @return void
      */
-    public function upsertByIds(Players $players): void;
+    public function upsertById(Players $players): void;
 }
