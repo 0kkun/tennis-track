@@ -24,6 +24,6 @@ class UpsertPlayer
      */
     public function execute(TennisPlayers $players): void
     {
-        $this->playerAdapterCommand->upsertById($players);
+        $this->playerAdapterCommand->upsertByKeys($players, ['id']);
     }
 }

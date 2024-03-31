@@ -26,7 +26,7 @@ class PlayerAdapterCommandTest extends TestCase
         $player3 = TennisPlayer::fromArray(['id' => 'test3', 'sport_category_id' => $sportCategory->id]);
         $players = TennisPlayers::fromArray([$player1, $player2, $player3]);
 
-        $playerAdapterCommand->upsertById($players);
+        $playerAdapterCommand->upsertByKeys($players, ['id']);
 
         $this->assertDatabaseCount('players', 3);
         $this->assertDatabaseHas('players', ['id' => 'test1']);

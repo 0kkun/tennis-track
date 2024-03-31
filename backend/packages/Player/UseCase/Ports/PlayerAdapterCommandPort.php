@@ -44,7 +44,8 @@ interface PlayerAdapterCommandPort
      * upsertを行う.
      * idが同じのものはupdate、それ以外はinsert
      * @param TennisPlayers $players
+     * @param array $keys
      * @return void
      */
-    public function upsertById(TennisPlayers $players): void;
+    public function upsertByKeys(TennisPlayers $players, array $keys): void;
 }

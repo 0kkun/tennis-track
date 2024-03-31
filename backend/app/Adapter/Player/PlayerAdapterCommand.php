@@ -22,9 +22,9 @@ class PlayerAdapterCommand implements PlayerAdapterCommandPort
     /**
      * {@inheritDoc}
      */
-    public function upsertById(TennisPlayers $players): void
+    public function upsertByKeys(TennisPlayers $players, array $keys): void
     {
         $playersArray = $players->toArray();
-        $this->eloquentPlayer->upsert($playersArray, ['id']);
+        $this->eloquentPlayer->upsert($playersArray, $keys);
     }
 }

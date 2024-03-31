@@ -16,7 +16,7 @@ class UpsertPlayerTest extends TestCase
     {
         $playerAdapterCommandMock = $this->createMock(PlayerAdapterCommandPort::class);
         $playerAdapterCommandMock->expects($this->once())
-            ->method('upsertById')
+            ->method('upsertByKeys')
             ->with($this->isInstanceOf(TennisPlayers::class));
 
         $upsertPlayer = new UpsertPlayer($playerAdapterCommandMock);
