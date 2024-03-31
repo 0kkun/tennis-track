@@ -22,6 +22,17 @@ class PlayerAdapterCommand implements PlayerAdapterCommandPort
     /**
      * {@inheritDoc}
      */
+    public function fetchBySportCategoryId(int $sportCategoryId): TennisPlayers
+    {
+        $eloquentPlayers = $this->eloquentPlayer
+            ->where('sport_category_id', $sportCategoryId)
+            ->get();
+        return TennisPlayers::fromArray($eloquentPlayers->toArray());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function upsertByKeys(TennisPlayers $players, array $keys): void
     {
         $playersArray = $players->toArray();

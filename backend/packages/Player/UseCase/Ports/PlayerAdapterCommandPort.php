@@ -34,11 +34,11 @@ interface PlayerAdapterCommandPort
     //  */
     // public function getByIdWithSportCategory(Id $id): Player;
 
-    // /**
-    //  * @param int $sportCategoryId
-    //  * @return void
-    //  */
-    // public function fetchBySportCategoryId(int $sportCategoryId);
+    /**
+     * @param int $sportCategoryId
+     * @return TennisPlayers
+     */
+    public function fetchBySportCategoryId(int $sportCategoryId): TennisPlayers;
 
     /**
      * upsertを行う.
