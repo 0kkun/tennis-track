@@ -27,6 +27,7 @@ class PlayerAdapterCommand implements PlayerAdapterCommandPort
         $eloquentPlayers = $this->eloquentPlayer
             ->where('sport_category_id', $sportCategoryId)
             ->get();
+
         return TennisPlayers::fromArray($eloquentPlayers->toArray());
     }
 

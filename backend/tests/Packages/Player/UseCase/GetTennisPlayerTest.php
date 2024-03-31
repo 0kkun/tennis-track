@@ -6,8 +6,8 @@ namespace Tests\Packages\Player\UseCase;
 
 use PHPUnit\Framework\TestCase;
 use TennisTrack\Player\Domain\Models\TennisPlayers;
-use TennisTrack\Player\UseCase\Ports\PlayerAdapterCommandPort;
 use TennisTrack\Player\UseCase\GetTennisPlayer;
+use TennisTrack\Player\UseCase\Ports\PlayerAdapterCommandPort;
 
 class GetTennisPlayerTest extends TestCase
 {
