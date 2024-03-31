@@ -197,8 +197,8 @@ return [
 
         // Add
         App\Providers\ServiceClassProvider::class,
-        App\Providers\RepositoryServiceProvider::class,
-        App\Providers\AdapterServiceProvider::class,
+        // App\Providers\RepositoryServiceProvider::class,
+        App\Providers\UseCaseServiceProvider::class,
     ],
 
     /*

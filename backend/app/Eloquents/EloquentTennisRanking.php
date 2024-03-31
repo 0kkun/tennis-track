@@ -7,25 +7,22 @@ namespace App\Eloquents;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EloquentFavoritePlayer extends Model
+class EloquentTennisRanking extends Model
 {
     use HasFactory;
 
-    protected $table = 'favorite_players';
+    protected $table = 'tennis_rankings';
 
     public $timestamps = true;
 
     protected $guarded = ['id'];
 
-    /****  リレーション ****/
+    public const ITEM_PER_PAGE = 150;
 
-    public function user()
-    {
-        return $this->belongsTo(EloquentUser::class);
-    }
+    /****  リレーション ****/
 
     public function player()
     {
-        return $this->belongsTo(EloquentPlayer::class);
+        return $this->belongsTo(EloquentTennisPlayer::class);
     }
 }

@@ -11,6 +11,7 @@ class ServiceClassProvider extends ServiceProvider
         'AdminFile',
         'TennisScraping',
         'Translate',
+        'ExternalApi',
     ];
 
     /**

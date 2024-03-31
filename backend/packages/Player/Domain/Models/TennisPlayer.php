@@ -6,7 +6,7 @@ namespace TennisTrack\Player\Domain\Models;
 
 use Carbon\Carbon;
 
-final class Player
+final class TennisPlayer
 {
     private function __construct(
         private Id $id,

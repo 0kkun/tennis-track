@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace TennisTrack\Player\UseCase\Ports;
 
 use TennisTrack\Player\Domain\Models\Id;
-use TennisTrack\Player\Domain\Models\Player;
-use TennisTrack\Player\Domain\Models\Players;
+use TennisTrack\Player\Domain\Models\TennisPlayers;
 
 interface PlayerAdapterCommandPort
 {
@@ -44,8 +43,8 @@ interface PlayerAdapterCommandPort
     /**
      * upsertを行う.
      * idが同じのものはupdate、それ以外はinsert
-     * @param Players $players
+     * @param TennisPlayers $players
      * @return void
      */
-    public function upsertById(Players $players): void;
+    public function upsertById(TennisPlayers $players): void;
 }

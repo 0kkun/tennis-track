@@ -13,10 +13,10 @@ use TennisTrack\Common\Exceptions\InvalidArgumentException;
 //     echo $player->getName();
 // }
 
-final class Players implements \IteratorAggregate
+final class TennisPlayers implements \IteratorAggregate
 {
     /**
-     * @param Player[] $players
+     * @param TennisPlayer[] $players
      */
     private function __construct(private array $players)
     {
@@ -24,13 +24,13 @@ final class Players implements \IteratorAggregate
     }
 
     /**
-     * @param array<Player> $players
+     * @param array<TennisPlayer> $players
      * @throws InvalidArgumentException
      */
     private function setPlayers(array $players): void
     {
         foreach ($players as $player) {
-            if (! $player instanceof Player) {
+            if (! $player instanceof TennisPlayer) {
                 throw new InvalidArgumentException('Invalid player provided.');
             }
         }
@@ -38,9 +38,9 @@ final class Players implements \IteratorAggregate
     }
 
     /**
-     * @param Player $player
+     * @param TennisPlayer $player
      */
-    public function addPlayer(Player $player): void
+    public function addPlayer(TennisPlayer $player): void
     {
         $this->players[] = $player;
     }
@@ -72,6 +72,6 @@ final class Players implements \IteratorAggregate
 
     public function toArray(): array
     {
-        return array_map(fn (Player $player) => $player->toArray(), $this->players);
+        return array_map(fn (TennisPlayer $player) => $player->toArray(), $this->players);
     }
 }

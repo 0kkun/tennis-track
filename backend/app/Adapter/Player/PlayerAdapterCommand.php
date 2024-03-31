@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace App\Adapter\Player;
 
-use App\Eloquents\EloquentPlayer;
-use TennisTrack\Player\Domain\Models\Players;
+use App\Eloquents\EloquentTennisPlayer;
+use TennisTrack\Player\Domain\Models\TennisPlayers;
 use TennisTrack\Player\UseCase\Ports\PlayerAdapterCommandPort;
 
 class PlayerAdapterCommand implements PlayerAdapterCommandPort
 {
     /**
-     * @param EloquentPlayer $eloquentPlayer
+     * @param EloquentTennisPlayer $eloquentTennisPlayer
      */
     public function __construct(
-        private EloquentPlayer $eloquentPlayer
+        private EloquentTennisPlayer $eloquentTennisPlayer
     ) {
-        $this->eloquentPlayer = $eloquentPlayer;
+        $this->eloquentTennisPlayer = $eloquentTennisPlayer;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function upsertById(Players $players): void
+    public function upsertById(TennisPlayers $players): void
     {
         $playersArray = $players->toArray();
-        $this->eloquentPlayer->upsert($playersArray, ['id']);
+        $this->eloquentTennisPlayer->upsert($playersArray, ['id']);
     }
 }

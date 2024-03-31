@@ -15,25 +15,25 @@ use TennisTrack\Player\Domain\Models\HighestSinglesRanking;
 use TennisTrack\Player\Domain\Models\Id;
 use TennisTrack\Player\Domain\Models\NameEn;
 use TennisTrack\Player\Domain\Models\NameJa;
-use TennisTrack\Player\Domain\Models\Player;
 use TennisTrack\Player\Domain\Models\ProYear;
+use TennisTrack\Player\Domain\Models\TennisPlayer;
 use TennisTrack\Player\Domain\Models\Weight;
 
-class PlayerTest extends TestCase
+class TennisPlayerTest extends TestCase
 {
     /**
      * @doesNotPerformAssertions
      */
     public function testFromArray()
     {
-        Player::fromArray([
+        TennisPlayer::fromArray([
             'id' => 'test',
         ]);
     }
 
     public function testToArray()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'id' => 'test',
         ]);
 
@@ -42,7 +42,7 @@ class PlayerTest extends TestCase
 
     public function testId()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'id' => 'test',
         ]);
         $this->assertInstanceOf(Id::class, $player->id());
@@ -51,7 +51,7 @@ class PlayerTest extends TestCase
 
     public function testNameJa()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'name_ja' => 'test',
         ]);
         $this->assertInstanceOf(NameJa::class, $player->nameJa());
@@ -60,7 +60,7 @@ class PlayerTest extends TestCase
 
     public function testNameEn()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'name_en' => 'test',
         ]);
         $this->assertInstanceOf(NameEn::class, $player->nameEn());
@@ -69,7 +69,7 @@ class PlayerTest extends TestCase
 
     public function testCountry()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'country' => 'test',
         ]);
         $this->assertInstanceOf(Country::class, $player->country());
@@ -78,7 +78,7 @@ class PlayerTest extends TestCase
 
     public function testCountryCode()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'country_code' => 'test',
         ]);
         $this->assertInstanceOf(CountryCode::class, $player->countryCode());
@@ -87,7 +87,7 @@ class PlayerTest extends TestCase
 
     public function testGender()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'gender' => 'male',
         ]);
         $this->assertInstanceOf(Gender::class, $player->gender());
@@ -96,7 +96,7 @@ class PlayerTest extends TestCase
 
     public function testBirthday()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'birthday' => '2020-01-01',
         ]);
         $this->assertInstanceOf(Birthday::class, $player->birthday());
@@ -104,7 +104,7 @@ class PlayerTest extends TestCase
 
     public function testAbbreviation()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'abbreviation' => 'test',
         ]);
         $this->assertInstanceOf(Abbreviation::class, $player->abbreviation());
@@ -113,7 +113,7 @@ class PlayerTest extends TestCase
 
     public function testProYear()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'pro_year' => 2020,
         ]);
         $this->assertInstanceOf(ProYear::class, $player->proYear());
@@ -122,7 +122,7 @@ class PlayerTest extends TestCase
 
     public function testHandedness()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'handedness' => 'right',
         ]);
         $this->assertInstanceOf(Handedness::class, $player->handedness());
@@ -131,7 +131,7 @@ class PlayerTest extends TestCase
 
     public function testHeight()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'height' => 180,
         ]);
         $this->assertInstanceOf(Height::class, $player->height());
@@ -140,7 +140,7 @@ class PlayerTest extends TestCase
 
     public function testWeight()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'weight' => 70,
         ]);
         $this->assertInstanceOf(Weight::class, $player->weight());
@@ -149,7 +149,7 @@ class PlayerTest extends TestCase
 
     public function testHighestSinglesRanking()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'highest_singles_ranking' => 1,
         ]);
         $this->assertInstanceOf(HighestSinglesRanking::class, $player->highestSinglesRanking());
@@ -158,7 +158,7 @@ class PlayerTest extends TestCase
 
     public function testHighestDoublesRanking()
     {
-        $player = Player::fromArray([
+        $player = TennisPlayer::fromArray([
             'highest_doubles_ranking' => 1,
         ]);
         $this->assertInstanceOf(HighestDoublesRanking::class, $player->highestDoublesRanking());

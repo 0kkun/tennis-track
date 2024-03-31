@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('players', function (Blueprint $table) {
+        Schema::create('tennis_players', function (Blueprint $table) {
             $table->comment('テニス選手管理テーブル');
             $table->string('id')->primary();
             $table->string('name_en', 100)->nullable()->comment('選手名(英)');
@@ -44,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('players');
+        Schema::dropIfExists('tennis_players');
     }
 };

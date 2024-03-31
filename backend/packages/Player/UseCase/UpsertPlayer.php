@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace TennisTrack\Player\UseCase;
 
-use TennisTrack\Player\Domain\Models\Players;
+use TennisTrack\Player\Domain\Models\TennisPlayers;
 use TennisTrack\Player\UseCase\Ports\PlayerAdapterCommandPort;
 
-final class UpsertPlayer
+class UpsertPlayer
 {
     /**
      * @param PlayerAdapterCommandPort $playerAdapterCommand
@@ -19,10 +19,10 @@ final class UpsertPlayer
     }
 
     /**
-     * @param Players $players
+     * @param TennisPlayers $players
      * @return void
      */
-    public function execute(Players $players): void
+    public function execute(TennisPlayers $players): void
     {
         $this->playerAdapterCommand->upsertById($players);
     }

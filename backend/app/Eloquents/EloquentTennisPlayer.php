@@ -8,11 +8,11 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EloquentPlayer extends Model
+class EloquentTennisPlayer extends Model
 {
     use HasFactory;
 
-    protected $table = 'players';
+    protected $table = 'tennis_players';
 
     public $timestamps = true;
 

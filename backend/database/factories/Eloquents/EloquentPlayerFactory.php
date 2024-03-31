@@ -3,6 +3,7 @@
 namespace Database\Factories\Eloquents;
 
 use App\Eloquents\EloquentSportCategory;
+use App\Eloquents\EloquentTennisPlayer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EloquentPlayerFactory extends Factory
 {
-    protected $model = EloquentSportCategory::class;
+    protected $model = EloquentTennisPlayer::class;
 
     /**
      * Define the model's default state.
