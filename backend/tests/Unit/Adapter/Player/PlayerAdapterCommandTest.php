@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Adapter\Player;
 
 use App\Adapter\Player\PlayerAdapterCommand;
+use App\Eloquents\EloquentPlayer;
 use App\Eloquents\EloquentSportCategory;
-use App\Eloquents\EloquentTennisPlayer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use TennisTrack\Player\Domain\Models\TennisPlayer;
 use TennisTrack\Player\Domain\Models\TennisPlayers;
@@ -18,7 +18,7 @@ class PlayerAdapterCommandTest extends TestCase
 
     public function testUpsertPlayers(): void
     {
-        $playerAdapterCommand = new PlayerAdapterCommand(new EloquentTennisPlayer());
+        $playerAdapterCommand = new PlayerAdapterCommand(new EloquentPlayer());
         $sportCategory = EloquentSportCategory::factory()->create();
 
         $player1 = TennisPlayer::fromArray(['id' => 'test1', 'sport_category_id' => $sportCategory->id]);
@@ -28,9 +28,9 @@ class PlayerAdapterCommandTest extends TestCase
 
         $playerAdapterCommand->upsertById($players);
 
-        $this->assertDatabaseCount('tennis_players', 3);
-        $this->assertDatabaseHas('tennis_players', ['id' => 'test1']);
-        $this->assertDatabaseHas('tennis_players', ['id' => 'test2']);
-        $this->assertDatabaseHas('tennis_players', ['id' => 'test3']);
+        $this->assertDatabaseCount('players', 3);
+        $this->assertDatabaseHas('players', ['id' => 'test1']);
+        $this->assertDatabaseHas('players', ['id' => 'test2']);
+        $this->assertDatabaseHas('players', ['id' => 'test3']);
     }
 }

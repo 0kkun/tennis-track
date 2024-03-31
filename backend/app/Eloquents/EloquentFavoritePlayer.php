@@ -7,11 +7,11 @@ namespace App\Eloquents;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EloquentFavoriteTennisPlayer extends Model
+class EloquentFavoritePlayer extends Model
 {
     use HasFactory;
 
-    protected $table = 'favorite_tennis_players';
+    protected $table = 'favorite_players';
 
     public $timestamps = true;
 
@@ -26,6 +26,6 @@ class EloquentFavoriteTennisPlayer extends Model
 
     public function player()
     {
-        return $this->belongsTo(EloquentTennisPlayer::class);
+        return $this->belongsTo(EloquentPlayer::class);
     }
 }

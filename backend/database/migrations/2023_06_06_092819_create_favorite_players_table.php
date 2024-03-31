@@ -13,20 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('favorite_tennis_players', function (Blueprint $table) {
+        Schema::create('favorite_players', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
                 ->constrained('users')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->string('tennis_player_id')->comment('選手ID');
-            $table->foreign('tennis_player_id')
+            $table->string('player_id')->comment('選手ID');
+            $table->foreign('player_id')
                 ->references('id')
-                ->on('tennis_players')
+                ->on('players')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             // 複合ユニーク制約を追加
-            $table->unique(['tennis_player_id', 'user_id']);
+            $table->unique(['player_id', 'user_id']);
             $table->timestamps();
         });
     }

@@ -23,6 +23,6 @@ class EloquentTennisRanking extends Model
 
     public function player()
     {
-        return $this->belongsTo(EloquentTennisPlayer::class);
+        return $this->belongsTo(EloquentPlayer::class);
     }
 }

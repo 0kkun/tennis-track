@@ -128,7 +128,7 @@ final class TennisRanking
     {
         return [
             'id' => $this->id->toInt(),
-            'tennis_player_id' => $this->playerId->toString(),
+            'player_id' => $this->playerId->toString(),
             'type' => $this->type->toString(),
             'rank' => $this->rank->toInt(),
             'movement' => $this->movement->toInt(),

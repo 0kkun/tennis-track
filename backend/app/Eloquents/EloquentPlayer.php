@@ -8,15 +8,17 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EloquentTennisPlayer extends Model
+class EloquentPlayer extends Model
 {
     use HasFactory;
 
-    protected $table = 'tennis_players';
+    protected $table = 'players';
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
 
     public $timestamps = true;
-
-    protected $guarded = ['id'];
 
     public const ITEM_PER_PAGE = 20;
 

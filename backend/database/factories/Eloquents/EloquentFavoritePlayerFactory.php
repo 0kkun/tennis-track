@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Eloquents;
 
-use App\Eloquents\EloquentFavoriteTennisPlayer;
+use App\Eloquents\EloquentFavoritePlayer;
 use App\Eloquents\EloquentUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EloquentFavoritePlayerFactory extends Factory
 {
-    protected $model = EloquentFavoriteTennisPlayer::class;
+    protected $model = EloquentFavoritePlayer::class;
 
     /**
      * Define the model's default state.
@@ -20,7 +20,7 @@ class EloquentFavoritePlayerFactory extends Factory
      */
     public function definition()
     {
-        $playerIds = EloquentFavoriteTennisPlayer::where('sport_category_id', 1)->limit(1000)->pluck('id');
+        $playerIds = EloquentFavoritePlayer::where('sport_category_id', 1)->limit(1000)->pluck('id');
 
         return [
             'user_id' => EloquentUser::first()->id,
