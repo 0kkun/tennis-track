@@ -22,11 +22,17 @@ final class Handedness
     private const LEFT = 'left';
 
     /**
+     * @var string
+     */
+    private const BOTH = 'both';
+
+    /**
      * @var string[]
      */
     private const VALUES = [
         self::RIGHT,
         self::LEFT,
+        self::BOTH,
     ];
 
     /**
@@ -54,6 +60,11 @@ final class Handedness
     public function isLeft(): bool
     {
         return $this->value === self::LEFT;
+    }
+
+    public function isBoth(): bool
+    {
+        return $this->value === self::BOTH;
     }
 
     /**

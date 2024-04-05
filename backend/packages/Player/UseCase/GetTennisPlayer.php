@@ -20,9 +20,9 @@ class GetTennisPlayer
 
     /**
      * @param TennisPlayers $players
-     * @return TennisPlayers
+     * @return array
      */
-    public function execute(): TennisPlayers
+    public function execute(): array
     {
         $sportCategoryId = 1;
         $players = $this->playerAdapterCommand->fetchBySportCategoryId($sportCategoryId);

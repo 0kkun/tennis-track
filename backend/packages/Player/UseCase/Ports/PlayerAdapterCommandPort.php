@@ -36,9 +36,9 @@ interface PlayerAdapterCommandPort
 
     /**
      * @param int $sportCategoryId
-     * @return TennisPlayers
+     * @return array
      */
-    public function fetchBySportCategoryId(int $sportCategoryId): TennisPlayers;
+    public function fetchBySportCategoryId(int $sportCategoryId): array;
 
     /**
      * upsertを行う.

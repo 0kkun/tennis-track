@@ -22,13 +22,13 @@ class PlayerAdapterCommand implements PlayerAdapterCommandPort
     /**
      * {@inheritDoc}
      */
-    public function fetchBySportCategoryId(int $sportCategoryId): TennisPlayers
+    public function fetchBySportCategoryId(int $sportCategoryId): array
     {
         $eloquentPlayers = $this->eloquentPlayer
             ->where('sport_category_id', $sportCategoryId)
             ->get();
 
-        return TennisPlayers::fromArray($eloquentPlayers->toArray());
+        return $eloquentPlayers->toArray();
     }
 
     /**

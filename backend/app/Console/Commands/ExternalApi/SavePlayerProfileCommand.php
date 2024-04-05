@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use TennisTrack\Player\Domain\Models\TennisPlayer;
 use TennisTrack\Player\Domain\Models\TennisPlayers;
+use TennisTrack\Player\UseCase\GetTennisPlayer;
 use TennisTrack\Player\UseCase\UpsertPlayer;
 use TennisTrack\SportRadar\Domain\Models\ApiName;
 use TennisTrack\SportRadar\Domain\Models\Endpoint;
@@ -23,10 +24,12 @@ class SavePlayerProfileCommand extends Command
      * @param ExternalApiServiceInterface $externalAPiService
      */
     public function __construct(
+        private GetTennisPlayer $getTennisPlayerUseCase,
         private UpsertPlayer $upsertPlayerUseCase,
         private ExternalApiServiceInterface $externalAPiService,
     ) {
         parent::__construct();
+        $this->getTennisPlayerUseCase = $getTennisPlayerUseCase;
         $this->upsertPlayerUseCase = $upsertPlayerUseCase;
         $this->externalAPiService = $externalAPiService;
     }
@@ -44,25 +47,39 @@ class SavePlayerProfileCommand extends Command
             // デフォルトはジョコビッチ
             $playerId = 'sr:competitor:14882';
         }
-        // 選手プロフィール取得のエンドポイント生成
-        $path = Endpoint::fromArray([
-            'api_name' => ApiName::playerProfile(),
-            'player_id_main' => $playerId,
-        ])->path();
+        $this->info('get existing players from db');
+        $existingPlayers = $this->getTennisPlayerUseCase->execute();
+        $chunk = array_chunk($existingPlayers, 50);
 
+        $progressBar = $this->output->createProgressBar(count($chunk));
+        $progressBar->start();
+
+        // FIXME: APIの制限があるため、必要な分だけ取得するように修正する
         try {
-            $result = $this->externalAPiService->execute($path);
-            if (array_key_exists('player', $result)) {
-                $player = $this->makePlayerFromResponse($result['player']);
-                $this->upsertPlayerUseCase->execute(TennisPlayers::fromArray([$player]));
+            $players = [];
+            foreach ($chunk[0] as $existingPlayer) {
+                $path = Endpoint::fromArray([
+                    'api_name' => ApiName::playerProfile(),
+                    'player_id_main' => $existingPlayer['id'],
+                ])->path();
+                $result = $this->externalAPiService->execute($path);
+                if (array_key_exists('player', $result)) {
+                    $players[] = $this->makePlayerFromResponse($result['player']);
+                    $progressBar->advance(1);
+                }
             }
         } catch (\Exception $e) {
+            $progressBar->finish();
+            $this->error($e->getMessage());
             $logger->exception($e);
 
             return;
         }
 
+        $this->info('insert new players from db');
+        $this->upsertPlayerUseCase->execute(TennisPlayers::fromArray($players));
         $this->info('[ Finish ]');
+        $progressBar->finish();
         $logger->success();
     }
 
@@ -72,20 +89,22 @@ class SavePlayerProfileCommand extends Command
      */
     private function makePlayerFromResponse(array $playerResponse): TennisPlayer
     {
+        $birthday = array_key_exists('date_of_birth', $playerResponse) ? Carbon::parse($playerResponse['date_of_birth']) : null;
+
         return TennisPlayer::fromArray([
             'id' => $playerResponse['id'],
             'name_ja' => $playerResponse['name'],
-            'country' => $playerResponse['nationality'],
-            'country_code' => $playerResponse['country_code'],
-            'abbreviation' => $playerResponse['abbreviation'],
+            'country' => $playerResponse['nationality'] ?? null,
+            'country_code' => $playerResponse['country_code'] ?? null,
+            'abbreviation' => $playerResponse['abbreviation'] ?? null,
             'gender' => $playerResponse['gender'],
-            'birthday' => Carbon::parse($playerResponse['date_of_birth']),
-            'pro_year' => $playerResponse['pro_year'],
-            'handedness' => $playerResponse['handedness'],
-            'height' => $playerResponse['height'],
-            'weight' => $playerResponse['weight'],
-            'highest_singles_ranking' => $playerResponse['highest_singles_ranking'],
-            'highest_doubles_ranking' => $playerResponse['highest_doubles_ranking'],
+            'birthday' => $birthday,
+            'pro_year' => $playerResponse['pro_year'] ?? null,
+            'handedness' => $playerResponse['handedness'] ?? null,
+            'height' => $playerResponse['height'] ?? null,
+            'weight' => $playerResponse['weight'] ?? null,
+            'highest_singles_ranking' => $playerResponse['highest_singles_ranking'] ?? null,
+            'highest_doubles_ranking' => $playerResponse['highest_doubles_ranking'] ?? null,
         ]);
     }
 }
