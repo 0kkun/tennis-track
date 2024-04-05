@@ -1,0 +1,33 @@
+post:
+  summary: ユーザーログイン
+  operationId: post-api-v1-user-auth-login
+  description: ユーザーログインを行う
+  tags:
+    - Auth
+  parameters:
+    - $ref: '../../../../index.yaml#/components/userAgent'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../../../index.yaml#/components/schemas/UserPostLogin'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '../../../../index.yaml#/components/schemas/Response'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '../../../../index.yaml#/components/schemas/UserToken'
+    '401':
+      $ref: '../../../../index.yaml#/components/responses/401Unauthorized'
+    '422':
+      $ref: '#/components/responses/422InvalidRequest'
+    '500':
+      $ref: '#/components/responses/500InternalServerError'

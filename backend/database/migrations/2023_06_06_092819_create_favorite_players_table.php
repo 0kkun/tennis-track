@@ -19,8 +19,10 @@ return new class extends Migration
                 ->constrained('users')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->foreignId('player_id')
-                ->constrained('players')
+            $table->string('player_id')->comment('選手ID');
+            $table->foreign('player_id')
+                ->references('id')
+                ->on('players')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             // 複合ユニーク制約を追加

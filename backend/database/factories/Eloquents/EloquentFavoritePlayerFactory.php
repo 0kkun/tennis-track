@@ -3,7 +3,6 @@
 namespace Database\Factories\Eloquents;
 
 use App\Eloquents\EloquentFavoritePlayer;
-use App\Eloquents\EloquentPlayer;
 use App\Eloquents\EloquentUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,7 +20,7 @@ class EloquentFavoritePlayerFactory extends Factory
      */
     public function definition()
     {
-        $playerIds = EloquentPlayer::where('sport_category_id', 1)->limit(1000)->pluck('id');
+        $playerIds = EloquentFavoritePlayer::where('sport_category_id', 1)->limit(1000)->pluck('id');
 
         return [
             'user_id' => EloquentUser::first()->id,

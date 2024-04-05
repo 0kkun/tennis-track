@@ -29,7 +29,7 @@ services:
     image: stoplight/prism:3
     container_name: "swagger-api"
     ports:
-      - "10083:4010"
+      - "4010:4010"
     command: mock -h 0.0.0.0 /api_spec.yaml
     volumes:
       - ./src/api_spec.yaml:/api_spec.yaml

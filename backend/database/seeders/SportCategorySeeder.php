@@ -14,8 +14,8 @@ class SportCategorySeeder extends Seeder
      */
     public function run()
     {
-        EloquentSportCategory::factory()->create(['name' => 'テニス']);
-        EloquentSportCategory::factory()->create(['name' => 'サッカー']);
-        EloquentSportCategory::factory()->create(['name' => '野球']);
+        EloquentSportCategory::factory()->create(['name' => 'Tennis']);
+        EloquentSportCategory::factory()->create(['name' => 'Soccer']);
+        EloquentSportCategory::factory()->create(['name' => 'Baseball']);
     }
 }

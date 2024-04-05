@@ -14,24 +14,25 @@ return new class extends Migration
     public function up()
     {
         Schema::create('players', function (Blueprint $table) {
-            $table->comment('テニス選手管理テーブル');
-            $table->id();
-            $table->string('name_en', 100)->comment('選手名(英)');
-            $table->string('name_jp', 100)->nullable()->comment('選手名(和)');
-            $table->string('country', 100)->nullable()->comment('出身');
-            $table->string('link', 2000)->nullable()->comment('選手情報詳細サイトのリンク');
+            $table->comment('選手管理テーブル');
+            $table->string('id')->primary();
+            $table->string('name_en', 100)->nullable()->comment('選手名(英)');
+            $table->string('name_ja', 100)->nullable()->comment('選手名(和)');
+            $table->string('country', 100)->nullable()->comment('出身国');
+            $table->string('country_code', 100)->nullable()->comment('出身国コード');
+            $table->string('abbreviation', 100)->nullable()->comment('略称');
+            $table->unsignedTinyInteger('gender')->nullable()->comment('性別[0:男/1:女]');
             $table->date('birthday')->nullable()->comment('生年月日');
+            $table->year('pro_year')->nullable()->comment('プロ転向年');
+            $table->unsignedTinyInteger('handedness')->nullable()->comment('利き腕[0:右/1:左]');
             $table->unsignedInteger('weight')->nullable()->comment('体重[Kg]');
             $table->unsignedFloat('height')->nullable()->comment('身長[cm]');
-            $table->year('turn_to_pro_year')->nullable()->comment('プロ転向年');
-            $table->unsignedTinyInteger('gender')->nullable()->comment('性別[0:男/1:女]');
-            $table->unsignedTinyInteger('dominant_arm')->nullable()->comment('利き腕[0:右/1:左]');
-            $table->unsignedTinyInteger('backhand_style')->nullable()->comment('バックハンド[0:片手/1:両手]');
+            $table->unsignedInteger('highest_singles_ranking')->nullable()->comment('生涯最高シングルスランク');
+            $table->unsignedInteger('highest_doubles_ranking')->nullable()->comment('生涯最高シングルスランク');
             $table->foreignId('sport_category_id')
                 ->constrained('sport_categories')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->unique(['name_en', 'sport_category_id']);
             $table->timestamps();
         });
     }

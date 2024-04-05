@@ -1,0 +1,16 @@
+description: 一時的にサービス提供ができない場合。（メンテナンス等）
+content:
+  application/json:
+    schema:
+      allOf:
+        - type: object
+          properties:
+            data:
+              type: object
+        - $ref: '../schemas/common/Response.yaml'
+    examples:
+      Server error:
+        value:
+          data: {}
+          status: 503
+          message: Server Unavailable. Contact your server administrator.

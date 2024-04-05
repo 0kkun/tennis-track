@@ -14,9 +14,11 @@ class EloquentPlayer extends Model
 
     protected $table = 'players';
 
-    public $timestamps = true;
+    public $incrementing = false;
 
-    protected $guarded = ['id'];
+    protected $keyType = 'string';
+
+    public $timestamps = true;
 
     public const ITEM_PER_PAGE = 20;
 
