@@ -17,7 +17,7 @@ class GetTennisPlayerTest extends TestCase
         $playerAdapterCommandMock->expects($this->once())
             ->method('fetchBySportCategoryId')
             ->with($this->equalTo(1))
-            ->willReturn(TennisPlayers::fromArray([]));
+            ->willReturn([]);
 
         $getTennisPlayer = new GetTennisPlayer($playerAdapterCommandMock);
 
