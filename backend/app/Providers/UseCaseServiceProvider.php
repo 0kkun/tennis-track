@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Adapter\Player\PlayerCommandAdapter;
 use App\Adapter\Player\PlayerQueryAdapter;
-use App\Adapter\Ranking\TennisRankingAdapterCommand;
+use App\Adapter\Ranking\TennisRankingCommandAdapter;
 use Illuminate\Support\ServiceProvider;
 use TennisTrack\Player\UseCase\GetTennisPlayerList;
 use TennisTrack\Player\UseCase\UpsertPlayer;
@@ -32,7 +32,7 @@ class UseCaseServiceProvider extends ServiceProvider
         // Ranking
         $this->app->bind(InsertTennisRanking::class, function ($app) {
             return new InsertTennisRanking(
-                $app->make(TennisRankingAdapterCommand::class)
+                $app->make(TennisRankingCommandAdapter::class)
             );
         });
     }

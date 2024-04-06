@@ -6,9 +6,9 @@ namespace App\Adapter\Ranking;
 
 use App\Eloquents\EloquentTennisRanking;
 use TennisTrack\Ranking\Domain\Models\TennisRankings;
-use TennisTrack\Ranking\UseCase\Ports\TennisRankingAdapterCommandPort;
+use TennisTrack\Ranking\UseCase\Ports\TennisRankingCommandPort;
 
-class TennisRankingAdapterCommand implements TennisRankingAdapterCommandPort
+class TennisRankingCommandAdapter implements TennisRankingCommandPort
 {
     /**
      * @param EloquentTennisRanking $eloquentTennisRanking

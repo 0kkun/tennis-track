@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Adapter\Ranking;
 
-use App\Adapter\Ranking\TennisRankingAdapterCommand;
+use App\Adapter\Ranking\TennisRankingCommandAdapter;
 use App\Eloquents\EloquentPlayer;
 use App\Eloquents\EloquentSportCategory;
 use App\Eloquents\EloquentTennisRanking;
@@ -13,13 +13,13 @@ use TennisTrack\Ranking\Domain\Models\TennisRanking;
 use TennisTrack\Ranking\Domain\Models\TennisRankings;
 use Tests\TestCase;
 
-class TennisRankingAdapterCommandTest extends TestCase
+class TennisRankingCommandAdapterTest extends TestCase
 {
     use RefreshDatabase;
 
     public function testUpsertTennisRanking(): void
     {
-        $tennisRankingAdapterCommand = new TennisRankingAdapterCommand(new EloquentTennisRanking());
+        $tennisRankingCommand = new TennisRankingCommandAdapter(new EloquentTennisRanking());
         $sportCategory = EloquentSportCategory::factory()->create();
         $player1 = EloquentPlayer::factory()->create(['id' => 'test1', 'sport_category_id' => $sportCategory->id]);
         $player2 = EloquentPlayer::factory()->create(['id' => 'test2', 'sport_category_id' => $sportCategory->id]);
@@ -48,7 +48,7 @@ class TennisRankingAdapterCommandTest extends TestCase
         ]);
         $rankings = TennisRankings::fromArray([$ranking1, $ranking2, $ranking3]);
 
-        $tennisRankingAdapterCommand->upsert($rankings);
+        $tennisRankingCommand->upsert($rankings);
 
         $this->assertDatabaseCount('tennis_rankings', 3);
         $this->assertDatabaseHas('tennis_rankings', ['rank' => 1]);
