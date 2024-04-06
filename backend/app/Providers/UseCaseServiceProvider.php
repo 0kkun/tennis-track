@@ -8,7 +8,7 @@ use App\Adapter\Ranking\TennisRankingCommandAdapter;
 use Illuminate\Support\ServiceProvider;
 use TennisTrack\Player\UseCase\GetTennisPlayerList;
 use TennisTrack\Player\UseCase\UpsertPlayer;
-use TennisTrack\Ranking\UseCase\InsertTennisRanking;
+use TennisTrack\Ranking\UseCase\UpsertTennisRanking;
 
 class UseCaseServiceProvider extends ServiceProvider
 {
@@ -30,8 +30,8 @@ class UseCaseServiceProvider extends ServiceProvider
         });
 
         // Ranking
-        $this->app->bind(InsertTennisRanking::class, function ($app) {
-            return new InsertTennisRanking(
+        $this->app->bind(UpsertTennisRanking::class, function ($app) {
+            return new UpsertTennisRanking(
                 $app->make(TennisRankingCommandAdapter::class)
             );
         });

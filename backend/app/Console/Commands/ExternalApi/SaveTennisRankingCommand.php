@@ -15,7 +15,7 @@ use TennisTrack\Player\UseCase\UpsertPlayer;
 use TennisTrack\Ranking\Domain\Models\TennisRanking;
 use TennisTrack\Ranking\Domain\Models\TennisRankings;
 use TennisTrack\Ranking\Domain\Models\Type;
-use TennisTrack\Ranking\UseCase\InsertTennisRanking;
+use TennisTrack\Ranking\UseCase\UpsertTennisRanking;
 use TennisTrack\SportRadar\Domain\Models\ApiName;
 use TennisTrack\SportRadar\Domain\Models\Endpoint;
 
@@ -27,14 +27,19 @@ class SaveTennisRankingCommand extends Command
 
     private $generatedAt;
 
+    /**
+     * @param ExternalApiServiceInterface $externalAPiService
+     * @param UpsertTennisRanking $upsertTennisRankingUseCase
+     * @param UpsertPlayer $upsertPlayerUseCase
+     */
     public function __construct(
         private ExternalApiServiceInterface $externalAPiService,
-        private InsertTennisRanking $insertTennisRankingUseCase,
+        private UpsertTennisRanking $upsertTennisRankingUseCase,
         private UpsertPlayer $upsertPlayerUseCase
     ) {
         parent::__construct();
         $this->externalAPiService = $externalAPiService;
-        $this->insertTennisRankingUseCase = $insertTennisRankingUseCase;
+        $this->upsertTennisRankingUseCase = $upsertTennisRankingUseCase;
         $this->upsertPlayerUseCase = $upsertPlayerUseCase;
     }
 
@@ -69,7 +74,7 @@ class SaveTennisRankingCommand extends Command
 
         DB::transaction(function () use ($tennisRankings, $players) {
             $this->upsertPlayerUseCase->execute(TennisPlayers::fromArray($players));
-            $this->insertTennisRankingUseCase->execute(TennisRankings::fromArray($tennisRankings));
+            $this->upsertTennisRankingUseCase->execute(TennisRankings::fromArray($tennisRankings));
         });
 
         $this->info('[ Finish ]');

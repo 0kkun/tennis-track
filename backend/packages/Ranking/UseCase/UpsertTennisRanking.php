@@ -7,7 +7,7 @@ namespace TennisTrack\Ranking\UseCase;
 use TennisTrack\Ranking\Domain\Models\TennisRankings;
 use TennisTrack\Ranking\UseCase\Ports\TennisRankingCommandPort;
 
-class InsertTennisRanking
+class UpsertTennisRanking
 {
     /**
      * @param TennisRankingCommandPort $tennisRankingAdapterCommand

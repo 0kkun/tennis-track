@@ -112,7 +112,7 @@ final class TennisRanking
         return new self(
             Id::from($data['id'] ?? 0),
             PlayerId::from($data['player_id'] ?? ''),
-            Type::from($data['type']),
+            Type::from($data['type'] ?? ''),
             Rank::from($data['rank'] ?? 0),
             Movement::from($data['movement'] ?? 0),
             PlayedCount::from($data['played_count'] ?? 0),
