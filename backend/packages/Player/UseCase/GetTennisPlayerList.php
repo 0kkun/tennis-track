@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace TennisTrack\Player\UseCase;
 
 use TennisTrack\Player\Domain\Models\TennisPlayers;
-use TennisTrack\Player\UseCase\Ports\PlayerAdapterCommandPort;
+use TennisTrack\Player\UseCase\Ports\PlayerQueryPort;
 
-class GetTennisPlayer
+class GetTennisPlayerList
 {
     /**
-     * @param PlayerAdapterCommandPort $playerAdapterCommand
+     * @param PlayerQueryPort $playerQuery
      */
     public function __construct(
-        private PlayerAdapterCommandPort $playerAdapterCommand
+        private PlayerQueryPort $playerQuery
     ) {
-        $this->playerAdapterCommand = $playerAdapterCommand;
+        $this->playerQuery = $playerQuery;
     }
 
     /**
@@ -25,7 +25,7 @@ class GetTennisPlayer
     public function execute(): array
     {
         $sportCategoryId = 1;
-        $players = $this->playerAdapterCommand->fetchBySportCategoryId($sportCategoryId);
+        $players = $this->playerQuery->fetchBySportCategoryId($sportCategoryId);
 
         return $players;
     }

@@ -7,7 +7,7 @@ namespace TennisTrack\Player\UseCase\Ports;
 use TennisTrack\Player\Domain\Models\Id;
 use TennisTrack\Player\Domain\Models\TennisPlayers;
 
-interface PlayerAdapterCommandPort
+interface PlayerCommandPort
 {
     // /**
     //  * @param Player $player
@@ -33,12 +33,6 @@ interface PlayerAdapterCommandPort
     //  * @return Player
     //  */
     // public function getByIdWithSportCategory(Id $id): Player;
-
-    /**
-     * @param int $sportCategoryId
-     * @return array
-     */
-    public function fetchBySportCategoryId(int $sportCategoryId): array;
 
     /**
      * upsertを行う.

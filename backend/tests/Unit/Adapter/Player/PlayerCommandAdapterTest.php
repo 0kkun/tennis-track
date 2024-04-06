@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Adapter\Player;
 
-use App\Adapter\Player\PlayerAdapterCommand;
+use App\Adapter\Player\PlayerCommandAdapter;
 use App\Eloquents\EloquentPlayer;
 use App\Eloquents\EloquentSportCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -12,13 +12,13 @@ use TennisTrack\Player\Domain\Models\TennisPlayer;
 use TennisTrack\Player\Domain\Models\TennisPlayers;
 use Tests\TestCase;
 
-class PlayerAdapterCommandTest extends TestCase
+class PlayerCommandAdapterTest extends TestCase
 {
     use RefreshDatabase;
 
     public function testUpsertPlayers(): void
     {
-        $playerAdapterCommand = new PlayerAdapterCommand(new EloquentPlayer());
+        $playerAdapterCommand = new PlayerCommandAdapter(new EloquentPlayer());
         $sportCategory = EloquentSportCategory::factory()->create();
 
         $player1 = TennisPlayer::fromArray(['id' => 'test1', 'sport_category_id' => $sportCategory->id]);

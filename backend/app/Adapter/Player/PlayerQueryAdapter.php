@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Adapter\Player;
 
 use App\Eloquents\EloquentPlayer;
-use TennisTrack\Player\Domain\Models\TennisPlayers;
-use TennisTrack\Player\UseCase\Ports\PlayerAdapterCommandPort;
+use TennisTrack\Player\UseCase\Ports\PlayerQueryPort;
 
-class PlayerAdapterCommand implements PlayerAdapterCommandPort
+class PlayerQueryAdapter implements PlayerQueryPort
 {
     /**
      * @param EloquentPlayer $eloquentPlayer
@@ -29,14 +28,5 @@ class PlayerAdapterCommand implements PlayerAdapterCommandPort
             ->get();
 
         return $eloquentPlayers->toArray();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function upsertByKeys(TennisPlayers $players, array $keys): void
-    {
-        $playersArray = $players->toArray();
-        $this->eloquentPlayer->upsert($playersArray, $keys);
     }
 }

@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
-use App\Adapter\Player\PlayerAdapterCommand;
+use App\Adapter\Player\PlayerCommandAdapter;
+use App\Adapter\Player\PlayerQueryAdapter;
 use App\Adapter\Ranking\TennisRankingAdapterCommand;
 use Illuminate\Support\ServiceProvider;
-use TennisTrack\Player\UseCase\GetTennisPlayer;
+use TennisTrack\Player\UseCase\GetTennisPlayerList;
 use TennisTrack\Player\UseCase\UpsertPlayer;
 use TennisTrack\Ranking\UseCase\InsertTennisRanking;
 
@@ -19,12 +20,12 @@ class UseCaseServiceProvider extends ServiceProvider
         // Player
         $this->app->bind(UpsertPlayer::class, function ($app) {
             return new UpsertPlayer(
-                $app->make(PlayerAdapterCommand::class)
+                $app->make(PlayerCommandAdapter::class)
             );
         });
-        $this->app->bind(GetTennisPlayer::class, function ($app) {
-            return new GetTennisPlayer(
-                $app->make(PlayerAdapterCommand::class)
+        $this->app->bind(GetTennisPlayerList::class, function ($app) {
+            return new GetTennisPlayerList(
+                $app->make(PlayerQueryAdapter::class)
             );
         });
 

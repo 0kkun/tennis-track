@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace TennisTrack\Player\UseCase;
 
 use TennisTrack\Player\Domain\Models\TennisPlayers;
-use TennisTrack\Player\UseCase\Ports\PlayerAdapterCommandPort;
+use TennisTrack\Player\UseCase\Ports\PlayerCommandPort;
 
 class UpsertPlayer
 {
     /**
-     * @param PlayerAdapterCommandPort $playerAdapterCommand
+     * @param PlayerCommandPort $playerCommand
      */
     public function __construct(
-        private PlayerAdapterCommandPort $playerAdapterCommand
+        private PlayerCommandPort $playerCommand
     ) {
-        $this->playerAdapterCommand = $playerAdapterCommand;
+        $this->playerCommand = $playerCommand;
     }
 
     /**
@@ -24,6 +24,6 @@ class UpsertPlayer
      */
     public function execute(TennisPlayers $players): void
     {
-        $this->playerAdapterCommand->upsertByKeys($players, ['id']);
+        $this->playerCommand->upsertByKeys($players, ['id']);
     }
 }
