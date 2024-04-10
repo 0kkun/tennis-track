@@ -6,8 +6,8 @@ namespace Tests\Unit\Adapter\SportCategory;
 
 use App\Adapter\SportCategory\SportCategoryQueryAdapter;
 use App\Eloquents\EloquentSportCategory;
-use TennisTrack\SportCategory\Domain\Models\SportCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use TennisTrack\SportCategory\Domain\Models\SportCategory;
 use Tests\TestCase;
 
 class SportCategoryQueryAdapterTest extends TestCase

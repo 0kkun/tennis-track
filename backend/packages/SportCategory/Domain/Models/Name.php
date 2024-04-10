@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace TennisTrack\SportCategory\Domain\Models;
 
-use TennisTrack\Common\ValueObject\ValueObjectString;
 use TennisTrack\Common\Exceptions\InvalidArgumentException;
+use TennisTrack\Common\ValueObject\ValueObjectString;
 
 final class Name
 {
@@ -13,8 +13,10 @@ final class Name
 
     /** @var string */
     private const TENNIS = 'Tennis';
+
     /** @var string */
     private const SOCCER = 'Soccer';
+
     /** @var string */
     private const BASEBALL = 'BaseBall';
 
@@ -30,14 +32,14 @@ final class Name
      */
     private function __construct(string $value)
     {
-        if (!in_array($value, self::CATEGORY_NAMES, true)) {
+        if (! in_array($value, self::CATEGORY_NAMES, true)) {
             throw new InvalidArgumentException('Invalid category name');
         }
         $this->value = $value;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function asTennis(): self
     {
@@ -45,7 +47,7 @@ final class Name
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function asSoccer(): self
     {
@@ -53,7 +55,7 @@ final class Name
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function asBaseBall(): self
     {
@@ -61,7 +63,7 @@ final class Name
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isTennis(): bool
     {
@@ -69,7 +71,7 @@ final class Name
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isSoccer(): bool
     {
@@ -77,7 +79,7 @@ final class Name
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isBaseBall(): bool
     {

@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Eloquents\EloquentSportCategory;
-use TennisTrack\SportCategory\Domain\Models\SportCategory;
 use Illuminate\Database\Seeder;
+use TennisTrack\SportCategory\Domain\Models\SportCategory;
 
 class SportCategorySeeder extends Seeder
 {

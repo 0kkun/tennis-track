@@ -2,10 +2,9 @@
 
 namespace Tests\Packages\SportCategory\Domain\Models;
 
-
+use PHPUnit\Framework\TestCase;
 use TennisTrack\Common\Exceptions\InvalidArgumentException;
 use TennisTrack\SportCategory\Domain\Models\Name;
-use PHPUnit\Framework\TestCase;
 
 class NameTest extends TestCase
 {

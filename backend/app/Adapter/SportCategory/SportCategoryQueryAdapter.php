@@ -27,6 +27,7 @@ class SportCategoryQueryAdapter implements SportCategoryQueryPort
         $result = $this->eloquentSportCategory
             ->where('name', $name)
             ->first();
+
         return SportCategory::fromArray($result->toArray());
     }
 }
