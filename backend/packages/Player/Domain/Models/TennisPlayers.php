@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace TennisTrack\Player\Domain\Models;
 
-use PhpParser\Node\Expr\Instanceof_;
-use TennisTrack\Common\Exceptions\InvalidArgumentException;
-
 // NOTE: 使い方
 // $players = new PlayerList([$player1, $player2, $player3]);
 // foreach ($players as $player) {
@@ -33,7 +30,7 @@ final class TennisPlayers implements \IteratorAggregate
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function count(): int
     {
@@ -63,6 +60,7 @@ final class TennisPlayers implements \IteratorAggregate
                 $items[] = $player;
             }
         }
+
         return new self($items);
     }
 
