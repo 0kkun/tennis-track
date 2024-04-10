@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TennisTrack\Player\Domain\Models;
 
 use Carbon\Carbon;
+use TennisTrack\SportCategory\Domain\Models\Id as SportCategoryId;
 
 final class TennisPlayer
 {
@@ -23,7 +24,7 @@ final class TennisPlayer
         private Weight $weight,
         private HighestSinglesRanking $highestSinglesRanking,
         private HighestDoublesRanking $highestDoublesRanking,
-        private int $sportCategoryId = 1
+        private SportCategoryId $sportCategoryId = 1
     ) {
         $this->id = $id;
         $this->nameEn = $nameEn;
@@ -180,7 +181,7 @@ final class TennisPlayer
             Weight::from($data['weight'] ?? null),
             HighestSinglesRanking::from($data['highest_singles_ranking'] ?? null),
             HighestDoublesRanking::from($data['highest_doubles_ranking'] ?? null),
-            $data['sport_category_id'] ?? 1,
+            SportCategoryId::from(['sport_category_id'] ?? 0),
         );
     }
 
@@ -212,7 +213,7 @@ final class TennisPlayer
             'weight' => $this->weight->toInt(),
             'highest_singles_ranking' => $this->highestSinglesRanking->toInt(),
             'highest_doubles_ranking' => $this->highestDoublesRanking->toInt(),
-            'sport_category_id' => $this->sportCategoryId,
+            'sport_category_id' => $this->sportCategoryId->toInt(),
         ];
     }
 }
