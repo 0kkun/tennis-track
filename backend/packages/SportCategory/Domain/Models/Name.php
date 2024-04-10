@@ -39,25 +39,25 @@ final class Name
     }
 
     /**
-     * @return bool
+     * @return self
      */
-    public function asTennis(): self
+    public static function asTennis(): self
     {
         return new self(self::TENNIS);
     }
 
     /**
-     * @return bool
+     * @return self
      */
-    public function asSoccer(): self
+    public static function asSoccer(): self
     {
         return new self(self::SOCCER);
     }
 
     /**
-     * @return bool
+     * @return self
      */
-    public function asBaseBall(): self
+    public static function asBaseBall(): self
     {
         return new self(self::BASEBALL);
     }

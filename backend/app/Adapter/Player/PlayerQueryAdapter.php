@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Adapter\Player;
 
 use App\Eloquents\EloquentPlayer;
+use TennisTrack\SportCategory\Domain\Models\Id as SportCategoryId;
 use TennisTrack\Player\UseCase\Ports\PlayerQueryPort;
 
 class PlayerQueryAdapter implements PlayerQueryPort
@@ -21,10 +22,10 @@ class PlayerQueryAdapter implements PlayerQueryPort
     /**
      * {@inheritDoc}
      */
-    public function fetchBySportCategoryId(int $sportCategoryId): array
+    public function fetchBySportCategoryId(SportCategoryId $sportCategoryId): array
     {
         $eloquentPlayers = $this->eloquentPlayer
-            ->where('sport_category_id', $sportCategoryId)
+            ->where('sport_category_id', $sportCategoryId->toInt())
             ->get();
 
         return $eloquentPlayers->toArray();

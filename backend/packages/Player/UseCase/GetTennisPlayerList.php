@@ -6,16 +6,21 @@ namespace TennisTrack\Player\UseCase;
 
 use TennisTrack\Player\Domain\Models\TennisPlayers;
 use TennisTrack\Player\UseCase\Ports\PlayerQueryPort;
+use TennisTrack\SportCategory\Domain\Models\Name as SportCategoryName;
+use TennisTrack\SportCategory\UseCase\Ports\SportCategoryQueryPort;
 
 class GetTennisPlayerList
 {
     /**
      * @param PlayerQueryPort $playerQuery
+     * @param SportCategoryQueryPort $sportCategoryQuery
      */
     public function __construct(
-        private PlayerQueryPort $playerQuery
+        private PlayerQueryPort $playerQuery,
+        private SportCategoryQueryPort $sportCategoryQuery
     ) {
         $this->playerQuery = $playerQuery;
+        $this->sportCategoryQuery = $sportCategoryQuery;
     }
 
     /**
@@ -24,8 +29,8 @@ class GetTennisPlayerList
      */
     public function execute(): array
     {
-        $sportCategoryId = 1;
-        $players = $this->playerQuery->fetchBySportCategoryId($sportCategoryId);
+        $sportCategory = $this->sportCategoryQuery->getByName(SportCategoryName::asTennis()->toString());
+        $players = $this->playerQuery->fetchBySportCategoryId($sportCategory->id());
 
         return $players;
     }
