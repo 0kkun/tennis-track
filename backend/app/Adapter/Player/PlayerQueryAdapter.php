@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Adapter\Player;
 
 use App\Eloquents\EloquentPlayer;
-use TennisTrack\SportCategory\Domain\Models\Id as SportCategoryId;
 use TennisTrack\Player\UseCase\Ports\PlayerQueryPort;
+use TennisTrack\SportCategory\Domain\Models\Id as SportCategoryId;
 
 class PlayerQueryAdapter implements PlayerQueryPort
 {

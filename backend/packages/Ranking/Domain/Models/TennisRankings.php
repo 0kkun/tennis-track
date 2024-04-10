@@ -53,6 +53,16 @@ final class TennisRankings implements \IteratorAggregate
      */
     public function toArray(): array
     {
-        return array_map(fn (TennisRanking $ranking) => $ranking->toArray(), $this->rankings);
+        $rankingsArray = [];
+        foreach ($this->rankings as $ranking) {
+            if (is_array($ranking)) {
+                $rankingsArray[] = $ranking;
+
+                continue;
+            }
+            $rankingsArray[] = $ranking->toArray();
+        }
+
+        return $rankingsArray;
     }
 }

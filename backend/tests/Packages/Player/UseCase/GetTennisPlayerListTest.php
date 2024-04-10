@@ -7,9 +7,9 @@ namespace Tests\Packages\Player\UseCase;
 use PHPUnit\Framework\TestCase;
 use TennisTrack\Player\UseCase\GetTennisPlayerList;
 use TennisTrack\Player\UseCase\Ports\PlayerQueryPort;
-use TennisTrack\SportCategory\Domain\Models\SportCategory;
-use TennisTrack\SportCategory\Domain\Models\Name;
 use TennisTrack\SportCategory\Domain\Models\Id;
+use TennisTrack\SportCategory\Domain\Models\Name;
+use TennisTrack\SportCategory\Domain\Models\SportCategory;
 use TennisTrack\SportCategory\UseCase\Ports\SportCategoryQueryPort;
 
 class GetTennisPlayerListTest extends TestCase
