@@ -76,4 +76,13 @@ final class Gender
     {
         return new self(self::VALUES[$value]);
     }
+
+    public static function from(int|string|null $value): self
+    {
+        if (is_int($value)) {
+            return self::fromInt($value);
+        }
+
+        return new self($value);
+    }
 }

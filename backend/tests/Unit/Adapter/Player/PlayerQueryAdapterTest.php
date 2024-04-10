@@ -9,6 +9,8 @@ use App\Eloquents\EloquentPlayer;
 use App\Eloquents\EloquentSportCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use TennisTrack\SportCategory\Domain\Models\Id as SportCategoryId;
+use TennisTrack\Player\Domain\Models\TennisPlayer;
+use TennisTrack\Player\Domain\Models\Id;
 use Tests\TestCase;
 
 class PlayerQueryAdapterTest extends TestCase
@@ -28,5 +30,18 @@ class PlayerQueryAdapterTest extends TestCase
         $this->assertEquals(2, count($result));
         $this->assertEquals($player1->id, $result[0]['id']);
         $this->assertEquals($player2->id, $result[1]['id']);
+    }
+
+    public function testGetById(): void
+    {
+        $playerAdapterCommand = new PlayerQueryAdapter(new EloquentPlayer());
+        $sportCategory = EloquentSportCategory::factory()->create(['id' => 1, 'name' => 'Tennis']);
+        $player = EloquentPlayer::factory()->create(['id' => 'test1', 'sport_category_id' => $sportCategory->id]);
+
+        $id = Id::from($player->id);
+        $result = $playerAdapterCommand->getById($id);
+
+        $this->assertEquals($player->id, $result->id()->toString());
+        $this->assertInstanceOf(TennisPlayer::class, $result);
     }
 }

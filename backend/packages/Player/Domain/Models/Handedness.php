@@ -87,4 +87,17 @@ final class Handedness
     {
         return new self(self::VALUES[$value]);
     }
+
+    /**
+     * @param integer|string|null $value
+     * @return self
+     */
+    public static function from(int|string|null $value): self
+    {
+        if (is_int($value)) {
+            return self::fromInt($value);
+        }
+
+        return new self($value);
+    }
 }

@@ -6,6 +6,8 @@ namespace App\Adapter\Player;
 
 use App\Eloquents\EloquentPlayer;
 use TennisTrack\Player\UseCase\Ports\PlayerQueryPort;
+use TennisTrack\Player\Domain\Models\TennisPlayer;
+use TennisTrack\Player\Domain\Models\Id;
 use TennisTrack\SportCategory\Domain\Models\Id as SportCategoryId;
 
 class PlayerQueryAdapter implements PlayerQueryPort
@@ -29,5 +31,14 @@ class PlayerQueryAdapter implements PlayerQueryPort
             ->get();
 
         return $eloquentPlayers->toArray();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getById(Id $id): TennisPlayer
+    {
+        $eloquentPlayer = $this->eloquentPlayer->find($id->toString());
+        return TennisPlayer::fromArray($eloquentPlayer->toArray());
     }
 }

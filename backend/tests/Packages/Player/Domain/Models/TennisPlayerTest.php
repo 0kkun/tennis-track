@@ -114,10 +114,10 @@ class TennisPlayerTest extends TestCase
     public function testProYear()
     {
         $player = TennisPlayer::fromArray([
-            'pro_year' => 2020,
+            'pro_year' => '2020',
         ]);
         $this->assertInstanceOf(ProYear::class, $player->proYear());
-        $this->assertEquals(2020, $player->proYear()->toInt());
+        $this->assertEquals('2020', $player->proYear()->toString());
     }
 
     public function testHandedness()
@@ -132,10 +132,10 @@ class TennisPlayerTest extends TestCase
     public function testHeight()
     {
         $player = TennisPlayer::fromArray([
-            'height' => 180,
+            'height' => 180.0,
         ]);
         $this->assertInstanceOf(Height::class, $player->height());
-        $this->assertEquals(180, $player->height()->toInt());
+        $this->assertEquals(180, $player->height()->toFloat());
     }
 
     public function testWeight()
