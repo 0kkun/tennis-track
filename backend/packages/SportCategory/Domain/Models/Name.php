@@ -10,7 +10,7 @@ final class Name
 {
     use ValueObjectString;
 
-    private const TENNIS = 'tennis';
+    private const TENNIS = 'Tennis';
 
     private const CATEGORY_NAMES = [
         self::TENNIS,

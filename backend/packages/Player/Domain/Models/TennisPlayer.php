@@ -24,7 +24,7 @@ final class TennisPlayer
         private Weight $weight,
         private HighestSinglesRanking $highestSinglesRanking,
         private HighestDoublesRanking $highestDoublesRanking,
-        private SportCategoryId $sportCategoryId = 1
+        private SportCategoryId $sportCategoryId
     ) {
         $this->id = $id;
         $this->nameEn = $nameEn;
@@ -155,9 +155,12 @@ final class TennisPlayer
         return $this->highestDoublesRanking;
     }
 
-    public function sportCategoryId(): int
+    /**
+     * @return SportCategoryId
+     */
+    public function sportCategoryId(): SportCategoryId
     {
-        return 1;
+        return $this->sportCategoryId;
     }
 
     /**
@@ -181,7 +184,7 @@ final class TennisPlayer
             Weight::from($data['weight'] ?? null),
             HighestSinglesRanking::from($data['highest_singles_ranking'] ?? null),
             HighestDoublesRanking::from($data['highest_doubles_ranking'] ?? null),
-            SportCategoryId::from(['sport_category_id'] ?? 0),
+            SportCategoryId::from($data['sport_category_id'] ?? 0),
         );
     }
 

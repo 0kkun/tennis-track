@@ -6,7 +6,7 @@ use App\Eloquents\EloquentSportCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Eloquents\EloquentPlayer>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Eloquents\EloquentSportCategory>
  */
 class EloquentSportCategoryFactory extends Factory
 {
@@ -22,7 +22,7 @@ class EloquentSportCategoryFactory extends Factory
         $faker = $this->faker;
 
         return [
-            'name' => $faker->name(),
+            'name' => $faker->unique()->word(),
         ];
     }
 }
