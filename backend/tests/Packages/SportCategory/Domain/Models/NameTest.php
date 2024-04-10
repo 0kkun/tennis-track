@@ -35,7 +35,7 @@ class NameTest extends TestCase
 
     public function testGetCategoryNames()
     {
-        $categoryNames = Name::getCategoryNames();
+        $categoryNames = Name::getNames();
         $this->assertEquals(['Tennis', 'Soccer', 'BaseBall'], $categoryNames);
     }
 }

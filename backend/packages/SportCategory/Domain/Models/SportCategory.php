@@ -6,24 +6,27 @@ namespace TennisTrack\SportCategory\Domain\Models;
 
 final class SportCategory
 {
-    private Id $id;
-    private Name $name;
-
     /**
      * @param Id $id
      * @param Name $name
      */
-    private function __construct(Id $id, Name $name)
+    private function __construct(private Id $id, private Name $name)
     {
         $this->id = $id;
         $this->name = $name;
     }
 
+    /**
+     * @return Id
+     */
     public function id(): Id
     {
         return $this->id;
     }
 
+    /**
+     * @return Name
+     */
     public function name(): Name
     {
         return $this->name;
@@ -35,5 +38,13 @@ final class SportCategory
             Id::from($data['id']),
             Name::from($data['name'])
         );
+    }
+
+    /**
+     * @return array
+     */
+    public static function getNames(): array
+    {
+        return Name::getNames();
     }
 }

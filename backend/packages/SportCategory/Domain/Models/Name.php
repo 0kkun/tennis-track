@@ -87,7 +87,7 @@ final class Name
     /**
      * @return array
      */
-    public static function getCategoryNames(): array
+    public static function getNames(): array
     {
         return self::CATEGORY_NAMES;
     }

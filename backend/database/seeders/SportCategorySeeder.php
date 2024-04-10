@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Eloquents\EloquentSportCategory;
+use TennisTrack\SportCategory\Domain\Models\SportCategory;
 use Illuminate\Database\Seeder;
 
 class SportCategorySeeder extends Seeder
@@ -14,8 +15,8 @@ class SportCategorySeeder extends Seeder
      */
     public function run()
     {
-        EloquentSportCategory::factory()->create(['name' => 'Tennis']);
-        EloquentSportCategory::factory()->create(['name' => 'Soccer']);
-        EloquentSportCategory::factory()->create(['name' => 'Baseball']);
+        foreach (SportCategory::getNames() as $name) {
+            EloquentSportCategory::factory()->create(['name' => $name]);
+        }
     }
 }
