@@ -19,6 +19,11 @@ class SavePlayerProfileCommand extends Command
 
     protected $description = '選手のプロフィール情報を外部APIで取得し保存するコマンド';
 
+    /**
+     * @param GetTennisPlayerList $getTennisPlayerListUseCase
+     * @param UpsertPlayer $upsertPlayerUseCase
+     * @param ExternalApiServiceInterface $externalAPiService
+     */
     public function __construct(
         private GetTennisPlayerList $getTennisPlayerListUseCase,
         private UpsertPlayer $upsertPlayerUseCase,
@@ -47,13 +52,14 @@ class SavePlayerProfileCommand extends Command
         $existingPlayers = $this->getTennisPlayerListUseCase->execute();
         $chunk = array_chunk($existingPlayers, 50);
 
-        $progressBar = $this->output->createProgressBar(count($chunk));
+        $this->info(count($chunk));
+        $progressBar = $this->output->createProgressBar(50);
         $progressBar->start();
 
         // FIXME: APIの制限があるため、必要な分だけ取得するように修正する
         try {
             $players = [];
-            foreach ($chunk[0] as $existingPlayer) {
+            foreach ($chunk as $existingPlayer) {
                 $path = Endpoint::fromArray([
                     'api_name' => ApiName::playerProfile(),
                     'player_id_main' => $existingPlayer['id'],
