@@ -8,9 +8,9 @@ use App\Adapter\Player\PlayerQueryAdapter;
 use App\Eloquents\EloquentPlayer;
 use App\Eloquents\EloquentSportCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use TennisTrack\SportCategory\Domain\Models\Id as SportCategoryId;
-use TennisTrack\Player\Domain\Models\TennisPlayer;
 use TennisTrack\Player\Domain\Models\Id;
+use TennisTrack\Player\Domain\Models\TennisPlayer;
+use TennisTrack\SportCategory\Domain\Models\Id as SportCategoryId;
 use Tests\TestCase;
 
 class PlayerQueryAdapterTest extends TestCase

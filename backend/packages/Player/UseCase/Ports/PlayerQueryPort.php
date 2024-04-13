@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace TennisTrack\Player\UseCase\Ports;
 
-use TennisTrack\SportCategory\Domain\Models\Id as SportCategoryId;
 use TennisTrack\Player\Domain\Models\Id;
 use TennisTrack\Player\Domain\Models\TennisPlayer;
+use TennisTrack\SportCategory\Domain\Models\Id as SportCategoryId;
 
 interface PlayerQueryPort
 {

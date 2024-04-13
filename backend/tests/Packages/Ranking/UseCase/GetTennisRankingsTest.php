@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Packages\Ranking\UseCase;
 
-use TennisTrack\Ranking\Domain\Models\TennisRankings;
-use TennisTrack\Ranking\UseCase\Ports\TennisRankingQueryPort;
-use TennisTrack\Ranking\UseCase\GetTennisRankings;
 use PHPUnit\Framework\TestCase;
+use TennisTrack\Ranking\Domain\Models\TennisRankings;
+use TennisTrack\Ranking\UseCase\GetTennisRankings;
+use TennisTrack\Ranking\UseCase\Ports\TennisRankingQueryPort;
 
 class GetTennisRankingsTest extends TestCase
 {

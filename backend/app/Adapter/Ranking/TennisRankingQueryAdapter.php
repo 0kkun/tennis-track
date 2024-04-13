@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Adapter\Ranking;
 
 use App\Eloquents\EloquentTennisRanking;
+use TennisTrack\Ranking\Domain\Models\RankingDate;
 use TennisTrack\Ranking\Domain\Models\TennisRankings;
 use TennisTrack\Ranking\UseCase\Ports\TennisRankingQueryPort;
-use TennisTrack\Ranking\Domain\Models\RankingDate;
 
 class TennisRankingQueryAdapter implements TennisRankingQueryPort
 {

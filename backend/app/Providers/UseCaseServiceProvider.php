@@ -10,8 +10,8 @@ use App\Adapter\SportCategory\SportCategoryQueryAdapter;
 use Illuminate\Support\ServiceProvider;
 use TennisTrack\Player\UseCase\GetTennisPlayerList;
 use TennisTrack\Player\UseCase\UpsertPlayer;
-use TennisTrack\Ranking\UseCase\UpsertTennisRanking;
 use TennisTrack\Ranking\UseCase\GetTennisRankings;
+use TennisTrack\Ranking\UseCase\UpsertTennisRanking;
 
 class UseCaseServiceProvider extends ServiceProvider
 {

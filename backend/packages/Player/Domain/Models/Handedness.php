@@ -89,7 +89,7 @@ final class Handedness
     }
 
     /**
-     * @param integer|string|null $value
+     * @param int|string|null $value
      * @return self
      */
     public static function from(int|string|null $value): self
