@@ -2,12 +2,16 @@
 
 namespace App\Providers;
 
-use App\Adapter\Player\PlayerAdapterCommand;
-use App\Adapter\Ranking\TennisRankingAdapterCommand;
+use App\Adapter\Player\PlayerCommandAdapter;
+use App\Adapter\Player\PlayerQueryAdapter;
+use App\Adapter\Ranking\TennisRankingCommandAdapter;
+use App\Adapter\Ranking\TennisRankingQueryAdapter;
+use App\Adapter\SportCategory\SportCategoryQueryAdapter;
 use Illuminate\Support\ServiceProvider;
-use TennisTrack\Player\UseCase\GetTennisPlayer;
+use TennisTrack\Player\UseCase\GetTennisPlayerList;
 use TennisTrack\Player\UseCase\UpsertPlayer;
-use TennisTrack\Ranking\UseCase\InsertTennisRanking;
+use TennisTrack\Ranking\UseCase\GetTennisRankings;
+use TennisTrack\Ranking\UseCase\UpsertTennisRanking;
 
 class UseCaseServiceProvider extends ServiceProvider
 {
@@ -19,19 +23,25 @@ class UseCaseServiceProvider extends ServiceProvider
         // Player
         $this->app->bind(UpsertPlayer::class, function ($app) {
             return new UpsertPlayer(
-                $app->make(PlayerAdapterCommand::class)
+                $app->make(PlayerCommandAdapter::class)
             );
         });
-        $this->app->bind(GetTennisPlayer::class, function ($app) {
-            return new GetTennisPlayer(
-                $app->make(PlayerAdapterCommand::class)
+        $this->app->bind(GetTennisPlayerList::class, function ($app) {
+            return new GetTennisPlayerList(
+                $app->make(PlayerQueryAdapter::class),
+                $app->make(SportCategoryQueryAdapter::class)
             );
         });
 
         // Ranking
-        $this->app->bind(InsertTennisRanking::class, function ($app) {
-            return new InsertTennisRanking(
-                $app->make(TennisRankingAdapterCommand::class)
+        $this->app->bind(UpsertTennisRanking::class, function ($app) {
+            return new UpsertTennisRanking(
+                $app->make(TennisRankingCommandAdapter::class)
+            );
+        });
+        $this->app->bind(GetTennisRankings::class, function ($app) {
+            return new GetTennisRankings(
+                $app->make(TennisRankingQueryAdapter::class)
             );
         });
     }

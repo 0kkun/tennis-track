@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace TennisTrack\Ranking\Domain\Models;
 
-use TennisTrack\Common\Exceptions\InvalidArgumentException;
-
 final class TennisRankings implements \IteratorAggregate
 {
     /**
@@ -13,38 +11,7 @@ final class TennisRankings implements \IteratorAggregate
      */
     private function __construct(private array $rankings)
     {
-        $this->setRankings($rankings);
-    }
-
-    /**
-     * @param array<TennisRanking> $rankings
-     * @throws InvalidArgumentException
-     */
-    private function setRankings(array $rankings): void
-    {
-        foreach ($rankings as $ranking) {
-            if (! $ranking instanceof TennisRanking) {
-                throw new InvalidArgumentException('Invalid ranking provided.');
-            }
-        }
         $this->rankings = $rankings;
-    }
-
-    /**
-     * @param TennisRanking $ranking
-     * @return void
-     */
-    public function addRanking(TennisRanking $ranking): void
-    {
-        $this->rankings[] = $ranking;
-    }
-
-    /**
-     * @return TennisRanking[]
-     */
-    public function getRankings(): array
-    {
-        return $this->rankings;
     }
 
     /**
@@ -56,11 +23,28 @@ final class TennisRankings implements \IteratorAggregate
     }
 
     /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return count($this->rankings);
+    }
+
+    /**
      * @param array $rankings
      * @return self
      */
     public static function fromArray(array $rankings): self
     {
+        foreach ($rankings as $ranking) {
+            if (is_array($ranking)) {
+                $items[] = TennisRanking::fromArray($ranking);
+            }
+            if ($ranking instanceof TennisRanking) {
+                $items[] = $ranking;
+            }
+        }
+
         return new self($rankings);
     }
 
@@ -69,6 +53,16 @@ final class TennisRankings implements \IteratorAggregate
      */
     public function toArray(): array
     {
-        return array_map(fn (TennisRanking $ranking) => $ranking->toArray(), $this->rankings);
+        $rankingsArray = [];
+        foreach ($this->rankings as $ranking) {
+            if (is_array($ranking)) {
+                $rankingsArray[] = $ranking;
+
+                continue;
+            }
+            $rankingsArray[] = $ranking->toArray();
+        }
+
+        return $rankingsArray;
     }
 }

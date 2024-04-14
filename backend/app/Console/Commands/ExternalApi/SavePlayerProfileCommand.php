@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use TennisTrack\Player\Domain\Models\TennisPlayer;
 use TennisTrack\Player\Domain\Models\TennisPlayers;
-use TennisTrack\Player\UseCase\GetTennisPlayer;
+use TennisTrack\Player\UseCase\GetTennisPlayerList;
 use TennisTrack\Player\UseCase\UpsertPlayer;
 use TennisTrack\SportRadar\Domain\Models\ApiName;
 use TennisTrack\SportRadar\Domain\Models\Endpoint;
@@ -20,16 +20,17 @@ class SavePlayerProfileCommand extends Command
     protected $description = '選手のプロフィール情報を外部APIで取得し保存するコマンド';
 
     /**
+     * @param GetTennisPlayerList $getTennisPlayerListUseCase
      * @param UpsertPlayer $upsertPlayerUseCase
      * @param ExternalApiServiceInterface $externalAPiService
      */
     public function __construct(
-        private GetTennisPlayer $getTennisPlayerUseCase,
+        private GetTennisPlayerList $getTennisPlayerListUseCase,
         private UpsertPlayer $upsertPlayerUseCase,
         private ExternalApiServiceInterface $externalAPiService,
     ) {
         parent::__construct();
-        $this->getTennisPlayerUseCase = $getTennisPlayerUseCase;
+        $this->getTennisPlayerListUseCase = $getTennisPlayerListUseCase;
         $this->upsertPlayerUseCase = $upsertPlayerUseCase;
         $this->externalAPiService = $externalAPiService;
     }
@@ -48,16 +49,17 @@ class SavePlayerProfileCommand extends Command
             $playerId = 'sr:competitor:14882';
         }
         $this->info('get existing players from db');
-        $existingPlayers = $this->getTennisPlayerUseCase->execute();
+        $existingPlayers = $this->getTennisPlayerListUseCase->execute();
         $chunk = array_chunk($existingPlayers, 50);
 
-        $progressBar = $this->output->createProgressBar(count($chunk));
+        $this->info(count($chunk));
+        $progressBar = $this->output->createProgressBar(50);
         $progressBar->start();
 
         // FIXME: APIの制限があるため、必要な分だけ取得するように修正する
         try {
             $players = [];
-            foreach ($chunk[0] as $existingPlayer) {
+            foreach ($chunk as $existingPlayer) {
                 $path = Endpoint::fromArray([
                     'api_name' => ApiName::playerProfile(),
                     'player_id_main' => $existingPlayer['id'],

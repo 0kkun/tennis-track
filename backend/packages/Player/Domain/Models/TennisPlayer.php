@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TennisTrack\Player\Domain\Models;
 
 use Carbon\Carbon;
+use TennisTrack\SportCategory\Domain\Models\Id as SportCategoryId;
 
 final class TennisPlayer
 {
@@ -23,7 +24,7 @@ final class TennisPlayer
         private Weight $weight,
         private HighestSinglesRanking $highestSinglesRanking,
         private HighestDoublesRanking $highestDoublesRanking,
-        private int $sportCategoryId = 1
+        private SportCategoryId $sportCategoryId
     ) {
         $this->id = $id;
         $this->nameEn = $nameEn;
@@ -154,9 +155,12 @@ final class TennisPlayer
         return $this->highestDoublesRanking;
     }
 
-    public function sportCategoryId(): int
+    /**
+     * @return SportCategoryId
+     */
+    public function sportCategoryId(): SportCategoryId
     {
-        return 1;
+        return $this->sportCategoryId;
     }
 
     /**
@@ -180,7 +184,7 @@ final class TennisPlayer
             Weight::from($data['weight'] ?? null),
             HighestSinglesRanking::from($data['highest_singles_ranking'] ?? null),
             HighestDoublesRanking::from($data['highest_doubles_ranking'] ?? null),
-            $data['sport_category_id'] ?? 1,
+            SportCategoryId::from($data['sport_category_id'] ?? 0),
         );
     }
 
@@ -206,13 +210,13 @@ final class TennisPlayer
             'abbreviation' => $this->abbreviation->toString(),
             'gender' => $this->gender->toInt(),
             'birthday' => $this->birthday->get(),
-            'pro_year' => $this->proYear->toInt(),
+            'pro_year' => $this->proYear->toString(),
             'handedness' => $this->handedness->toInt(),
-            'height' => $this->height->toInt(),
+            'height' => $this->height->toFloat(),
             'weight' => $this->weight->toInt(),
             'highest_singles_ranking' => $this->highestSinglesRanking->toInt(),
             'highest_doubles_ranking' => $this->highestDoublesRanking->toInt(),
-            'sport_category_id' => $this->sportCategoryId,
+            'sport_category_id' => $this->sportCategoryId->toInt(),
         ];
     }
 }

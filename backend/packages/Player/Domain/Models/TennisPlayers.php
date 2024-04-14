@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace TennisTrack\Player\Domain\Models;
 
-use TennisTrack\Common\Exceptions\InvalidArgumentException;
-
 // NOTE: 使い方
 // $players = new PlayerList([$player1, $player2, $player3]);
 // foreach ($players as $player) {
@@ -20,20 +18,6 @@ final class TennisPlayers implements \IteratorAggregate
      */
     private function __construct(private array $players)
     {
-        $this->setPlayers($players);
-    }
-
-    /**
-     * @param array<TennisPlayer> $players
-     * @throws InvalidArgumentException
-     */
-    private function setPlayers(array $players): void
-    {
-        foreach ($players as $player) {
-            if (! $player instanceof TennisPlayer) {
-                throw new InvalidArgumentException('Invalid player provided.');
-            }
-        }
         $this->players = $players;
     }
 
@@ -46,11 +30,11 @@ final class TennisPlayers implements \IteratorAggregate
     }
 
     /**
-     * @return Player[]
+     * @return int
      */
-    public function getPlayers(): array
+    public function count(): int
     {
-        return $this->players;
+        return count($this->players);
     }
 
     /**
@@ -67,7 +51,17 @@ final class TennisPlayers implements \IteratorAggregate
      */
     public static function fromArray(array $players): self
     {
-        return new self($players);
+        $items = [];
+        foreach ($players as $player) {
+            if (is_array($player)) {
+                $items[] = TennisPlayer::fromArray($player);
+            }
+            if ($player instanceof TennisPlayer) {
+                $items[] = $player;
+            }
+        }
+
+        return new self($items);
     }
 
     public function toArray(): array

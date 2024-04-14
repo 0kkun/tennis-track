@@ -6,9 +6,9 @@ namespace App\Adapter\Player;
 
 use App\Eloquents\EloquentPlayer;
 use TennisTrack\Player\Domain\Models\TennisPlayers;
-use TennisTrack\Player\UseCase\Ports\PlayerAdapterCommandPort;
+use TennisTrack\Player\UseCase\Ports\PlayerCommandPort;
 
-class PlayerAdapterCommand implements PlayerAdapterCommandPort
+class PlayerCommandAdapter implements PlayerCommandPort
 {
     /**
      * @param EloquentPlayer $eloquentPlayer
@@ -17,18 +17,6 @@ class PlayerAdapterCommand implements PlayerAdapterCommandPort
         private EloquentPlayer $eloquentPlayer
     ) {
         $this->eloquentPlayer = $eloquentPlayer;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function fetchBySportCategoryId(int $sportCategoryId): array
-    {
-        $eloquentPlayers = $this->eloquentPlayer
-            ->where('sport_category_id', $sportCategoryId)
-            ->get();
-
-        return $eloquentPlayers->toArray();
     }
 
     /**

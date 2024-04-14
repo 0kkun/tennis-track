@@ -31,7 +31,7 @@ class EloquentPlayerFactory extends Factory
             'country' => $faker->country(),
             'country_code' => $faker->country(),
             'pro_year' => $faker->year(),
-            'height' => 180,
+            'height' => 180.0,
             'weight' => 70,
             'handedness' => rand(0, 1),
             'highest_singles_ranking' => rand(1, 100),

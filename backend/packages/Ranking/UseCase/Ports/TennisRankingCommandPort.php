@@ -6,7 +6,7 @@ namespace TennisTrack\Ranking\UseCase\Ports;
 
 use TennisTrack\Ranking\Domain\Models\TennisRankings;
 
-interface TennisRankingAdapterCommandPort
+interface TennisRankingCommandPort
 {
     public function upsert(TennisRankings $rankings): void;
 }
