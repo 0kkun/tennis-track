@@ -24,13 +24,13 @@ class GetTennisPlayerList
     }
 
     /**
-     * @param TennisPlayers $players
+     * @param integer|null $limit
      * @return array
      */
-    public function execute(): array
+    public function execute(int $limit = null): array
     {
         $sportCategory = $this->sportCategoryQuery->getByName(SportCategoryName::asTennis()->toString());
-        $players = $this->playerQuery->fetchBySportCategoryId($sportCategory->id());
+        $players = $this->playerQuery->fetchBySportCategoryId($sportCategory->id(), $limit);
 
         return $players;
     }

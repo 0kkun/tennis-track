@@ -24,10 +24,11 @@ class PlayerQueryAdapter implements PlayerQueryPort
     /**
      * {@inheritDoc}
      */
-    public function fetchBySportCategoryId(SportCategoryId $sportCategoryId): array
+    public function fetchBySportCategoryId(SportCategoryId $sportCategoryId, int $limit = null): array
     {
         $eloquentPlayers = $this->eloquentPlayer
             ->where('sport_category_id', $sportCategoryId->toInt())
+            ->when($limit, fn ($query) => $query->limit($limit))
             ->get();
 
         return $eloquentPlayers->toArray();
