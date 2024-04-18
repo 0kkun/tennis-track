@@ -9,7 +9,7 @@ use App\Modules\FileUploader;
 use Illuminate\Http\UploadedFile;
 use App\Modules\CsvExporter;
 
-class CsvExportForTennisPlayers extends Command
+class ExportCsvForTennisPlayersCommand extends Command
 {
     protected $signature = 'command:ExportCsvForTennisPlayers';
 
@@ -41,9 +41,11 @@ class CsvExportForTennisPlayers extends Command
         $players = $this->getTennisPlayerListUseCase->execute($limit = 10);
         $headers = array_keys($players[0] ?? []);
         $fileName = 'players_'.now()->format('Ymd_His').'.csv';
-        // TODO: storageディレクトリに保存するように変更
+
         $file = $this->csvExporter->export($headers, $players, $fileName);
         $this->fileUploader->upload(new UploadedFile($file->getPathname(), $fileName), 's3', '/exports', $fileName);
+        $this->csvExporter->deleteFile($file->getPathname());
+
         $logger->success();
         $this->info('[ End ]');
     }
