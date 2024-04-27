@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 class CsvExporter
 {
     const CSV_EXPORT_DIR = 'app/exports/';
+
     /**
      * CSVファイル出力
      * データベースから取得したデータをカラム毎に列に格納する
@@ -21,10 +22,10 @@ class CsvExporter
         Log::info('[CSV Export Start]');
 
         $tempDir = storage_path(self::CSV_EXPORT_DIR);
-        if (!file_exists($tempDir)) {
+        if (! file_exists($tempDir)) {
             mkdir($tempDir, 0777, true);
         }
-        $pathAndName = $tempDir . $fileName;
+        $pathAndName = $tempDir.$fileName;
 
         // CSVファイルを作成
         $file = new \SplFileObject($pathAndName, 'w');
@@ -47,18 +48,20 @@ class CsvExporter
         // ファイルを閉じる
         unset($file);
         Log::info('[CSV Export End] rowCount:'.$rowCount);
+
         return new \SplFileObject($pathAndName);
     }
 
     /**
      * @param string $filePath
-     * @return boolean
+     * @return bool
      */
     public static function deleteFile(string $filePath): bool
     {
         if (file_exists($filePath)) {
             return unlink($filePath);
         }
+
         return false;
     }
 }

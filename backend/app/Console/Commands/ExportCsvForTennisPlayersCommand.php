@@ -3,17 +3,17 @@
 namespace App\Console\Commands;
 
 use App\Modules\ApplicationLogger;
-use Illuminate\Console\Command;
-use TennisTrack\Player\UseCase\GetTennisPlayerList;
-use App\Modules\FileUploader;
-use Illuminate\Http\UploadedFile;
 use App\Modules\CsvExporter;
+use App\Modules\FileUploader;
+use Illuminate\Console\Command;
+use Illuminate\Http\UploadedFile;
+use TennisTrack\Player\UseCase\GetTennisPlayerList;
 
 class ExportCsvForTennisPlayersCommand extends Command
 {
     protected $signature = 'command:ExportCsvForTennisPlayers';
 
-    protected $description = 'playersテーブルのデータをCSVにエクスポートするコマンド';
+    protected $description = 'playersテーブルのデータをCSVに出力しS3に保存するコマンド';
 
     /**
      * @param GetTennisPlayerList $getTennisPlayerListUseCase
@@ -38,7 +38,7 @@ class ExportCsvForTennisPlayersCommand extends Command
     {
         $logger = new ApplicationLogger(__METHOD__);
         $this->info('[ Start ]');
-        $players = $this->getTennisPlayerListUseCase->execute($limit = 10);
+        $players = $this->getTennisPlayerListUseCase->execute();
         $headers = array_keys($players[0] ?? []);
         $fileName = 'players_'.now()->format('Ymd_His').'.csv';
 
