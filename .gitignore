@@ -1,4 +1,5 @@
 .DS_Store
 .docker/db/data
+.docker/schemaspy/output
 .env
 .openapi/src/api_spec.yaml

@@ -1,5 +1,0 @@
-date=2023-04-10 08:58:17+0900
-os=Linux 5.10.25-linuxkit
-schemaspy-version=6.1.0
-schemaspy-build=6.1.0.41 2019-09-17 21:52:57
-diagramImplementation=Graphviz dot 2.38
