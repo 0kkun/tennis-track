@@ -137,8 +137,8 @@ feature-test:
 pint-check:
 	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/pint --test
 
-.PHONY: pint-dirty
-pint-dirty:
+.PHONY: pint
+pint:
 	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/pint --dirty
 
 .PHONY: pint-all
