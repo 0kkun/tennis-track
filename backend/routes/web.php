@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\File;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // パスワードリセットメールの確認用
 if (app()->isLocal()) {
@@ -31,11 +31,12 @@ if (app()->isLocal()) {
     });
 }
 
-Route::get('/schemaspy', function () {
-    $path = public_path('schemaspy/index.html');
-
-    if (File::exists($path)) {
-        return response()->file($path);
-    }
-    abort(404);
+Route::middleware('basic.auth')->group(function () {
+    Route::get('/schemaspy', function () {
+        $path = public_path('schemaspy/index.html');
+        if (File::exists($path)) {
+            return response()->file($path);
+        }
+        abort(404);
+    });
 });

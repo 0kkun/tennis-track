@@ -17,6 +17,6 @@ class PlayerSeeder extends Seeder
         $file = new UploadedFile(storage_path('app/csv').'/players.csv', 'players.csv');
         $importer = new CsvImporter($file);
         $data = $importer->import();
-        EloquentPlayer::insert($data);
+        EloquentPlayer::upsert($data, ['id']);
     }
 }

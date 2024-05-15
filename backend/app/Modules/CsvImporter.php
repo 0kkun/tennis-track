@@ -2,6 +2,8 @@
 
 namespace App\Modules;
 
+use Carbon\Carbon;
+
 class CsvImporter extends AbstractCsvImporter
 {
     /**
@@ -23,6 +25,18 @@ class CsvImporter extends AbstractCsvImporter
         $results = [];
         foreach ($this->getCsvRows() as $row) {
             // CSVの各行を加工
+
+            // FIXME: いい感じに外部からこの処理を注入できるようにする
+            if (isset($row['created_at'])) {
+                $row['created_at'] = Carbon::parse($row['created_at'])->format('Y-m-d H:i:s');
+            }
+            if (isset($row['updated_at'])) {
+                $row['updated_at'] = Carbon::parse($row['updated_at'])->format('Y-m-d H:i:s');
+            }
+            if (isset($row['pro_year'])) {
+                $row['pro_year'] = !empty($row['pro_year']) ? (int)$row['pro_year'] : null;
+            }
+
             $results[] = $row;
         }
 

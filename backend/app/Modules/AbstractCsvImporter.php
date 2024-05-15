@@ -66,6 +66,12 @@ abstract class AbstractCsvImporter
 
         $this->validateCsvFile();
 
+        // ファイルの最初の3バイトをチェックしてBOMを除去する
+        $bom = $file->fread(3);
+        if ($bom !== "\xEF\xBB\xBF") {
+            $file->fseek(0);
+        }
+
         $header = $this->hasHeaderRow ? $file->fgetcsv($this->delimiter) : null;
 
         foreach ($file as $index => $row) {
