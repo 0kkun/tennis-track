@@ -102,14 +102,14 @@ services:
   #     - /${SOURCE_DIR_NAME}/node_modules
   #     - /${SOURCE_DIR_NAME}/vendor
 
-  # DB作成後、ER図作成したい時以外は一旦コメントアウトしておく
-  # schemaspy:
-  #   container_name: ${PROJECT_NAME}_schemaspy
-  #   build: 
-  #     context: .docker/schemaspy
-  #   volumes:
-  #     - .docker/schemaspy/output:/output
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     SCHEMASPY_OUTPUT: /output
+  schemaspy:
+    container_name: ${PROJECT_NAME}_schemaspy
+    build: 
+      context: .docker/schemaspy
+    volumes:
+      - .docker/schemaspy/schemaspy.properties:/schemaspy.properties
+      - ./backend/public/schemaspy:/output
+    depends_on:
+      - db
+    environment:
+      SCHEMASPY_OUTPUT: /output

@@ -3,6 +3,7 @@
 use App\Eloquents\EloquentUser;
 use App\Notifications\Auth\ResetPasswordNotification;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,12 @@ if (app()->isLocal()) {
         return (new ResetPasswordNotification('test_token'))->toMail($user);
     });
 }
+
+Route::get('/schemaspy', function () {
+    $path = public_path('schemaspy/index.html');
+
+    if (File::exists($path)) {
+        return response()->file($path);
+    }
+    abort(404);
+});
