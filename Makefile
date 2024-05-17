@@ -205,13 +205,21 @@ open-mailhog:
 # *****************************
 # *        Schemaspy          *
 # *****************************
+# .PHONY: ss-run
+# ss-run:
+# 	docker compose run --rm schemaspy
+
+# .PHONY: ss-open
+# ss-open:
+# 	open .docker/schemaspy/output/index.html
+
+.PHONY: ss-image
+ss-image:
+	cd .docker/schemaspy && docker build -t tennis-track-er-document .
+
 .PHONY: ss-run
 ss-run:
-	docker compose run --rm schemaspy
-
-.PHONY: ss-open
-ss-open:
-	open .docker/schemaspy/output/index.html
+	docker run --platform linux/amd64 --net host -v $(PWD)/.docker/schemaspy/output:/output --rm tennis-track-er-document
 
 # *****************************
 # *           MySql           *
