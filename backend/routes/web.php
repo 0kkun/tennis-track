@@ -2,6 +2,7 @@
 
 use App\Eloquents\EloquentUser;
 use App\Notifications\Auth\ResetPasswordNotification;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // パスワードリセットメールの確認用
 if (app()->isLocal()) {
@@ -29,3 +30,13 @@ if (app()->isLocal()) {
         return (new ResetPasswordNotification('test_token'))->toMail($user);
     });
 }
+
+Route::middleware('basic.auth')->group(function () {
+    Route::get('/schemaspy', function () {
+        $path = public_path('schemaspy/index.html');
+        if (File::exists($path)) {
+            return response()->file($path);
+        }
+        abort(404);
+    });
+});

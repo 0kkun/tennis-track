@@ -3,17 +3,20 @@
 namespace Database\Seeders;
 
 use App\Eloquents\EloquentPlayer;
+use App\Modules\CsvImporter;
 use Illuminate\Database\Seeder;
+use Illuminate\Http\UploadedFile;
 
 class PlayerSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
-     *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        EloquentPlayer::factory()->count(10)->create();
+        $file = new UploadedFile(storage_path('app/csv').'/players.csv', 'players.csv');
+        $importer = new CsvImporter($file);
+        $data = $importer->import();
+        EloquentPlayer::upsert($data, ['id']);
     }
 }

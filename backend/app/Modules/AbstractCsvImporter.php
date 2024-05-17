@@ -36,15 +36,15 @@ abstract class AbstractCsvImporter
      */
     protected function validateCsvFile()
     {
-        if (! $this->file->isValid()) {
+        if (! file_exists($this->file->getPathname())) {
             throw new \Exception('CSV file not found.');
         }
 
-        if (! $this->file->isReadable()) {
+        if (! is_readable($this->file->getPathname())) {
             throw new \Exception('Unable to read CSV file.');
         }
 
-        if (count(file($this->file)) > self::MAX_ROWS) {
+        if (count(file($this->file->getPathname())) > self::MAX_ROWS) {
             throw new \Exception('CSV file has too many rows.');
         }
     }
@@ -65,6 +65,12 @@ abstract class AbstractCsvImporter
         );
 
         $this->validateCsvFile();
+
+        // ファイルの最初の3バイトをチェックしてBOMを除去する
+        $bom = $file->fread(3);
+        if ($bom !== "\xEF\xBB\xBF") {
+            $file->fseek(0);
+        }
 
         $header = $this->hasHeaderRow ? $file->fgetcsv($this->delimiter) : null;
 

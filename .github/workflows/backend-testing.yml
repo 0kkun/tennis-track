@@ -51,7 +51,7 @@ jobs:
 
       - name: Cache Docker Layers
         id: cache-docker
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.IMAGE_CACHE_DIR }}
           key: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ env.CACHE_VER }}-${{ hashFiles('docker-compose.yaml') }}
@@ -59,7 +59,7 @@ jobs:
 
       - name: Cache Composer Dependencies
         id: cache-composer
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ./backend/vendor
           key: ${{ runner.os }}-composer-cache-${{ env.CACHE_VER }}-${{ hashFiles('backend/composer.lock') }}

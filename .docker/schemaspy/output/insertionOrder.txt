@@ -1,5 +1,0 @@
-password_reset_tokens
-users
-failed_jobs
-migrations
-personal_access_tokens
