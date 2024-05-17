@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TennisTrack\Player\UseCase;
 
-use TennisTrack\Player\Domain\Models\TennisPlayers;
 use TennisTrack\Player\UseCase\Ports\PlayerQueryPort;
 use TennisTrack\SportCategory\Domain\Models\Name as SportCategoryName;
 use TennisTrack\SportCategory\UseCase\Ports\SportCategoryQueryPort;
@@ -24,7 +23,7 @@ class GetTennisPlayerList
     }
 
     /**
-     * @param integer|null $limit
+     * @param int|null $limit
      * @return array
      */
     public function execute(int $limit = null): array

@@ -17,7 +17,7 @@ interface PlayerQueryPort
 
     /**
      * @param SportCategoryId $sportCategoryId
-     * @param integer|null $limit
+     * @param int|null $limit
      * @return array
      */
     public function fetchBySportCategoryId(SportCategoryId $sportCategoryId, int $limit = null): array;

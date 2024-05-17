@@ -34,7 +34,7 @@ class CsvImporter extends AbstractCsvImporter
                 $row['updated_at'] = Carbon::parse($row['updated_at'])->format('Y-m-d H:i:s');
             }
             if (isset($row['pro_year'])) {
-                $row['pro_year'] = !empty($row['pro_year']) ? (int)$row['pro_year'] : null;
+                $row['pro_year'] = ! empty($row['pro_year']) ? (int) $row['pro_year'] : null;
             }
 
             $results[] = $row;
