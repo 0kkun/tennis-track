@@ -197,3 +197,11 @@ $ php artisan command:ScrapeTennisPlayerInfo
   - App.tsx: アプリケーションのエントリーポイントであり、ルートコンポーネントが定義されるファイルです。
   - main.tsx: アプリケーションの起動やDOMのレンダリングを行うファイルです。
 - index.html: アプリケーションのエントリーポイントとなるHTMLファイルです。Reactアプリケーションのビルド時に生成されるJavaScriptファイルが読み込まれます。
+
+## 外部APIのメモ
+
+### Rapidapi
+- [ダッシュボード](https://rapidapi.com/developer/dashboard)
+
+### SportRador
+- [コンソール](https://console.sportradar.com/accounts/6605310de53c782eb5b6cfaa/6605310de53c782eb5b6cfab)
