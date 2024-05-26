@@ -12,6 +12,7 @@ class ServiceClassProvider extends ServiceProvider
         'TennisScraping',
         'Translate',
         'ExternalApi',
+        'RapidApi',
     ];
 
     /**

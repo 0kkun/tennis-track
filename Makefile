@@ -145,6 +145,11 @@ pint:
 pint-all:
 	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/pint
 
+.PHONY: pint-path
+pint-path:
+	@read -p "Enter a test file path or class name: " PINTPATH; \
+	$(DEI) $(PROJECT_NAME)_app ./vendor/bin/pint $$TESTPATH
+
 .PHONY: ide-helper
 ide-helper:
 	$(DEI) $(PROJECT_NAME)_app php artisan ide-helper:models --nowrite

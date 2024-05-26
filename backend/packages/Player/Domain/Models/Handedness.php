@@ -27,12 +27,18 @@ final class Handedness
     private const BOTH = 'both';
 
     /**
+     * @var string
+     */
+    private const UNKNOWN = 'unknown';
+
+    /**
      * @var string[]
      */
     private const VALUES = [
         self::RIGHT,
         self::LEFT,
         self::BOTH,
+        self::UNKNOWN,
     ];
 
     /**
@@ -62,9 +68,20 @@ final class Handedness
         return $this->value === self::LEFT;
     }
 
+    /**
+     * @return bool
+     */
     public function isBoth(): bool
     {
         return $this->value === self::BOTH;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUnknown(): bool
+    {
+        return $this->value === self::UNKNOWN;
     }
 
     /**
