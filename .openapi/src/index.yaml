@@ -2,14 +2,14 @@ openapi: 3.0.0
 info:
   title: tennis-track
   description: テニス情報サイト
-  version: '1.0'
+  version: "1.0"
   license:
     name: Tennis Track
-    url: 'https://www.tennis-track.com'
+    url: "https://www.tennis-track.com"
 servers:
-  - url: 'http://localhost:4010/'
+  - url: "http://localhost:4010"
     description: Local Server
-  - url: 'https://tennis-track.com/'
+  - url: "https://tennis-track.com"
     description: Production Server
 tags:
   - name: Auth
@@ -18,12 +18,12 @@ tags:
     description: 選手管理
 
 paths:
-  '/api/v1/users/login':
-    $ref: './paths/V1/User/Auth/Login.yaml'
-  '/api/v1/users/me':
-    $ref: './paths/V1/User/Auth/Me.yaml'
-  '/api/v1/users/players':
-    $ref: './paths/V1/User/Player/Players.yaml'
+  "/api/v1/users/login":
+    $ref: "./paths/V1/User/Auth/Login.yaml"
+  "/api/v1/users/me":
+    $ref: "./paths/V1/User/Auth/Me.yaml"
+  "/api/v1/users/players":
+    $ref: "./paths/V1/User/Player/Players.yaml"
 
 components:
   securitySchemes:
@@ -43,28 +43,28 @@ components:
     Response:
       $ref: "./components/Schemas/Common/Response.yaml"
     UserPlayer:
-      $ref: './components/Schemas/User/Player/Player.yaml'
+      $ref: "./components/Schemas/User/Player/Player.yaml"
     UserPostPlayer:
-      $ref: './components/Schemas/User/Player/PostPlayer.yaml'
+      $ref: "./components/Schemas/User/Player/PostPlayer.yaml"
     User:
-      $ref: './components/Schemas/User/Auth/User.yaml'
+      $ref: "./components/Schemas/User/Auth/User.yaml"
     UserPostLogin:
-      $ref: './components/Schemas/User/Auth/PostLogin.yaml'
+      $ref: "./components/Schemas/User/Auth/PostLogin.yaml"
     UserToken:
-      $ref: './components/Schemas/User/Auth/Token.yaml'
+      $ref: "./components/Schemas/User/Auth/Token.yaml"
 
   responses:
     200Ok:
-      $ref: './components/responses/200Ok.yaml'
+      $ref: "./components/responses/200Ok.yaml"
     201DataCreated:
-      $ref: './components/responses/201DataCreated.yaml'
+      $ref: "./components/responses/201DataCreated.yaml"
     204NoContent:
-      $ref: './components/responses/204NoContent.yaml'
+      $ref: "./components/responses/204NoContent.yaml"
     401Unauthorized:
-      $ref: './components/responses/401Unauthorized.yaml'
+      $ref: "./components/responses/401Unauthorized.yaml"
     422InvalidRequest:
-      $ref: './components/responses/422InvalidRequest.yaml'
+      $ref: "./components/responses/422InvalidRequest.yaml"
     500InternalServerError:
-      $ref: './components/responses/500InternalServerError.yaml'
+      $ref: "./components/responses/500InternalServerError.yaml"
     503ServiceUnavailable:
-      $ref: './components/responses/503ServiceUnavailable.yaml'
+      $ref: "./components/responses/503ServiceUnavailable.yaml"

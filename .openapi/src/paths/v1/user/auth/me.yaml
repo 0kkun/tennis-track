@@ -7,24 +7,24 @@ get:
   security:
     - BearerAuth: []
   parameters:
-    - $ref: '../../../../index.yaml#/components/userAgent'
+    - $ref: "#/components/userAgent"
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
           schema:
             allOf:
-              - $ref: '../../../../index.yaml#/components/schemas/Response'
+              - $ref: "#/components/schemas/Response"
               - type: object
                 properties:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/User'
-    '401':
-      $ref: '../../../../index.yaml#/components/responses/401Unauthorized'
-    '422':
-      $ref: '../../../../index.yaml#/components/responses/422InvalidRequest'
-    '500':
-      $ref: '../../../../index.yaml#/components/responses/500InternalServerError'
+                      $ref: "#/components/schemas/User"
+    "401":
+      $ref: "#/components/responses/401Unauthorized"
+    "422":
+      $ref: "#/components/responses/422InvalidRequest"
+    "500":
+      $ref: "#/components/responses/500InternalServerError"

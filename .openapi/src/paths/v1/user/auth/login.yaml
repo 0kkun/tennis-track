@@ -5,29 +5,29 @@ post:
   tags:
     - Auth
   parameters:
-    - $ref: '../../../../index.yaml#/components/userAgent'
+    - $ref: "#/components/userAgent"
   requestBody:
     content:
       application/json:
         schema:
-          $ref: '../../../../index.yaml#/components/schemas/UserPostLogin'
+          $ref: "#/components/schemas/UserPostLogin"
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
           schema:
             allOf:
-              - $ref: '../../../../index.yaml#/components/schemas/Response'
+              - $ref: "#/components/schemas/Response"
               - type: object
                 properties:
                   data:
                     type: array
                     items:
-                      $ref: '../../../../index.yaml#/components/schemas/UserToken'
-    '401':
-      $ref: '../../../../index.yaml#/components/responses/401Unauthorized'
-    '422':
-      $ref: '#/components/responses/422InvalidRequest'
-    '500':
-      $ref: '#/components/responses/500InternalServerError'
+                      $ref: "#/components/schemas/UserToken"
+    "401":
+      $ref: "#/components/responses/401Unauthorized"
+    "422":
+      $ref: "#/components/responses/422InvalidRequest"
+    "500":
+      $ref: "#/components/responses/500InternalServerError"

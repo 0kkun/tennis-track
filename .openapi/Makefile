@@ -1,4 +1,4 @@
-DCE = docker-compose exec
+DCE = docker compose exec
 
 # *****************************
 # *         For Build         *
@@ -18,23 +18,23 @@ create-api_spec:
 # *****************************
 .PHONY: build_c
 build_c:
-	docker-compose build --no-cache --force-rm
+	docker compose build --no-cache --force-rm
 
 .PHONY: build
 build:
-	docker-compose build
+	docker compose build
 
 .PHONY: up
 up:
-	docker-compose up -d
+	docker compose up -d
 
 .PHONY: stop
 stop:
-	docker-compose stop
+	docker compose stop
 
 .PHONY: down
 down:
-	docker-compose down --remove-orphans
+	docker compose down --remove-orphans
 
 .PHONY: swagger-ui
 swagger-ui:
@@ -53,9 +53,22 @@ restart:
 open:
 	open http://localhost:10082
 
+
 # *****************************
-# *  merge api_spec.yaml      *
+# *           cli          *
 # *****************************
-.PHONY: merge-api
-merge-api:
-	docker-compose run --rm swagger-merger
+.PHONY: cli
+cli:
+	$(DCE) cli sh
+
+.PHONY: lint
+lint:
+	$(DCE) cli npm run lint
+
+.PHONY: format
+format:
+	$(DCE) cli npm run format
+
+.PHONY: merge
+merge:
+	$(DCE) cli npm run merge

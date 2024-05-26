@@ -5,7 +5,7 @@ get:
   tags:
     - Player
   parameters:
-    - $ref: '../../../../index.yaml#/components/userAgent'
+    - $ref: "#/components/userAgent"
     - schema:
         type: string
       in: query
@@ -37,29 +37,29 @@ get:
       name: backhand_style
       description: バックハンドスタイル
   responses:
-    '200':
+    "200":
       description: OK
       content:
         application/json:
           schema:
             allOf:
-              - $ref: '../../../../index.yaml#/components/schemas/Response'
+              - $ref: "#/components/schemas/Response"
               - type: object
                 properties:
                   data:
                     type: array
                     items:
-                      $ref: '../../../../index.yaml#/components/schemas/UserPlayer'
-    '204':
-      $ref: '../../../../index.yaml#/components/responses/204NoContent'
-    '401':
-      $ref: '../../../../index.yaml#/components/responses/401Unauthorized'
-    '422':
-      $ref: '../../../../index.yaml#/components/responses/422InvalidRequest'
-    '500':
-      $ref: '../../../../index.yaml#/components/responses/500InternalServerError'
-    '503':
-      $ref: '../../../../index.yaml#/components/responses/503ServiceUnavailable'
+                      $ref: "#/components/schemas/UserPlayer"
+    "204":
+      $ref: "#/components/responses/204NoContent"
+    "401":
+      $ref: "#/components/responses/401Unauthorized"
+    "422":
+      $ref: "#/components/responses/422InvalidRequest"
+    "500":
+      $ref: "#/components/responses/500InternalServerError"
+    "503":
+      $ref: "#/components/responses/503ServiceUnavailable"
 
 post:
   summary: 選手登録機能
@@ -71,13 +71,13 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../../index.yaml#/components/schemas/UserPostPlayer'
+          $ref: "#/components/schemas/UserPostPlayer"
   responses:
-    '201':
-      $ref: '../../../../index.yaml#/components/responses/201DataCreated'
-    '401':
-      $ref: '../../../../index.yaml#/components/responses/401Unauthorized'
-    '422':
-      $ref: '../../../../index.yaml#/components/responses/422InvalidRequest'
-    '500':
-      $ref: '../../../../index.yaml#/components/responses/500InternalServerError'
+    "201":
+      $ref: "#/components/responses/201DataCreated"
+    "401":
+      $ref: "#/components/responses/401Unauthorized"
+    "422":
+      $ref: "#/components/responses/422InvalidRequest"
+    "500":
+      $ref: "#/components/responses/500InternalServerError"
