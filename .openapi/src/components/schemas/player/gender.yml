@@ -1,0 +1,4 @@
+title: playerGender
+description: 性別
+type: string
+example: 男

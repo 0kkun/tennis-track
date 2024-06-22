@@ -1,0 +1,4 @@
+title: playerHandedness
+description: 利き手
+type: string
+example: 右

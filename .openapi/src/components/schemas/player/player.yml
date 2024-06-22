@@ -7,20 +7,12 @@ properties:
   sport_category_id:
     $ref: "#/components/schemas/sportCategoryId"
   name_en:
-    type: string
-    description: 選手名
+    $ref: "#/components/schemas/playerNameEn"
   country:
-    type: string
-    description: 出身国
+    $ref: "#/components/schemas/playerCountry"
   gender:
-    type: string
-    description: 性別
-    example: 男
-  turn_to_pro_year:
-    type: integer
-    description: プロ転向年
-    example: 2004
-  dominant_arm:
-    type: string
-    description: 利き腕
-    example: 右
+    $ref: "#/components/schemas/playerGender"
+  pro_year:
+    $ref: "#/components/schemas/playerProYear"
+  handedness:
+    $ref: "#/components/schemas/playerHandedness"

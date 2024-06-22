@@ -54,8 +54,20 @@ components:
       $ref: "./components/schemas/player/player.yml"
     playerId:
       $ref: "./components/schemas/player/id.yml"
+    playerNameEn:
+      $ref: "./components/schemas/player/nameEn.yml"
+    playerCountry:
+      $ref: "./components/schemas/player/country.yml"
+    playerGender:
+      $ref: "./components/schemas/player/gender.yml"
+    playerProYear:
+      $ref: "./components/schemas/player/proYear.yml"
+    playerHandedness:
+      $ref: "./components/schemas/player/handedness.yml"
     sportCategoryId:
       $ref: "./components/schemas/sportCategory/id.yml"
+    sportCategoryName:
+      $ref: "./components/schemas/sportCategory/name.yml"
 
   responses:
     200Ok:

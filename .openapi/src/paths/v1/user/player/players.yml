@@ -72,29 +72,18 @@ post:
           type: object
           properties:
             name_en:
-              type: string
-              description: 選手名
-              example: Test Player
+              $ref: "#/components/schemas/playerNameEn"
+            gender:
+              $ref: "#/components/schemas/playerGender"
             country:
-              type: string
-              description: 出身国
-              example: Japan
-            dominant_arm:
-              type: integer
-              description: 利き腕
-              enum:
-                - 0
-                - 1
-              example: 0
-            turn_to_pro_year:
-              type: integer
-              description: プロ転向年
-              example: 2005
+              $ref: "#/components/schemas/playerCountry"
+            handedness:
+              $ref: "#/components/schemas/playerHandedness"
+            pro_year:
+              $ref: "#/components/schemas/playerProYear"
           required:
             - name_en
   responses:
-    200:
-      $ref: "#/components/responses/200Ok"
     201:
       $ref: "#/components/responses/201DataCreated"
     401:
