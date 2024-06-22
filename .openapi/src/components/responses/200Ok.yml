@@ -3,16 +3,10 @@ content:
   application/json:
     schema:
       allOf:
+        - $ref: "#/components/schemas/commonResponse"
         - type: object
           properties:
             data:
               type: object
           required:
             - data
-        - $ref: "#/components/schemas/commonResponse"
-    examples:
-      success:
-        value:
-          data: {}
-          status: 200
-          message: success

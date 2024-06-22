@@ -3,11 +3,11 @@ content:
   application/json:
     schema:
       allOf:
+        - $ref: "#/components/schemas/commonResponse"
         - type: object
           properties:
             data:
-              type: object
-        - $ref: "#/components/schemas/commonResponse"
+              type: objec
     examples:
       Server error:
         value:

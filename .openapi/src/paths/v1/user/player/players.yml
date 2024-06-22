@@ -93,6 +93,8 @@ post:
           required:
             - name_en
   responses:
+    200:
+      $ref: "#/components/responses/200Ok"
     201:
       $ref: "#/components/responses/201DataCreated"
     401:
