@@ -16,14 +16,18 @@ tags:
     description: ユーザー管理
   - name: Player
     description: 選手管理
+  - name: SportCategory
+    description: スポーツカテゴリ管理
 
 paths:
-  "/api/v1/users/login":
+  /api/v1/users/login:
     $ref: ./paths/v1/user/auth/login.yml
-  "/api/v1/users/me":
+  /api/v1/users/me:
     $ref: "./paths/v1/user/auth/me.yml"
-  "/api/v1/users/players":
+  /api/v1/users/players:
     $ref: "./paths/v1/user/player/players.yml"
+  /api/v1/users/sportCategories:
+    $ref: "./paths/v1/user/sportCategory/sportCategories.yml"
 
 components:
   securitySchemes:
@@ -64,6 +68,8 @@ components:
       $ref: "./components/schemas/player/proYear.yml"
     playerHandedness:
       $ref: "./components/schemas/player/handedness.yml"
+    sportCategory:
+      $ref: "./components/schemas/sportCategory/sportCategory.yml"
     sportCategoryId:
       $ref: "./components/schemas/sportCategory/id.yml"
     sportCategoryName:
