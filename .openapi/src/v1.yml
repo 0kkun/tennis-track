@@ -18,6 +18,8 @@ tags:
     description: 選手管理
   - name: SportCategory
     description: スポーツカテゴリ管理
+  - name: Favorite
+    description: お気に入り管理
 
 paths:
   /api/v1/users/login:
@@ -28,6 +30,10 @@ paths:
     $ref: "./paths/v1/user/player/players.yml"
   /api/v1/users/sportCategories:
     $ref: "./paths/v1/user/sportCategory/sportCategories.yml"
+  /api/v1/users/favorites/players/{playerId}:
+    $ref: "./paths/v1/user/favorite/player/playerId.yml"
+  /api/v1/users/favorites/players:
+    $ref: "./paths/v1/user/favorite/player/players.yml"
 
 components:
   securitySchemes:

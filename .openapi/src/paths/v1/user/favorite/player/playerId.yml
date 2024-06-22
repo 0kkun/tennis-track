@@ -1,0 +1,49 @@
+post:
+  summary: お気にり選手登録機能
+  description: 選手をお気に入りに登録する
+  operationId: post-api-v1-user-favorite-player-playerId
+  tags:
+    - Favorite
+  security:
+    - BearerAuth: []
+  parameters:
+    - $ref: "#/components/schemas/userAgent"
+    - schema:
+        type: integer
+      in: query
+      name: player_id
+      description: 選手ID
+  responses:
+    201:
+      $ref: "#/components/responses/201DataCreated"
+    401:
+      $ref: "#/components/responses/401Unauthorized"
+    422:
+      $ref: "#/components/responses/422InvalidRequest"
+    500:
+      $ref: "#/components/responses/500InternalServerError"
+
+delete:
+  summary: お気にり選手解除機能
+  description: 選手をお気に入りから解除する
+  operationId: delete-api-v1-user-favorite-player-playerId
+  tags:
+    - Favorite
+  security:
+    - BearerAuth: []
+  parameters:
+    - $ref: "#/components/schemas/userAgent"
+    - schema:
+        type: integer
+      in: query
+      name: player_id
+      description: 選手ID
+  responses:
+    204:
+      $ref: "#/components/responses/204NoContent"
+    401:
+      $ref: "#/components/responses/401Unauthorized"
+    422:
+      $ref: "#/components/responses/422InvalidRequest"
+    500:
+      $ref: "#/components/responses/500InternalServerError"
