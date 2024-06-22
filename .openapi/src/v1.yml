@@ -22,6 +22,8 @@ tags:
     description: お気に入り管理
 
 paths:
+  /api/v1/users/register:
+    $ref: "./paths/v1/user/auth/register.yml"
   /api/v1/users/login:
     $ref: ./paths/v1/user/auth/login.yml
   /api/v1/users/logout:
