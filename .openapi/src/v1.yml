@@ -28,6 +28,10 @@ paths:
     $ref: ./paths/v1/user/auth/logout.yml
   /api/v1/users/me:
     $ref: "./paths/v1/user/auth/me.yml"
+  /api/v1/users/forgot-password:
+    $ref: "./paths/v1/user/auth/forgotPassword.yml"
+  /api/v1/users/reset-password:
+    $ref: "./paths/v1/user/auth/resetPassword.yml"
   /api/v1/users/players:
     $ref: "./paths/v1/user/player/players.yml"
   /api/v1/users/sportCategories:
