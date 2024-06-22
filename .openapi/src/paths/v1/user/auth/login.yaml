@@ -5,7 +5,7 @@ post:
   tags:
     - Auth
   parameters:
-    - $ref: "#/components/userAgent"
+    - $ref: "#/components/schemas/userAgent"
   requestBody:
     content:
       application/json:

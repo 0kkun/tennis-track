@@ -5,7 +5,7 @@ get:
   tags:
     - Player
   parameters:
-    - $ref: "#/components/userAgent"
+    - $ref: "#/components/schemas/userAgent"
     - schema:
         type: string
       in: query

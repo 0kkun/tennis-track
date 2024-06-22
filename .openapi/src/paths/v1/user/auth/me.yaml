@@ -7,7 +7,7 @@ get:
   security:
     - BearerAuth: []
   parameters:
-    - $ref: "#/components/userAgent"
+    - $ref: "#/components/schemas/userAgent"
   responses:
     "200":
       description: OK

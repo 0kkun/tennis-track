@@ -5,13 +5,13 @@ DCE = docker compose exec
 # *****************************
 .PHONY: init
 init:
-	@make create-api_spec
+	@make create-api-spec
 	@make build
 	@make up
 
-.PHONY: create-api_spec
-create-api_spec:
-	touch ./src/api_spec.yaml
+.PHONY: create-api-spec
+create-api-spec:
+	touch ./src/specs/v1.yml
 
 # *****************************
 # *     Container Controll    *

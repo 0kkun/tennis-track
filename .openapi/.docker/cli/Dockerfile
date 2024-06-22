@@ -2,7 +2,7 @@ FROM node:16-alpine
 
 WORKDIR /openapi
 
-COPY ./src/package.json /openapi/
+COPY ./package.json /openapi/package.json
 
 RUN npm install
 

@@ -4,23 +4,23 @@ services:
   # OpenAPI仕様に則ったAPI仕様からドキュメントを生成するツール
   swagger-ui:
     image: swaggerapi/swagger-ui
-    container_name: "swagger-ui"
+    container_name: swagger-ui
     ports:
-      - "10082:8080"
+      - 10082:8080
     volumes:
-      - ./src/api_spec.yaml:/usr/share/nginx/html/api_spec.yaml
+      - ./src/specs/v1.yml:/usr/share/nginx/html/v1.yml
     environment:
-      API_URL: api_spec.yaml
+      API_URL: v1.yml
 
   # Stoplight社が提供するOSSのAPIモックサーバー
   swagger-api:
     image: stoplight/prism:3
     container_name: swagger-api
     ports:
-      - "4010:4010"
-    command: mock -h 0.0.0.0 /api_spec.yaml
+      - 4010:4010
+    command: mock -h 0.0.0.0 /v1.yml
     volumes:
-      - ./src/api_spec.yaml:/api_spec.yaml
+      - ./src/specs/v1.yml:/v1.yml
 
   # lintやmergeを行うためのcliツール
   cli:
@@ -28,9 +28,8 @@ services:
     build:
       context: .
       dockerfile: ./.docker/cli/Dockerfile
-    tty: true
     volumes:
-      - ./src:/openapi
-      - ./src/package.json:/openapi/package.json
-      - ./src/node_modules:/openapi/node_modules
+      - ./:/openapi
+      - ./node_modules:/openapi/node_modules
+      - ./package.json:/openapi/package.json
     working_dir: /openapi

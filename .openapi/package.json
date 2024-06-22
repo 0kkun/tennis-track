@@ -1,13 +1,13 @@
 {
   "name": "openapi",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "openapi",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write \"./**/*.yaml\"",
-    "lint": "redocly lint \"./**/*.yaml\"",
-    "merge": "swagger-merger -i index.yaml -o api_spec.yaml"
+    "format": "prettier --write \"./src/**/*.yaml\"",
+    "lint": "redocly lint \"./src/**/*.yaml\"",
+    "merge": "swagger-merger -i src/v1.yml -o src/specs/v1.yml"
   },
   "author": "",
   "license": "ISC",

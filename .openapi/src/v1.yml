@@ -32,12 +32,6 @@ components:
       scheme: bearer
       bearerFormat: JWT
       description: Bearerトークンを使用した認証
-  userAgent:
-    in: header
-    name: User-Agent
-    required: true
-    type: string
-    description: クライアントのユーザーエージェント
 
   schemas:
     Response:
@@ -52,6 +46,8 @@ components:
       $ref: "./components/Schemas/User/Auth/PostLogin.yaml"
     UserToken:
       $ref: "./components/Schemas/User/Auth/Token.yaml"
+    userAgent:
+      $ref: "./components/Schemas/Common/userAgent.yml"
 
   responses:
     200Ok:
