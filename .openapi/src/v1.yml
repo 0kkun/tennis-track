@@ -24,6 +24,8 @@ tags:
 paths:
   /api/v1/users/login:
     $ref: ./paths/v1/user/auth/login.yml
+  /api/v1/users/logout:
+    $ref: ./paths/v1/user/auth/logout.yml
   /api/v1/users/me:
     $ref: "./paths/v1/user/auth/me.yml"
   /api/v1/users/players:
