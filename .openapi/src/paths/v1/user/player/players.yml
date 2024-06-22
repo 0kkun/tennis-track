@@ -1,6 +1,6 @@
 get:
   summary: 選手情報一覧取得
-  operationId: get-api-v1-user-players
+  operationId: get-api-v1-user-player
   description: 選手情報一覧取得
   tags:
     - Player
@@ -37,7 +37,7 @@ get:
       name: backhand_style
       description: バックハンドスタイル
   responses:
-    "200":
+    200:
       description: OK
       content:
         application/json:
@@ -50,16 +50,12 @@ get:
                     type: array
                     items:
                       $ref: "#/components/schemas/player"
-    "204":
-      $ref: "#/components/responses/204NoContent"
-    "401":
-      $ref: "#/components/responses/401Unauthorized"
-    "422":
+    404:
+      $ref: "#/components/responses/404NotFound"
+    422:
       $ref: "#/components/responses/422InvalidRequest"
-    "500":
+    500:
       $ref: "#/components/responses/500InternalServerError"
-    "503":
-      $ref: "#/components/responses/503ServiceUnavailable"
 
 post:
   summary: 選手登録機能
@@ -67,17 +63,41 @@ post:
   operationId: post-api-v1-user-player
   tags:
     - Player
+  security:
+    - BearerAuth: []
   requestBody:
     content:
       application/json:
         schema:
-          $ref: "#/components/schemas/UserPostPlayer"
+          type: object
+          properties:
+            name_en:
+              type: string
+              description: 選手名
+              example: Test Player
+            country:
+              type: string
+              description: 出身国
+              example: Japan
+            dominant_arm:
+              type: integer
+              description: 利き腕
+              enum:
+                - 0
+                - 1
+              example: 0
+            turn_to_pro_year:
+              type: integer
+              description: プロ転向年
+              example: 2005
+          required:
+            - name_en
   responses:
-    "201":
+    201:
       $ref: "#/components/responses/201DataCreated"
-    "401":
+    401:
       $ref: "#/components/responses/401Unauthorized"
-    "422":
+    422:
       $ref: "#/components/responses/422InvalidRequest"
-    "500":
+    500:
       $ref: "#/components/responses/500InternalServerError"

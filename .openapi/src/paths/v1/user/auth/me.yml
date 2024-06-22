@@ -9,7 +9,7 @@ get:
   parameters:
     - $ref: "#/components/schemas/userAgent"
   responses:
-    "200":
+    200:
       description: OK
       content:
         application/json:
@@ -20,9 +20,11 @@ get:
                 properties:
                   data:
                     $ref: "#/components/schemas/user"
-    "401":
+    401:
       $ref: "#/components/responses/401Unauthorized"
-    "422":
+    404:
+      $ref: "#/components/responses/404NotFound"
+    422:
       $ref: "#/components/responses/422InvalidRequest"
-    "500":
+    500:
       $ref: "#/components/responses/500InternalServerError"

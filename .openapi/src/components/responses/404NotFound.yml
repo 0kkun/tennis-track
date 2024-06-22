@@ -1,0 +1,18 @@
+description: Not Found error.
+content:
+  application/json:
+    schema:
+      allOf:
+        - type: object
+          properties:
+            data:
+              type: object
+          required:
+            - data
+        - $ref: "#/components/schemas/commonResponse"
+    examples:
+      NotFound:
+        value:
+          data: {}
+          status: 404
+          message: Not Found error.

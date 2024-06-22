@@ -56,8 +56,6 @@ components:
       $ref: "./components/schemas/player/id.yml"
     sportCategoryId:
       $ref: "./components/schemas/sportCategory/id.yml"
-    UserPostPlayer:
-      $ref: "./components/schemas/user/player/PostPlayer.yml"
 
   responses:
     200Ok:
@@ -68,6 +66,8 @@ components:
       $ref: "./components/responses/204NoContent.yml"
     401Unauthorized:
       $ref: "./components/responses/401Unauthorized.yml"
+    404NotFound:
+      $ref: "./components/responses/404NotFound.yml"
     422InvalidRequest:
       $ref: "./components/responses/422InvalidRequest.yml"
     500InternalServerError:

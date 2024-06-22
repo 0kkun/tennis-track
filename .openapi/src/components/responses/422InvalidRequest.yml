@@ -14,6 +14,7 @@ content:
       Validation Error:
         value:
           data:
-            name: 氏名が不正です。
+            errors:
+              name: 氏名が不正です。
           status: 422
           message: Validation error. There is a problem with the request params.

@@ -20,7 +20,7 @@ post:
             - email
             - password
   responses:
-    "200":
+    200:
       description: OK
       content:
         application/json:
@@ -36,9 +36,11 @@ post:
                         $ref: "#/components/schemas/userToken"
                     required:
                       - token
-    "401":
+    401:
       $ref: "#/components/responses/401Unauthorized"
-    "422":
+    404:
+      $ref: "#/components/responses/404NotFound"
+    422:
       $ref: "#/components/responses/422InvalidRequest"
-    "500":
+    500:
       $ref: "#/components/responses/500InternalServerError"
