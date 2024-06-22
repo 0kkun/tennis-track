@@ -1,4 +1,4 @@
-title: Response
+title: commonResponse
 type: object
 description: レスポンス
 properties:

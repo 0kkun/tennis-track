@@ -7,7 +7,7 @@ get:
   parameters:
     - $ref: "#/components/schemas/userAgent"
     - schema:
-        type: string
+        type: integer
       in: query
       name: sport_category_id
       description: スポーツカテゴリID
@@ -43,13 +43,13 @@ get:
         application/json:
           schema:
             allOf:
-              - $ref: "#/components/schemas/Response"
+              - $ref: "#/components/schemas/commonResponse"
               - type: object
                 properties:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/UserPlayer"
+                      $ref: "#/components/schemas/player"
     "204":
       $ref: "#/components/responses/204NoContent"
     "401":

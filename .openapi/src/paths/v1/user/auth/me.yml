@@ -15,13 +15,11 @@ get:
         application/json:
           schema:
             allOf:
-              - $ref: "#/components/schemas/Response"
+              - $ref: "#/components/schemas/commonResponse"
               - type: object
                 properties:
                   data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/User"
+                    $ref: "#/components/schemas/user"
     "401":
       $ref: "#/components/responses/401Unauthorized"
     "422":

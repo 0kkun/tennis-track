@@ -7,7 +7,7 @@ content:
           properties:
             data:
               type: object
-        - $ref: "../schemas/common/Response.yaml"
+        - $ref: "#/components/schemas/commonResponse"
     examples:
       Server error:
         value:

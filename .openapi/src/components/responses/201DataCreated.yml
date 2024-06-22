@@ -1,4 +1,4 @@
-description: 正常に成功にした場合
+description: レコードを新規作成した場合
 content:
   application/json:
     schema:
@@ -9,10 +9,10 @@ content:
               type: object
           required:
             - data
-        - $ref: "../schemas/common/Response.yaml"
+        - $ref: "#/components/schemas/commonResponse"
     examples:
       success:
         value:
           data: {}
-          status: 200
+          status: 201
           message: success

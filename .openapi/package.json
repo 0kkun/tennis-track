@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write \"./src/**/*.yaml\"",
-    "lint": "redocly lint \"./src/**/*.yaml\"",
+    "format": "prettier --write \"./src/**/*.yml\"",
+    "lint": "redocly lint \"./src/**/*.yml\"",
     "merge": "swagger-merger -i src/v1.yml -o src/specs/v1.yml"
   },
   "author": "",

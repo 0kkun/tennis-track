@@ -1,0 +1,6 @@
+title: playerId
+type: integer
+format: int64
+readOnly: true
+example: 1
+description: 選手ID

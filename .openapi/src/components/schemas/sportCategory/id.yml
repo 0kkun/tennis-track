@@ -1,0 +1,6 @@
+title: sportCategoryId
+type: integer
+format: int64
+readOnly: true
+example: 1
+description: スポーツカテゴリID

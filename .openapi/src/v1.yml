@@ -19,11 +19,11 @@ tags:
 
 paths:
   "/api/v1/users/login":
-    $ref: "./paths/V1/User/Auth/Login.yaml"
+    $ref: ./paths/v1/user/auth/login.yml
   "/api/v1/users/me":
-    $ref: "./paths/V1/User/Auth/Me.yaml"
+    $ref: "./paths/v1/user/auth/me.yml"
   "/api/v1/users/players":
-    $ref: "./paths/V1/User/Player/Players.yaml"
+    $ref: "./paths/v1/user/player/players.yml"
 
 components:
   securitySchemes:
@@ -34,33 +34,43 @@ components:
       description: Bearerトークンを使用した認証
 
   schemas:
-    Response:
-      $ref: "./components/Schemas/Common/Response.yaml"
-    UserPlayer:
-      $ref: "./components/Schemas/User/Player/Player.yaml"
-    UserPostPlayer:
-      $ref: "./components/Schemas/User/Player/PostPlayer.yaml"
-    User:
-      $ref: "./components/Schemas/User/Auth/User.yaml"
-    UserPostLogin:
-      $ref: "./components/Schemas/User/Auth/PostLogin.yaml"
-    UserToken:
-      $ref: "./components/Schemas/User/Auth/Token.yaml"
+    commonResponse:
+      $ref: "./components/schemas/common/response.yml"
     userAgent:
-      $ref: "./components/Schemas/Common/userAgent.yml"
+      $ref: "./components/schemas/common/userAgent.yml"
+    user:
+      $ref: "./components/schemas/user/user.yml"
+    userId:
+      $ref: "./components/schemas/user/id.yml"
+    userName:
+      $ref: "./components/schemas/user/name.yml"
+    userEmail:
+      $ref: "./components/schemas/user/email.yml"
+    userPassword:
+      $ref: "./components/schemas/user/password.yml"
+    userToken:
+      $ref: "./components/schemas/user/token.yml"
+    player:
+      $ref: "./components/schemas/player/player.yml"
+    playerId:
+      $ref: "./components/schemas/player/id.yml"
+    sportCategoryId:
+      $ref: "./components/schemas/sportCategory/id.yml"
+    UserPostPlayer:
+      $ref: "./components/schemas/user/player/PostPlayer.yml"
 
   responses:
     200Ok:
-      $ref: "./components/responses/200Ok.yaml"
+      $ref: "./components/responses/200Ok.yml"
     201DataCreated:
-      $ref: "./components/responses/201DataCreated.yaml"
+      $ref: "./components/responses/201DataCreated.yml"
     204NoContent:
-      $ref: "./components/responses/204NoContent.yaml"
+      $ref: "./components/responses/204NoContent.yml"
     401Unauthorized:
-      $ref: "./components/responses/401Unauthorized.yaml"
+      $ref: "./components/responses/401Unauthorized.yml"
     422InvalidRequest:
-      $ref: "./components/responses/422InvalidRequest.yaml"
+      $ref: "./components/responses/422InvalidRequest.yml"
     500InternalServerError:
-      $ref: "./components/responses/500InternalServerError.yaml"
+      $ref: "./components/responses/500InternalServerError.yml"
     503ServiceUnavailable:
-      $ref: "./components/responses/503ServiceUnavailable.yaml"
+      $ref: "./components/responses/503ServiceUnavailable.yml"

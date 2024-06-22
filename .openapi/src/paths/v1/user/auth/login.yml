@@ -10,7 +10,15 @@ post:
     content:
       application/json:
         schema:
-          $ref: "#/components/schemas/UserPostLogin"
+          type: object
+          properties:
+            email:
+              $ref: "#/components/schemas/userEmail"
+            password:
+              $ref: "#/components/schemas/userPassword"
+          required:
+            - email
+            - password
   responses:
     "200":
       description: OK
@@ -18,13 +26,16 @@ post:
         application/json:
           schema:
             allOf:
-              - $ref: "#/components/schemas/Response"
+              - $ref: "#/components/schemas/commonResponse"
               - type: object
                 properties:
                   data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/UserToken"
+                    type: object
+                    properties:
+                      token:
+                        $ref: "#/components/schemas/userToken"
+                    required:
+                      - token
     "401":
       $ref: "#/components/responses/401Unauthorized"
     "422":

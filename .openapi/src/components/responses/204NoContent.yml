@@ -9,7 +9,7 @@ content:
               type: object
           required:
             - data
-        - $ref: "../schemas/common/Response.yaml"
+        - $ref: "#/components/schemas/commonResponse"
     examples:
       success:
         value:
