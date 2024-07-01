@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info:
+  title: tennis-track
+  description: テニス情報サイト
+  version: "1.0"
+  license:
+    name: Tennis Track
+    url: "https://www.tennis-track.com"
+servers:
+  - url: "http://localhost:4010"
+    description: Local Server
+  - url: "https://tennis-track.com"
+    description: Production Server
+tags:
+  - name: Auth
+    description: ユーザー管理
+  - name: Player
+    description: 選手管理
+  - name: SportCategory
+    description: スポーツカテゴリ管理
+  - name: Favorite
+    description: お気に入り管理
+
+paths:
+  /api/v1/users/register:
+    $ref: "./paths/v1/user/auth/register.yml"
+  /api/v1/users/login:
+    $ref: ./paths/v1/user/auth/login.yml
+  /api/v1/users/logout:
+    $ref: ./paths/v1/user/auth/logout.yml
+  /api/v1/users/me:
+    $ref: "./paths/v1/user/auth/me.yml"
+  /api/v1/users/forgot-password:
+    $ref: "./paths/v1/user/auth/forgotPassword.yml"
+  /api/v1/users/reset-password:
+    $ref: "./paths/v1/user/auth/resetPassword.yml"
+  /api/v1/users/players:
+    $ref: "./paths/v1/user/player/players.yml"
+  /api/v1/users/sportCategories:
+    $ref: "./paths/v1/user/sportCategory/sportCategories.yml"
+  /api/v1/users/favorites/players/{playerId}:
+    $ref: "./paths/v1/user/favorite/player/playerId.yml"
+  /api/v1/users/favorites/players:
+    $ref: "./paths/v1/user/favorite/player/players.yml"
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearerトークンを使用した認証
+
+  schemas:
+    commonResponse:
+      $ref: "./components/schemas/common/response.yml"
+    userAgent:
+      $ref: "./components/schemas/common/userAgent.yml"
+    user:
+      $ref: "./components/schemas/user/user.yml"
+    userId:
+      $ref: "./components/schemas/user/id.yml"
+    userName:
+      $ref: "./components/schemas/user/name.yml"
+    userEmail:
+      $ref: "./components/schemas/user/email.yml"
+    userPassword:
+      $ref: "./components/schemas/user/password.yml"
+    userToken:
+      $ref: "./components/schemas/user/token.yml"
+    player:
+      $ref: "./components/schemas/player/player.yml"
+    playerId:
+      $ref: "./components/schemas/player/id.yml"
+    playerNameEn:
+      $ref: "./components/schemas/player/nameEn.yml"
+    playerCountry:
+      $ref: "./components/schemas/player/country.yml"
+    playerGender:
+      $ref: "./components/schemas/player/gender.yml"
+    playerProYear:
+      $ref: "./components/schemas/player/proYear.yml"
+    playerHandedness:
+      $ref: "./components/schemas/player/handedness.yml"
+    sportCategory:
+      $ref: "./components/schemas/sportCategory/sportCategory.yml"
+    sportCategoryId:
+      $ref: "./components/schemas/sportCategory/id.yml"
+    sportCategoryName:
+      $ref: "./components/schemas/sportCategory/name.yml"
+
+  responses:
+    200Ok:
+      $ref: "./components/responses/200Ok.yml"
+    201DataCreated:
+      $ref: "./components/responses/201DataCreated.yml"
+    204NoContent:
+      $ref: "./components/responses/204NoContent.yml"
+    401Unauthorized:
+      $ref: "./components/responses/401Unauthorized.yml"
+    404NotFound:
+      $ref: "./components/responses/404NotFound.yml"
+    422InvalidRequest:
+      $ref: "./components/responses/422InvalidRequest.yml"
+    500InternalServerError:
+      $ref: "./components/responses/500InternalServerError.yml"
+    503ServiceUnavailable:
+      $ref: "./components/responses/503ServiceUnavailable.yml"

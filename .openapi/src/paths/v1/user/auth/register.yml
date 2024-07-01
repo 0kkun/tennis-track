@@ -1,0 +1,41 @@
+post:
+  summary: ユーザー新規登録
+  operationId: post-api-v1-user-auth-register
+  description: ユーザー新規登録を行う
+  tags:
+    - Auth
+  parameters:
+    - $ref: "#/components/schemas/userAgent"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              $ref: "#/components/schemas/userName"
+            email:
+              $ref: "#/components/schemas/userEmail"
+            password:
+              $ref: "#/components/schemas/userPassword"
+          required:
+            - name
+            - email
+            - password
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/commonResponse"
+              - type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/user"
+    422:
+      $ref: "#/components/responses/422InvalidRequest"
+    500:
+      $ref: "#/components/responses/500InternalServerError"

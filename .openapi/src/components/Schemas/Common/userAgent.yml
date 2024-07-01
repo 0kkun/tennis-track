@@ -1,0 +1,7 @@
+title: userAgent
+in: header
+name: User-Agent
+description: クライアントのユーザーエージェント
+schema:
+  type: string
+required: true

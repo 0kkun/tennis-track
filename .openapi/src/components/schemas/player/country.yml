@@ -1,0 +1,4 @@
+title: playerCountry
+type: string
+description: 出身国
+example: Japan

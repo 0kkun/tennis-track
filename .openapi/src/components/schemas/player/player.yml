@@ -1,0 +1,18 @@
+title: player
+type: object
+description: 選手情報
+properties:
+  id:
+    $ref: "#/components/schemas/playerId"
+  sport_category_id:
+    $ref: "#/components/schemas/sportCategoryId"
+  name_en:
+    $ref: "#/components/schemas/playerNameEn"
+  country:
+    $ref: "#/components/schemas/playerCountry"
+  gender:
+    $ref: "#/components/schemas/playerGender"
+  pro_year:
+    $ref: "#/components/schemas/playerProYear"
+  handedness:
+    $ref: "#/components/schemas/playerHandedness"

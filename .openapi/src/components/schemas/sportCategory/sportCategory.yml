@@ -1,0 +1,8 @@
+title: sportCategory
+type: object
+description: スポーツ種目
+properties:
+  id:
+    $ref: "#/components/schemas/sportCategoryId"
+  name:
+    $ref: "#/components/schemas/sportCategoryName"

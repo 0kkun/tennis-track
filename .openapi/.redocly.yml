@@ -1,0 +1,15 @@
+apis:
+  myApi@v1:
+    root: ./src/specs/v1.yml
+extends:
+  - recommended
+plugins:
+  - './plugins/custom-lint-rules.js'
+rules:
+  info-license: off
+  no-unused-components: error
+  my-local-plugin/query-param-snake-case: error
+  # my-local-plugin/schema-property-snake-case: error
+  # my-local-plugin/operation-id-camel-case: error
+  # my-local-plugin/tags-kebab-case: error
+  # my-local-plugin/enum-snake-case: error
