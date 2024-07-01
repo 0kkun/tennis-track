@@ -64,6 +64,9 @@ final class TennisPlayers implements \IteratorAggregate
         return new self($items);
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return array_map(fn (TennisPlayer $player) => $player->toArray(), $this->players);
