@@ -1,0 +1,20 @@
+description: 引数が足りない・バリデーションに引っかかった場合など
+content:
+  application/json:
+    schema:
+      allOf:
+        - $ref: "#/components/schemas/commonResponse"
+        - type: object
+          properties:
+            data:
+              type: object
+          required:
+            - data
+    examples:
+      Validation Error:
+        value:
+          data:
+            errors:
+              name: 氏名が不正です。
+          status: 422
+          message: Validation error. There is a problem with the request params.

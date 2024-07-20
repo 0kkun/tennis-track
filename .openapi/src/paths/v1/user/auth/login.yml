@@ -1,0 +1,46 @@
+post:
+  summary: ユーザーログイン
+  operationId: post-api-v1-user-auth-login
+  description: ユーザーログインを行う
+  tags:
+    - Auth
+  parameters:
+    - $ref: "#/components/schemas/userAgent"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              $ref: "#/components/schemas/userEmail"
+            password:
+              $ref: "#/components/schemas/userPassword"
+          required:
+            - email
+            - password
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/commonResponse"
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        $ref: "#/components/schemas/userToken"
+                    required:
+                      - token
+    401:
+      $ref: "#/components/responses/401Unauthorized"
+    404:
+      $ref: "#/components/responses/404NotFound"
+    422:
+      $ref: "#/components/responses/422InvalidRequest"
+    500:
+      $ref: "#/components/responses/500InternalServerError"

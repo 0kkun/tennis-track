@@ -1,0 +1,30 @@
+get:
+  summary: 認証ユーザー情報取得
+  operationId: get-api-v1-user-auth-me
+  description: ユーザー情報取得
+  tags:
+    - Auth
+  security:
+    - BearerAuth: []
+  parameters:
+    - $ref: "#/components/schemas/userAgent"
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/commonResponse"
+              - type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/user"
+    401:
+      $ref: "#/components/responses/401Unauthorized"
+    404:
+      $ref: "#/components/responses/404NotFound"
+    422:
+      $ref: "#/components/responses/422InvalidRequest"
+    500:
+      $ref: "#/components/responses/500InternalServerError"

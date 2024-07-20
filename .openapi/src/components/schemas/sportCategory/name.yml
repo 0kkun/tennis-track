@@ -1,0 +1,4 @@
+title: sportCategoryName
+description: スポーツ種目名
+type: string
+example: テニス

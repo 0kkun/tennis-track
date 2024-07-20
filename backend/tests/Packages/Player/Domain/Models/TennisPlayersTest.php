@@ -60,4 +60,11 @@ class TennisPlayersTest extends TestCase
 
         $this->assertSame(3, $players->count());
     }
+
+    public function testEmpty()
+    {
+        $players = TennisPlayers::fromArray([]);
+
+        $this->assertSame(0, $players->count());
+    }
 }

@@ -1,0 +1,6 @@
+titile: userId
+type: integer
+format: int64
+description: ユーザーID
+readOnly: true
+example: 1

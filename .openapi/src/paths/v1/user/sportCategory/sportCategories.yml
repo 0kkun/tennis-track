@@ -1,0 +1,26 @@
+get:
+  summary: スポーツカテゴリ一覧取得
+  operationId: get-api-v1-user-sportCategory
+  description: スポーツカテゴリ一覧取得
+  tags:
+    - SportCategory
+  parameters:
+    - $ref: "#/components/schemas/userAgent"
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/commonResponse"
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/sportCategory"
+    404:
+      $ref: "#/components/responses/404NotFound"
+    500:
+      $ref: "#/components/responses/500InternalServerError"

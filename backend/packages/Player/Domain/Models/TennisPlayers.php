@@ -55,17 +55,29 @@ final class TennisPlayers implements \IteratorAggregate
         foreach ($players as $player) {
             if (is_array($player)) {
                 $items[] = TennisPlayer::fromArray($player);
-            }
-            if ($player instanceof TennisPlayer) {
+            } elseif ($player instanceof TennisPlayer) {
                 $items[] = $player;
+            } else {
+                continue; // 無効なエントリをスキップ
             }
         }
 
         return new self($items);
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return array_map(fn (TennisPlayer $player) => $player->toArray(), $this->players);
+    }
+
+    /**
+     * @return bool
+     */
+    public function empty(): bool
+    {
+        return empty($this->players);
     }
 }

@@ -1,0 +1,46 @@
+get:
+  summary: お気に入り選手一覧取得
+  description: お気に入り選手一覧取得
+  operationId: get-api-v1-user-favorite-player
+  tags:
+    - Favorite
+  security:
+    - BearerAuth: []
+  parameters:
+    - $ref: "#/components/schemas/userAgent"
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/commonResponse"
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/player"
+    401:
+      $ref: "#/components/responses/401Unauthorized"
+    500:
+      $ref: "#/components/responses/500InternalServerError"
+
+delete:
+  summary: お気に入り選手一括解除
+  description: お気に入り選手一括解除
+  operationId: delete-api-v1-user-favorite-player
+  tags:
+    - Favorite
+  security:
+    - BearerAuth: []
+  parameters:
+    - $ref: "#/components/schemas/userAgent"
+  responses:
+    204:
+      $ref: "#/components/responses/204NoContent"
+    401:
+      $ref: "#/components/responses/401Unauthorized"
+    500:
+      $ref: "#/components/responses/500InternalServerError"
