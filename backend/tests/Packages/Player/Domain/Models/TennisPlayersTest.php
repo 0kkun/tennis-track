@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Packages\Player\Domain\Models;
 
-use PHPUnit\Framework\TestCase;
 use TennisTrack\Player\Domain\Models\TennisPlayer;
 use TennisTrack\Player\Domain\Models\TennisPlayers;
+use PHPUnit\Framework\TestCase;
 
 class TennisPlayersTest extends TestCase
 {
@@ -59,5 +59,12 @@ class TennisPlayersTest extends TestCase
         $players = TennisPlayers::fromArray([$player1, $player2, $player3]);
 
         $this->assertSame(3, $players->count());
+    }
+
+    public function testEmpty()
+    {
+        $players = TennisPlayers::fromArray([]);
+
+        $this->assertSame(0, $players->count());
     }
 }
