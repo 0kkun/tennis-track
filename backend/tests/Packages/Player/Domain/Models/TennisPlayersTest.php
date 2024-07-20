@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Packages\Player\Domain\Models;
 
+use PHPUnit\Framework\TestCase;
 use TennisTrack\Player\Domain\Models\TennisPlayer;
 use TennisTrack\Player\Domain\Models\TennisPlayers;
-use PHPUnit\Framework\TestCase;
 
 class TennisPlayersTest extends TestCase
 {

@@ -74,7 +74,7 @@ final class TennisPlayers implements \IteratorAggregate
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function empty(): bool
     {
