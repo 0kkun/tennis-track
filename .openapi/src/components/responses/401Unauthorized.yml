@@ -2,20 +2,4 @@ description: 未認証
 content:
   application/json:
     schema:
-      allOf:
-        - $ref: "#/components/schemas/commonResponse"
-        - type: object
-          properties:
-            data:
-              type: object
-          required:
-            - data
-    examples:
-      Unauthorized:
-        value:
-          data:
-            errors:
-              email: emailは必須です
-              password: パスワードは必須です
-          status: 401
-          message: Unauthorized error.
+      $ref: "#/components/schemas/commonUnauthorizedResponse"

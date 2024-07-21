@@ -57,6 +57,8 @@ components:
       $ref: "./components/schemas/common/createdResponse.yml"
     commonNoContentResponse:
       $ref: "./components/schemas/common/noContentResponse.yml"
+    commonUnauthorizedResponse:
+      $ref: "./components/schemas/common/unauthorizedResponse.yml"
     userAgent:
       $ref: "./components/schemas/common/userAgent.yml"
     user:
