@@ -2,15 +2,5 @@ description: 正常に成功にした場合
 content:
   application/json:
     schema:
-      allOf:
-        - $ref: "#/components/schemas/commonResponse"
-        - type: object
-          properties:
-            message:
-              type: string
-              const: success
-            status:
-              type: integer
-              const: 200
-          required:
-            - data
+      $ref: "#/components/schemas/commonSuccessResponse"
+

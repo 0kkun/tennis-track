@@ -15,15 +15,9 @@ get:
         application/json:
           schema:
             allOf:
-              - $ref: "#/components/schemas/commonResponse"
+              - $ref: "#/components/schemas/commonSuccessResponse"
               - type: object
                 properties:
-                  message:
-                    type: string
-                    const: success
-                  status:
-                    type: integer
-                    const: 200
                   data:
                     $ref: "#/components/schemas/user"
     401:

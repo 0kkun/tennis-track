@@ -2,17 +2,4 @@ description: レコードを新規作成した場合
 content:
   application/json:
     schema:
-      allOf:
-        - $ref: "#/components/schemas/commonResponse"
-        - type: object
-          properties:
-            data:
-              type: object
-          required:
-            - data
-    examples:
-      success:
-        value:
-          data: {}
-          status: 201
-          message: created
+      $ref: "#/components/schemas/commonCreatedResponse"

@@ -1,0 +1,19 @@
+title: commonCreatedResponse
+type: object
+description: 正常レスポンス
+properties:
+  status:
+    type: integer
+    description: ステータスコード
+    const: 201
+  message:
+    type: string
+    description: メッセージ
+    const: created
+  data:
+    type: object
+    description: レスポンスデータ
+required:
+  - status
+  - message
+  - data

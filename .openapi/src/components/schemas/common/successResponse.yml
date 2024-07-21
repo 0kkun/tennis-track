@@ -1,0 +1,19 @@
+title: commonSuccessResponse
+type: object
+description: 正常レスポンス
+properties:
+  status:
+    type: integer
+    description: ステータスコード
+    const: 200
+  message:
+    type: string
+    description: メッセージ
+    const: success
+  data:
+    type: object
+    description: レスポンスデータ
+required:
+  - status
+  - message
+  - data

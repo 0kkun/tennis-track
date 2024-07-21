@@ -30,7 +30,7 @@ post:
         application/json:
           schema:
             allOf:
-              - $ref: "#/components/schemas/commonResponse"
+              - $ref: "#/components/schemas/commonSuccessResponse"
               - type: object
                 properties:
                   data:
