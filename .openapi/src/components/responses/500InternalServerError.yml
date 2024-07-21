@@ -1,17 +1,5 @@
-description: サーバ内部にエラーが発生した場合。予期しないサーバー処理のエラー。
+description: サーバ内部にエラーが発生した場合
 content:
   application/json:
     schema:
-      allOf:
-        - $ref: "#/components/schemas/commonResponse"
-        - type: object
-          properties:
-            data:
-              type: objec
-    examples:
-      Server error:
-        value:
-          data:
-            XXXXX: XXXXXXXXXXXXXXXX
-          status: 500
-          message: Server error
+      $ref: "#/components/schemas/commonServerErrorResponse"

@@ -1,0 +1,19 @@
+title: commonNotFoundResponse
+type: object
+description: 取得するデータが存在しない場合に返却される。
+properties:
+  status:
+    type: integer
+    description: ステータスコード
+    const: 404
+  message:
+    type: string
+    description: メッセージ
+    const: not found
+  data:
+    type: object
+    description: レスポンスデータ
+required:
+  - status
+  - message
+  - data

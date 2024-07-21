@@ -39,3 +39,5 @@ post:
       $ref: "#/components/responses/422InvalidRequest"
     500:
       $ref: "#/components/responses/500InternalServerError"
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"

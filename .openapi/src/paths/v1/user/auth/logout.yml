@@ -15,3 +15,5 @@ post:
       $ref: "#/components/responses/401Unauthorized"
     500:
       $ref: "#/components/responses/500InternalServerError"
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"

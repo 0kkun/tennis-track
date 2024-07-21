@@ -26,7 +26,8 @@ get:
       $ref: "#/components/responses/401Unauthorized"
     500:
       $ref: "#/components/responses/500InternalServerError"
-
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"
 delete:
   summary: お気に入り選手一括解除
   description: お気に入り選手一括解除
@@ -44,3 +45,5 @@ delete:
       $ref: "#/components/responses/401Unauthorized"
     500:
       $ref: "#/components/responses/500InternalServerError"
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"

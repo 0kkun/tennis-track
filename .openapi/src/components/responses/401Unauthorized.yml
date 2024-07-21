@@ -1,4 +1,4 @@
-description: 未認証
+description: 未認証の場合
 content:
   application/json:
     schema:

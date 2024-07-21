@@ -1,4 +1,4 @@
-description: 正常なリクエストが来たが、レスポンスの中身が無かった場合
+description: レスポンスの中身が無かった場合
 content:
   application/json:
     schema:

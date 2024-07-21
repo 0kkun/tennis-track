@@ -1,18 +1,5 @@
-description: Not Found error.
+description: データが存在しない場合
 content:
   application/json:
     schema:
-      allOf:
-        - $ref: "#/components/schemas/commonResponse"
-        - type: object
-          properties:
-            data:
-              type: object
-          required:
-            - data
-    examples:
-      NotFound:
-        value:
-          data: {}
-          status: 404
-          message: Not Found error.
+      $ref: "#/components/schemas/commonNotFoundResponse"

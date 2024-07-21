@@ -59,6 +59,14 @@ components:
       $ref: "./components/schemas/common/noContentResponse.yml"
     commonUnauthorizedResponse:
       $ref: "./components/schemas/common/unauthorizedResponse.yml"
+    commonNotFoundResponse:
+      $ref: "./components/schemas/common/notFoundResponse.yml"
+    commonInvalidRequestResponse:
+      $ref: "./components/schemas/common/invalidRequestResponse.yml"
+    commonServerErrorResponse:
+      $ref: "./components/schemas/common/serverErrorResponse.yml"
+    commonServiceUnavailableResponse:
+      $ref: "./components/schemas/common/serviceUnavailableResponse.yml"
     userAgent:
       $ref: "./components/schemas/common/userAgent.yml"
     user:
