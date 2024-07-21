@@ -1,9 +1,8 @@
 version: "3.9"
 
 services:
-  # OpenAPI仕様に則ったAPI仕様からドキュメントを生成するツール
   swagger-ui:
-    image: swaggerapi/swagger-ui
+    image: swaggerapi/swagger-ui:latest
     container_name: swagger-ui
     ports:
       - 10082:8080
@@ -12,7 +11,6 @@ services:
     environment:
       API_URL: v1.yml
 
-  # Stoplight社が提供するOSSのAPIモックサーバー
   swagger-api:
     image: stoplight/prism:3
     container_name: swagger-api
@@ -22,7 +20,6 @@ services:
     volumes:
       - ./src/specs/v1.yml:/v1.yml
 
-  # lintやmergeを行うためのcliツール
   cli:
     container_name: cli
     build:

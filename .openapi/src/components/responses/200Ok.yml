@@ -6,7 +6,11 @@ content:
         - $ref: "#/components/schemas/commonResponse"
         - type: object
           properties:
-            data:
-              type: object
+            message:
+              type: string
+              const: success
+            status:
+              type: integer
+              const: 200
           required:
             - data
