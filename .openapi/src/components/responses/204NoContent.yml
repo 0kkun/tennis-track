@@ -2,17 +2,4 @@ description: 正常なリクエストが来たが、レスポンスの中身が�
 content:
   application/json:
     schema:
-      allOf:
-        - $ref: "#/components/schemas/commonResponse"
-        - type: object
-          properties:
-            data:
-              type: object
-          required:
-            - data
-    examples:
-      success:
-        value:
-          data: {}
-          status: 204
-          message: There was no data to return as a response.
+      $ref: "#/components/schemas/commonNoContentResponse"
