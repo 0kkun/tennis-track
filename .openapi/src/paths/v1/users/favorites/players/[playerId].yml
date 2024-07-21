@@ -9,7 +9,7 @@ post:
   parameters:
     - $ref: "#/components/schemas/userAgent"
     - schema:
-        type: integer
+        $ref: "#/components/schemas/playerId"
       in: query
       name: player_id
       description: 選手ID

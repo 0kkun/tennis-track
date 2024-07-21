@@ -23,25 +23,25 @@ tags:
 
 paths:
   /api/v1/users/register:
-    $ref: "./paths/v1/user/auth/register.yml"
+    $ref: "./paths/v1/users/auth/register.yml"
   /api/v1/users/login:
-    $ref: ./paths/v1/user/auth/login.yml
+    $ref: ./paths/v1/users/auth/login.yml
   /api/v1/users/logout:
-    $ref: ./paths/v1/user/auth/logout.yml
+    $ref: ./paths/v1/users/auth/logout.yml
   /api/v1/users/me:
-    $ref: "./paths/v1/user/auth/me.yml"
+    $ref: "./paths/v1/users/auth/me.yml"
   /api/v1/users/forgot-password:
-    $ref: "./paths/v1/user/auth/forgotPassword.yml"
+    $ref: "./paths/v1/users/auth/forgotPassword.yml"
   /api/v1/users/reset-password:
-    $ref: "./paths/v1/user/auth/resetPassword.yml"
+    $ref: "./paths/v1/users/auth/resetPassword.yml"
   /api/v1/users/players:
-    $ref: "./paths/v1/user/player/players.yml"
-  /api/v1/users/sportCategories:
-    $ref: "./paths/v1/user/sportCategory/sportCategories.yml"
+    $ref: "./paths/v1/users/players.yml"
   /api/v1/users/favorites/players/{playerId}:
-    $ref: "./paths/v1/user/favorite/player/playerId.yml"
+    $ref: "./paths/v1/users/favorites/players/[playerId].yml"
   /api/v1/users/favorites/players:
-    $ref: "./paths/v1/user/favorite/player/players.yml"
+    $ref: "./paths/v1/users/favorites/players.yml"
+  /api/v1/users/sportCategories:
+    $ref: "./paths/v1/users/sportCategories.yml"
 
 components:
   securitySchemes:
