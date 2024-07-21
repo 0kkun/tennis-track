@@ -22,18 +22,16 @@ tags:
     description: お気に入り管理
 
 paths:
-  /api/v1/users/register:
-    $ref: "./paths/v1/users/auth/register.yml"
-  /api/v1/users/login:
-    $ref: ./paths/v1/users/auth/login.yml
-  /api/v1/users/logout:
-    $ref: ./paths/v1/users/auth/logout.yml
+  /api/v1/users:
+    $ref: "./paths/v1/users.yml"
+  /api/v1/users/sessions:
+    $ref: ./paths/v1/users/sessions.yml
   /api/v1/users/me:
-    $ref: "./paths/v1/users/auth/me.yml"
+    $ref: "./paths/v1/users/me.yml"
   /api/v1/users/forgot-password:
-    $ref: "./paths/v1/users/auth/forgotPassword.yml"
+    $ref: "./paths/v1/users/forgotPassword.yml"
   /api/v1/users/reset-password:
-    $ref: "./paths/v1/users/auth/resetPassword.yml"
+    $ref: "./paths/v1/users/resetPassword.yml"
   /api/v1/users/players:
     $ref: "./paths/v1/users/players.yml"
   /api/v1/users/favorites/players/{playerId}:
