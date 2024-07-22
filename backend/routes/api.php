@@ -10,14 +10,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1/')->group(function () {
     Route::prefix('/users')->group(function () {
-        Route::post('/register', [AuthController::class, 'register'])->name('users.register');
-        Route::post('/login', [AuthController::class, 'login'])->name('users.login');
+        Route::post('/', [AuthController::class, 'register'])->name('users.register');
+        // Route::post('/register', [AuthController::class, 'register'])->name('users.register');
+        Route::post('/sessions', [AuthController::class, 'login'])->name('users.login');
         Route::post('/forgot-password', ForgotPasswordController::class)->name('password.forgot');
         Route::post('/reset-password', ResetPasswordController::class)->name('password.reset');
 
         Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/me', [AuthController::class, 'me'])->name('users.me');
-            Route::post('/logout', [AuthController::class, 'logout'])->name('users.logout');
+            Route::delete('/sessions', [AuthController::class, 'logout'])->name('users.logout');
+            // Route::post('/logout', [AuthController::class, 'logout'])->name('users.logout');
             Route::as('users.')->group(function () {
                 Route::apiResource('/players', PlayerController::class)->only(['index', 'show']);
                 Route::apiResource('/tennis_atp_rankings', TennisAtpRankingController::class)->only(['index', 'show']);
