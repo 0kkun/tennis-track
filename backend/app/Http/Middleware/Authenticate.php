@@ -28,6 +28,7 @@ class Authenticate
         if (! Auth::guard($guard)->check()) {
             throw new AuthenticationException('Unauthenticated.');
         }
+
         return $next($req);
     }
 

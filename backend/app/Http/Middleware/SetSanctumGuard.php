@@ -19,6 +19,7 @@ class SetSanctumGuard
         } else {
             config(['sanctum.defaults.guard' => 'web']);
         }
+
         return $next($request);
     }
 }
