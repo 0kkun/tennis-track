@@ -5,7 +5,7 @@ import { ApiSuccessResponse, ApiErrorResponse } from '@/libs/apiClient'
 
 export const sendLogin = async (request: LoginRequest): Promise<ApiSuccessResponse> => {
   try {
-    const response = await apiClient.post('/api/v1/users/login', request)
+    const response = await apiClient.post('/api/v1/users/sessions', request)
     console.log('Login api success!')
     return response.data
   } catch (error) {

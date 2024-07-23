@@ -43,7 +43,7 @@ get:
         application/json:
           schema:
             allOf:
-              - $ref: "#/components/schemas/commonResponse"
+              - $ref: "#/components/schemas/commonSuccessResponse"
               - type: object
                 properties:
                   data:
@@ -56,7 +56,8 @@ get:
       $ref: "#/components/responses/422InvalidRequest"
     500:
       $ref: "#/components/responses/500InternalServerError"
-
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"
 post:
   summary: 選手登録機能
   description: 選手を登録する
@@ -92,3 +93,5 @@ post:
       $ref: "#/components/responses/422InvalidRequest"
     500:
       $ref: "#/components/responses/500InternalServerError"
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"

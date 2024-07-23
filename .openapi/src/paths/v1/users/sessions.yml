@@ -26,7 +26,7 @@ post:
         application/json:
           schema:
             allOf:
-              - $ref: "#/components/schemas/commonResponse"
+              - $ref: "#/components/schemas/commonSuccessResponse"
               - type: object
                 properties:
                   data:
@@ -36,11 +36,29 @@ post:
                         $ref: "#/components/schemas/userToken"
                     required:
                       - token
-    401:
-      $ref: "#/components/responses/401Unauthorized"
-    404:
-      $ref: "#/components/responses/404NotFound"
     422:
       $ref: "#/components/responses/422InvalidRequest"
     500:
       $ref: "#/components/responses/500InternalServerError"
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"
+
+delete:
+  summary: ユーザーログアウト
+  operationId: post-api-v1-user-auth-logout
+  description: ユーザーログアウトを行う
+  tags:
+    - Auth
+  security:
+    - BearerAuth: []
+  parameters:
+    - $ref: "#/components/schemas/userAgent"
+  responses:
+    200:
+      $ref: "#/components/responses/200Ok"
+    401:
+      $ref: "#/components/responses/401Unauthorized"
+    500:
+      $ref: "#/components/responses/500InternalServerError"
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"

@@ -1,13 +1,15 @@
-title: commonResponse
+title: commonCreatedResponse
 type: object
-description: レスポンス
+description: 正常レスポンス
 properties:
   status:
     type: integer
     description: ステータスコード
+    const: 201
   message:
     type: string
     description: メッセージ
+    const: created
   data:
     type: object
     description: レスポンスデータ

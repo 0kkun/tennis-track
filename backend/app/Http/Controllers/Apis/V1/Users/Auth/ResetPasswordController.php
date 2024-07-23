@@ -19,7 +19,7 @@ class ResetPasswordController extends Controller
      */
     public function __invoke(ResetPasswordRequest $request): SuccessResource
     {
-        $credentials = request()->only(['email', 'token', 'password']);
+        $credentials = $request->only(['email', 'token', 'password']);
 
         $status = Password::reset($credentials, function (EloquentUser $user, string $password) {
             $user->password = bcrypt($password);

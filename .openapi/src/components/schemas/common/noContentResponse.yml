@@ -1,13 +1,15 @@
-title: commonResponse
+title: commonNoContentResponse
 type: object
-description: レスポンス
+description: 削除成功時に返却される。
 properties:
   status:
     type: integer
     description: ステータスコード
+    const: 204
   message:
     type: string
     description: メッセージ
+    const: success
   data:
     type: object
     description: レスポンスデータ

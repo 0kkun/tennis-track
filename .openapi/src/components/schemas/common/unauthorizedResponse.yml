@@ -1,0 +1,34 @@
+title: commonUnauthorizedResponse
+type: object
+description: 未認証時に返却される。
+properties:
+  status:
+    type: integer
+    description: ステータスコード
+    const: 401
+  message:
+    type: string
+    description: メッセージ
+    const: unauthorized
+  data:
+    type: object
+    description: レスポンスデータ
+    properties:
+      errors:
+        type: object
+        description: エラー内容
+        properties:
+          email:
+            type: string
+            description: エラーメッセージ
+            example: emailは必須です。
+          password:
+            type: string
+            description: エラーメッセージ
+            example: passwordは必須です。
+    required:
+      - errors
+required:
+  - status
+  - message
+  - data

@@ -1,0 +1,30 @@
+title: commonInvalidRequestResponse
+type: object
+description: バリデーションエラー時に返却される。
+properties:
+  status:
+    type: integer
+    description: ステータスコード
+    const: 422
+  message:
+    type: string
+    description: メッセージ
+    const: invalid request
+  data:
+    type: object
+    description: レスポンスデータ
+    properties:
+      errors:
+        type: object
+        description: エラー内容
+        properties:
+          name:
+            type: string
+            description: エラーメッセージ
+            example: 指名は必須です
+    required:
+      - errors
+required:
+  - status
+  - message
+  - data

@@ -4,7 +4,7 @@ import { ApiErrorResponse } from '@/libs/apiClient'
 
 export const sendLogout = async (): Promise<void> => {
   await apiClient
-    .post('/api/v1/users/logout')
+    .delete('/api/v1/users/sessions')
     .then((res) => {
       console.log(res.data)
       apiClient.unsetAuthToken()

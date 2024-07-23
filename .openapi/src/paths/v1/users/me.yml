@@ -15,16 +15,16 @@ get:
         application/json:
           schema:
             allOf:
-              - $ref: "#/components/schemas/commonResponse"
+              - $ref: "#/components/schemas/commonSuccessResponse"
               - type: object
                 properties:
                   data:
                     $ref: "#/components/schemas/user"
     401:
       $ref: "#/components/responses/401Unauthorized"
-    404:
-      $ref: "#/components/responses/404NotFound"
     422:
       $ref: "#/components/responses/422InvalidRequest"
     500:
       $ref: "#/components/responses/500InternalServerError"
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"

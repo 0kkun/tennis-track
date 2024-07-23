@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   title: tennis-track
   description: テニス情報サイト
@@ -22,38 +22,49 @@ tags:
     description: お気に入り管理
 
 paths:
-  /api/v1/users/register:
-    $ref: "./paths/v1/user/auth/register.yml"
-  /api/v1/users/login:
-    $ref: ./paths/v1/user/auth/login.yml
-  /api/v1/users/logout:
-    $ref: ./paths/v1/user/auth/logout.yml
+  /api/v1/users:
+    $ref: "./paths/v1/users.yml"
+  /api/v1/users/sessions:
+    $ref: ./paths/v1/users/sessions.yml
   /api/v1/users/me:
-    $ref: "./paths/v1/user/auth/me.yml"
+    $ref: "./paths/v1/users/me.yml"
   /api/v1/users/forgot-password:
-    $ref: "./paths/v1/user/auth/forgotPassword.yml"
+    $ref: "./paths/v1/users/forgotPassword.yml"
   /api/v1/users/reset-password:
-    $ref: "./paths/v1/user/auth/resetPassword.yml"
+    $ref: "./paths/v1/users/resetPassword.yml"
   /api/v1/users/players:
-    $ref: "./paths/v1/user/player/players.yml"
-  /api/v1/users/sportCategories:
-    $ref: "./paths/v1/user/sportCategory/sportCategories.yml"
+    $ref: "./paths/v1/users/players.yml"
   /api/v1/users/favorites/players/{playerId}:
-    $ref: "./paths/v1/user/favorite/player/playerId.yml"
+    $ref: "./paths/v1/users/favorites/players/[playerId].yml"
   /api/v1/users/favorites/players:
-    $ref: "./paths/v1/user/favorite/player/players.yml"
+    $ref: "./paths/v1/users/favorites/players.yml"
+  /api/v1/users/sportCategories:
+    $ref: "./paths/v1/users/sportCategories.yml"
 
 components:
   securitySchemes:
     BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: Bearerトークンを使用した認証
+      $ref: "./components/securitySchemes/bearerAuth.yml"
 
   schemas:
     commonResponse:
       $ref: "./components/schemas/common/response.yml"
+    commonSuccessResponse:
+      $ref: "./components/schemas/common/successResponse.yml"
+    commonCreatedResponse:
+      $ref: "./components/schemas/common/createdResponse.yml"
+    commonNoContentResponse:
+      $ref: "./components/schemas/common/noContentResponse.yml"
+    commonUnauthorizedResponse:
+      $ref: "./components/schemas/common/unauthorizedResponse.yml"
+    commonNotFoundResponse:
+      $ref: "./components/schemas/common/notFoundResponse.yml"
+    commonInvalidRequestResponse:
+      $ref: "./components/schemas/common/invalidRequestResponse.yml"
+    commonServerErrorResponse:
+      $ref: "./components/schemas/common/serverErrorResponse.yml"
+    commonServiceUnavailableResponse:
+      $ref: "./components/schemas/common/serviceUnavailableResponse.yml"
     userAgent:
       $ref: "./components/schemas/common/userAgent.yml"
     user:

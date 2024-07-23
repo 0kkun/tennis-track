@@ -1,0 +1,28 @@
+title: commoServiceUnavailableResponse
+type: object
+description: メンテナンス中の場合に返却される。
+properties:
+  status:
+    type: integer
+    description: ステータスコード
+    const: 503
+  message:
+    type: string
+    description: メッセージ
+    const: service unavailable
+  data:
+    type: object
+    description: レスポンスデータ
+    properties:
+      startAt:
+        type: string
+        format: date-time
+        description: メンテナンス開始日時
+      endAt:
+        type: string
+        format: date-time
+        description: メンテナンス終了日時
+required:
+  - status
+  - message
+  - data

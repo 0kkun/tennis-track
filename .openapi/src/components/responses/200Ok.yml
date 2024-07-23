@@ -2,11 +2,4 @@ description: 正常に成功にした場合
 content:
   application/json:
     schema:
-      allOf:
-        - $ref: "#/components/schemas/commonResponse"
-        - type: object
-          properties:
-            data:
-              type: object
-          required:
-            - data
+      $ref: "#/components/schemas/commonSuccessResponse"

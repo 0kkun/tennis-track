@@ -9,7 +9,7 @@ post:
   parameters:
     - $ref: "#/components/schemas/userAgent"
     - schema:
-        type: integer
+        $ref: "#/components/schemas/playerId"
       in: query
       name: player_id
       description: 選手ID
@@ -22,7 +22,8 @@ post:
       $ref: "#/components/responses/422InvalidRequest"
     500:
       $ref: "#/components/responses/500InternalServerError"
-
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"
 delete:
   summary: お気にり選手解除機能
   description: 選手をお気に入りから解除する
@@ -47,3 +48,5 @@ delete:
       $ref: "#/components/responses/422InvalidRequest"
     500:
       $ref: "#/components/responses/500InternalServerError"
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"

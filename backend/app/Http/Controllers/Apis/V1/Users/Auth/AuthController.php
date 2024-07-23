@@ -9,6 +9,7 @@ use App\Http\Requests\Users\Auth\RegisterRequest;
 use App\Http\Resources\Common\SuccessResource;
 use App\Modules\ApplicationLogger;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -48,13 +49,16 @@ class AuthController extends Controller
     {
         $logger = new ApplicationLogger(__METHOD__);
         $user = EloquentUser::where('email', $request->email)->first();
+        DB::beginTransaction();
         try {
             if (! $user || ! Hash::check($request->password, $user->password)) {
                 throw ValidationException::withMessages([trans('auth.password')]);
             }
             $user->tokens()->where('name', $request->email)->delete();
             $token = $user->createToken($request->email)->plainTextToken;
+            DB::commit();
         } catch (\Exception $e) {
+            DB::rollBack();
             $logger->exception($e);
             throw $e;
         }

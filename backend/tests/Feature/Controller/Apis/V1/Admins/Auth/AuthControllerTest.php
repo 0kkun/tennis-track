@@ -58,7 +58,7 @@ class AuthControllerTest extends TestCase
     {
         $adminUser = EloquentAdmin::factory()->create();
         $token = $adminUser->createToken($adminUser->email, ['admin'])->plainTextToken;
-        $response = $this->post(route('admins.logout'), [], [
+        $response = $this->delete(route('admins.logout'), [], [
             'Authorization' => "Bearer $token",
         ]);
 

@@ -1,0 +1,28 @@
+title: commonServerErrorResponse
+type: object
+description: サーバーエラーの場合に返却される。
+properties:
+  status:
+    type: integer
+    description: ステータスコード
+    const: 500
+  message:
+    type: string
+    description: メッセージ
+    const: server error
+  data:
+    type: object
+    description: レスポンスデータ
+    properties:
+      errors:
+        type: object
+        description: エラーメッセージ
+        properties:
+          message:
+            type: string
+            description: エラーメッセージ
+            example: "production.ERROR: SQLSTATE[HY000] [2002] Connection refused"
+required:
+  - status
+  - message
+  - data
