@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace TennisTrack\FavoritePlayer\UseCase\Ports;
 
 use TennisTrack\FavoritePlayer\Domain\Models\FavoritePlayers;
-use TennisTrack\User\Domain\Models\Id as UserId;
 use TennisTrack\FavoritePlayer\Domain\Models\Id as FavoritePlayerId;
+use TennisTrack\User\Domain\Models\Id as UserId;
 
 interface FavoritePlayerCommandPort
 {

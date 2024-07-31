@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Adapter\FavoritePlayer;
 
 use App\Eloquents\EloquentFavoritePlayer;
-use TennisTrack\FavoritePlayer\Domain\Models\Id as FavoritePlayerId;
 use TennisTrack\FavoritePlayer\Domain\Models\FavoritePlayers;
-use TennisTrack\User\Domain\Models\Id as UserId;
+use TennisTrack\FavoritePlayer\Domain\Models\Id as FavoritePlayerId;
 use TennisTrack\FavoritePlayer\UseCase\Ports\FavoritePlayerCommandPort;
+use TennisTrack\User\Domain\Models\Id as UserId;
 
 class FavoritePlayerCommandAdapter implements FavoritePlayerCommandPort
 {

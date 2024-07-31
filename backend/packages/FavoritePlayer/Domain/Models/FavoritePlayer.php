@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace TennisTrack\FavoritePlayer\Domain\Models;
 
 use TennisTrack\Player\Domain\Models\Id as PlayerId;
-use TennisTrack\User\Domain\Models\Id as UserId;
 use TennisTrack\Player\Domain\Models\TennisPlayer;
+use TennisTrack\User\Domain\Models\Id as UserId;
 
 final class FavoritePlayer
 {

@@ -6,32 +6,49 @@ namespace TennisTrack\User\Domain\Models;
 
 final class User
 {
-    private Id $id;
-    private Name $name;
-    private Email $email;
-
-    public function __construct(Id $id, Name $name, Email $email)
-    {
+    /**
+     * @param Id $id
+     * @param Name $name
+     * @param Email $email
+     */
+    public function __construct(
+        private Id $id,
+        private Name $name,
+        private Email $email
+    ) {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
     }
 
+    /**
+     * @return Id
+     */
     public function id(): Id
     {
         return $this->id;
     }
 
+    /**
+     * @return Name
+     */
     public function name(): Name
     {
         return $this->name;
     }
 
+    /**
+     * @return Email
+     */
     public function email(): Email
     {
         return $this->email;
     }
 
+    /**
+     * @param array $data
+     * @return self
+     */
     public static function fromArray(array $data): self
     {
         return new self(
@@ -41,6 +58,9 @@ final class User
         );
     }
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return [

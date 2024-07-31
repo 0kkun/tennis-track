@@ -34,7 +34,7 @@ final class FavoritePlayers implements \IteratorAggregate
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function count(): int
     {
@@ -75,6 +75,7 @@ final class FavoritePlayers implements \IteratorAggregate
                 throw new \InvalidArgumentException('Invalid argument');
             }
         }
+
         return $items;
     }
 }
