@@ -61,10 +61,7 @@ final class FavoritePlayer
     }
 
     /**
-     * @param Id $id
-     * @param UserId $userId
-     * @param PlayerId $playerId
-     * @param TennisPlayer $player
+     * @param array $data
      * @return self
      */
     public static function fromArray(array $data): self
