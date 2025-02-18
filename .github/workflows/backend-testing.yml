@@ -18,7 +18,7 @@ concurrency:
 jobs:
   backend-testing:
     runs-on: ubuntu-latest
-    # docker-compose用の環境変数
+    # docker compose用の環境変数
     env:
       PROJECT_NAME: "tennis-track"
       SOURCE_DIR_NAME: "backend"
@@ -36,7 +36,7 @@ jobs:
 
       IMAGE_CACHE_DIR: /tmp/docker-img
       IMAGE_CACHE_KEY: cache-docker-image
-      CACHE_VER: 1 # キャッシュをクリアしたい時は数値に＋1する
+      CACHE_VER: 2 # キャッシュをクリアしたい時は数値に＋1する
 
       # dockerhubの既存imageのものはそのまま使う
       # 自作のimageはdocker-compose.yamlのservice名と同じにする
@@ -68,7 +68,7 @@ jobs:
       - name: Docker Compose Build
         id: docker-build
         if: steps.cache-docker.outputs.cache-hit != 'true'
-        run: docker-compose build
+        run: docker compose build
 
       - name: Docker Image Save
         id: docker-tag-save
@@ -85,47 +85,47 @@ jobs:
         run: ls  -1 ${IMAGE_CACHE_DIR}/*.tar | xargs -L 1 docker load -i
 
       - name: Docker Compose Up
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Docker Compose Process
-        run: docker-compose ps -a
+        run: docker compose ps -a
 
       - name: PHP, Composer Version
         run: |
-          docker-compose exec -T app php --version
-          docker-compose exec -T app composer --version
+          docker compose exec -T app php --version
+          docker compose exec -T app composer --version
 
       - name: Composer Install
         if: steps.cache-composer.outputs.cache-hit != 'true'
-        run: docker-compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        run: docker compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
       - name: Clear Routes Cache
-        run: docker-compose exec -T app php artisan route:clear
+        run: docker compose exec -T app php artisan route:clear
 
       - name: Composer Dump Autoload
-        run: docker-compose exec -T app composer dump-autoload -q
+        run: docker compose exec -T app composer dump-autoload -q
 
       - name: Laravel Settings
         run: |
-          docker-compose exec -T app cp .env.example .env
-          docker-compose exec -T app php artisan key:generate
-          docker-compose exec -T app php artisan optimize
-          docker-compose exec -T app chmod -R 777 storage bootstrap/cache
+          docker compose exec -T app cp .env.example .env
+          docker compose exec -T app php artisan key:generate
+          docker compose exec -T app php artisan optimize
+          docker compose exec -T app chmod -R 777 storage bootstrap/cache
 
       - name: Laravel Version
-        run: docker-compose exec -T app php artisan --version
+        run: docker compose exec -T app php artisan --version
 
       - name: Excute Migrate
-        run: docker-compose exec -T app php artisan migrate
+        run: docker compose exec -T app php artisan migrate
 
       - name: Rollback Testing
-        run: docker-compose exec -T app php artisan migrate:refresh
+        run: docker compose exec -T app php artisan migrate:refresh
 
       - name: Seeding Testing
-        run: docker-compose exec -T app php artisan db:seed
+        run: docker compose exec -T app php artisan db:seed
 
       - name: PHP Testing
-        run: docker-compose exec -T app ./vendor/bin/phpunit
+        run: docker compose exec -T app ./vendor/bin/phpunit
 
       - name: Pint Testing
-        run: docker-compose exec -T app ./vendor/bin/pint --test
+        run: docker compose exec -T app ./vendor/bin/pint --test
