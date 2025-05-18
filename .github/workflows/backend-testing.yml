@@ -39,9 +39,9 @@ jobs:
 
       # dockerhubの既存imageのものはそのまま使う
       # 自作のimageはdocker-compose.yamlのservice名と同じにする
-      APP_IMAGE_TAG: tennis-track_app
-      NGINX_IMAGE_TAG: tennis-track_nginx
-      MYSQL_IMAGE_TAG: tennis-track_db
+      APP_IMAGE_TAG: tennis-track-app
+      NGINX_IMAGE_TAG: tennis-track-nginx
+      MYSQL_IMAGE_TAG: tennis-track-db
       # QUEUE_WORKER_IMAGE_TAG: tennis-track_queue_worker
 
     steps:
