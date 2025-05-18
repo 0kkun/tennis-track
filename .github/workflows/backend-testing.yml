@@ -69,10 +69,6 @@ jobs:
         if: steps.cache-docker.outputs.cache-hit != 'true'
         run: docker compose build
 
-      # TODO: 後で削除
-      - name: Debug Docker Images
-        run: docker images
-
       - name: Docker Image Save
         id: docker-tag-save
         if: steps.cache-docker.outputs.cache-hit != 'true'
@@ -90,9 +86,6 @@ jobs:
       - name: Docker Compose Up
         run: docker compose up -d
 
-      - name: Docker Compose Process
-        run: docker compose ps -a
-
       - name: Composer Install
         if: steps.cache-composer.outputs.cache-hit != 'true'
         run: docker compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
@@ -105,13 +98,9 @@ jobs:
 
       - name: Laravel Settings
         run: |
-          docker compose exec -T app cp .env.example .env
-          docker compose exec -T app php artisan key:generate
+          docker compose exec -T app cp .env.testing .env
           docker compose exec -T app php artisan optimize
           docker compose exec -T app chmod -R 777 storage bootstrap/cache
-
-      - name: Laravel Version
-        run: docker compose exec -T app php artisan --version
 
       - name: Excute Migrate
         run: docker compose exec -T app php artisan migrate
