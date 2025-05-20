@@ -25,11 +25,10 @@ class BasicAuthenticate
             return $next($request);
         }
 
-        Log::error("Basic Auth failed: Username - $username, Password - $password");
+        Log::warning("Basic Auth failed: username={$username}");
 
-        abort(401, 'Enter username and password.', [
-            header('WWW-Authenticate: Basic realm="Sample Private Page"'),
-            header('Content-Type: text/plain; charset=utf-8'),
-        ]);
+        return response('Enter username and password.', 401)
+            ->header('WWW-Authenticate', 'Basic realm="Sample Private Page"')
+            ->header('Content-Type', 'text/plain; charset=utf-8');
     }
 }
