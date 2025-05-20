@@ -16,5 +16,8 @@ class ValueObjectFromTest extends TestCase
     {
         $valueObject = ValueObjectFromTestDummy::from('valid value');
         $this->assertInstanceOf(ValueObjectFromTestDummy::class, $valueObject);
+
+        $valueObject = ValueObjectFromTestDummy::from(0);
+        $this->assertInstanceOf(ValueObjectFromTestDummy::class, $valueObject);
     }
 }

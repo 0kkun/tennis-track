@@ -31,10 +31,14 @@ services:
       - /${SOURCE_DIR_NAME}/vendor
     tty: true
     depends_on:
-      - db
-      - redis
-      - minio
-      - mailhog
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      minio:
+        condition: service_started
+      mailhog:
+        condition: service_started
     networks:
       backend:
         ipv4_address: 172.16.239.20
@@ -54,6 +58,11 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       TZ: Asia/Tokyo
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
     networks:
       backend:
         ipv4_address: 172.16.239.30
