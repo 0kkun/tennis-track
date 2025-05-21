@@ -21,7 +21,7 @@ class BasicAuthenticate
         $username = $request->getUser();
         $password = $request->getPassword();
 
-        if ($username == env('BASIC_AUTH_USER') && $password == env('BASIC_AUTH_PASS')) {
+        if ($username == config('basic_auth.user') && $password == config('basic_auth.pass')) {
             return $next($request);
         }
 
