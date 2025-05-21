@@ -24,7 +24,7 @@ class BasicAuthenticateTest extends TestCase
         $headers = [];
 
         if (isset($data['auth'])) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($data['auth']);
+            $headers['Authorization'] = 'Basic '.base64_encode($data['auth']);
         }
 
         $response = $this->get('/test-basic-auth', $headers);
