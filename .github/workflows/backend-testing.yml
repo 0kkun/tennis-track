@@ -47,14 +47,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Cache Docker Buildx layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ env.CACHE_VER }}-${{ hashFiles('docker-compose.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-${{ env.CACHE_VER }}-
-
       - name: Build nginx image
         uses: docker/build-push-action@v5
         with:
@@ -62,8 +54,8 @@ jobs:
           file: ./.docker/nginx/Dockerfile
           tags: ${{ env.NGINX_IMAGE_TAG }}:latest
           load: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build app image
         uses: docker/build-push-action@v5
@@ -72,8 +64,8 @@ jobs:
           file: ./.docker/php/Dockerfile
           tags: ${{ env.APP_IMAGE_TAG }}:latest
           load: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build db image
         uses: docker/build-push-action@v5
@@ -82,13 +74,8 @@ jobs:
           file: ./.docker/db/Dockerfile
           tags: ${{ env.MYSQL_IMAGE_TAG }}:latest
           load: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
-
-      - name: Replace old buildx cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Cache Composer Dependencies
         id: cache-composer
