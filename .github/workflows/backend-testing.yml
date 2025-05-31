@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Prepare docker .env
-        run: cp .env.docker .env
+        run: cp .env.ci .env
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -68,25 +68,15 @@ jobs:
           key: ${{ runner.os }}-composer-cache-${{ env.CACHE_VER }}-${{ hashFiles('backend/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-${{ env.CACHE_VER }}-
 
+      - name: Prepare Laravel .env
+        run: cp backend/.env.testing backend/.env
+
       - name: Docker Compose Up
         run: docker compose up -d
 
       - name: Composer Install
         if: steps.cache-composer.outputs.cache-hit != 'true'
         run: docker compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-
-      - name: Clear Routes Cache
-        run: docker compose exec -T app php artisan route:clear
-
-      - name: Composer Dump Autoload
-        run: docker compose exec -T app composer dump-autoload -q
-
-      - name: Laravel Settings
-        run: |
-          docker compose exec -T app cp .env.testing .env
-          docker compose exec -T app php artisan config:clear
-          docker compose exec -T app php artisan optimize
-          docker compose exec -T app chmod -R 777 storage bootstrap/cache
 
       - name: Execute Migrate
         run: docker compose exec -T app php artisan migrate
