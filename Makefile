@@ -33,7 +33,7 @@ setup:
 	@if [ -e ${SOURCE_DIR_NAME}/.env ] ; then \
 		echo "${SOURCE_DIR_NAME}/.env already exists"; \
 	else \
-		cp ${SOURCE_DIR_NAME}/.env.example ${SOURCE_DIR_NAME}/.env; \
+		cp ${SOURCE_DIR_NAME}/.env.docker ${SOURCE_DIR_NAME}/.env; \
 	fi
 
 .PHONY: composer-install

@@ -8,7 +8,7 @@ on:
     paths:
       - 'backend/**'
       - '.docker/**'
-      - '.github/workflows/**'
+      - '.github/workflows/backend-testing.yml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -18,77 +18,47 @@ jobs:
   backend-testing:
     runs-on: ubuntu-latest
     env:
-      PROJECT_NAME: "tennis-track"
-      SOURCE_DIR_NAME: "backend"
-      APP_HOST_PORT: 9000
-      APP_VITE_HOST_PORT: 5173
-      NGINX_HOST_PORT: 80
-      DB_HOST_PORT: 3306
-      REDIS_HOST_PORT: 6379
-      MINIO_HOST_PORT1: 9999
-      MINIO_HOST_PORT2: 9001
-      MYSQL_DB_NAME: "tennis-track_db_testing"
-      MYSQL_USER_NAME: "tennis-track_user"
-      MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "password"
-
-      IMAGE_CACHE_DIR: /tmp/docker-img
-      IMAGE_CACHE_KEY: cache-docker-image
-      CACHE_VER: 2 # キャッシュクリア時は数字アップ
-
-      APP_IMAGE_TAG: tennis-track-app
-      NGINX_IMAGE_TAG: tennis-track-nginx
-      MYSQL_IMAGE_TAG: tennis-track-db
+      CACHE_VER: 1
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Prepare docker .env
+        run: cp .env.ci .env
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-      - name: Cache Docker Buildx layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ env.CACHE_VER }}-${{ hashFiles('docker-compose.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-${{ env.CACHE_VER }}-
 
       - name: Build nginx image
         uses: docker/build-push-action@v5
         with:
           context: ./.docker/nginx
           file: ./.docker/nginx/Dockerfile
-          tags: ${{ env.NGINX_IMAGE_TAG }}:latest
+          tags: tennis-track-nginx:latest
           load: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build app image
         uses: docker/build-push-action@v5
         with:
           context: ./.docker/php
           file: ./.docker/php/Dockerfile
-          tags: ${{ env.APP_IMAGE_TAG }}:latest
+          tags: tennis-track-app:latest
           load: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Build db image
         uses: docker/build-push-action@v5
         with:
           context: ./.docker/db
           file: ./.docker/db/Dockerfile
-          tags: ${{ env.MYSQL_IMAGE_TAG }}:latest
+          tags: tennis-track-db:latest
           load: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
-
-      - name: Replace old buildx cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Cache Composer Dependencies
         id: cache-composer
@@ -98,25 +68,15 @@ jobs:
           key: ${{ runner.os }}-composer-cache-${{ env.CACHE_VER }}-${{ hashFiles('backend/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-${{ env.CACHE_VER }}-
 
+      - name: Prepare Laravel .env
+        run: cp backend/.env.testing backend/.env
+
       - name: Docker Compose Up
         run: docker compose up -d
 
       - name: Composer Install
         if: steps.cache-composer.outputs.cache-hit != 'true'
         run: docker compose exec -T app composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-
-      - name: Clear Routes Cache
-        run: docker compose exec -T app php artisan route:clear
-
-      - name: Composer Dump Autoload
-        run: docker compose exec -T app composer dump-autoload -q
-
-      - name: Laravel Settings
-        run: |
-          docker compose exec -T app cp .env.testing .env
-          docker compose exec -T app php artisan config:clear
-          docker compose exec -T app php artisan optimize
-          docker compose exec -T app chmod -R 777 storage bootstrap/cache
 
       - name: Execute Migrate
         run: docker compose exec -T app php artisan migrate
