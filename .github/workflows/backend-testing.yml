@@ -18,31 +18,14 @@ jobs:
   backend-testing:
     runs-on: ubuntu-latest
     env:
-      PROJECT_NAME: "tennis-track"
-      SOURCE_DIR_NAME: "backend"
-      APP_HOST_PORT: 9000
-      APP_VITE_HOST_PORT: 5173
-      NGINX_HOST_PORT: 80
-      DB_HOST_PORT: 3306
-      REDIS_HOST_PORT: 6379
-      MINIO_HOST_PORT1: 9999
-      MINIO_HOST_PORT2: 9001
-      MYSQL_DB_NAME: "tennis-track_db_testing"
-      MYSQL_USER_NAME: "tennis-track_user"
-      MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "password"
-
-      IMAGE_CACHE_DIR: /tmp/docker-img
-      IMAGE_CACHE_KEY: cache-docker-image
-      CACHE_VER: 2 # キャッシュクリア時は数字アップ
-
-      APP_IMAGE_TAG: tennis-track-app
-      NGINX_IMAGE_TAG: tennis-track-nginx
-      MYSQL_IMAGE_TAG: tennis-track-db
+      CACHE_VER: 1
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
+      - name: Prepare docker .env
+        run: cp .env.docker .env
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -52,7 +35,7 @@ jobs:
         with:
           context: ./.docker/nginx
           file: ./.docker/nginx/Dockerfile
-          tags: ${{ env.NGINX_IMAGE_TAG }}:latest
+          tags: tennis-track-nginx:latest
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -62,7 +45,7 @@ jobs:
         with:
           context: ./.docker/php
           file: ./.docker/php/Dockerfile
-          tags: ${{ env.APP_IMAGE_TAG }}:latest
+          tags: tennis-track-app:latest
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -72,7 +55,7 @@ jobs:
         with:
           context: ./.docker/db
           file: ./.docker/db/Dockerfile
-          tags: ${{ env.MYSQL_IMAGE_TAG }}:latest
+          tags: tennis-track-db:latest
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max

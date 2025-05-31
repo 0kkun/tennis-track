@@ -37,7 +37,7 @@ $ cd tennis-track
 
 $ touch .env
 
-$ cp .env.example .env
+$ cp .env.docker .env
 
 $ make init
 
