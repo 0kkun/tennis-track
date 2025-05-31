@@ -21,15 +21,14 @@ class BasicAuthenticate
         $username = $request->getUser();
         $password = $request->getPassword();
 
-        if ($username == env('BASIC_AUTH_USER') && $password == env('BASIC_AUTH_PASS')) {
+        if ($username == config('basic_auth.user') && $password == config('basic_auth.pass')) {
             return $next($request);
         }
 
-        Log::error("Basic Auth failed: Username - $username, Password - $password");
+        Log::warning("Basic Auth failed: username={$username}");
 
-        abort(401, 'Enter username and password.', [
-            header('WWW-Authenticate: Basic realm="Sample Private Page"'),
-            header('Content-Type: text/plain; charset=utf-8'),
-        ]);
+        return response('Enter username and password.', 401)
+            ->header('WWW-Authenticate', 'Basic realm="Sample Private Page"')
+            ->header('Content-Type', 'text/plain; charset=utf-8');
     }
 }
