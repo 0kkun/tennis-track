@@ -12,7 +12,7 @@ DEI = docker exec -it
 init:
 ifdef PROJECT_NAME
 	@make down
-	@make set-up
+	@make setup
 	@make build
 	@make up
 	@make composer-install
@@ -28,12 +28,12 @@ else
 endif
 
 # .envがなければ生成する
-.PHONY: set-up
+.PHONY: setup
 setup:
 	@if [ -e ${SOURCE_DIR_NAME}/.env ] ; then \
 		echo "${SOURCE_DIR_NAME}/.env already exists"; \
 	else \
-		cp ${SOURCE_DIR_NAME}/.env.docker ${SOURCE_DIR_NAME}/.env; \
+		cp ${SOURCE_DIR_NAME}/.env.example ${SOURCE_DIR_NAME}/.env; \
 	fi
 
 .PHONY: composer-install
