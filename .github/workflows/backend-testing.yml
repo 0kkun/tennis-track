@@ -43,7 +43,7 @@ jobs:
       - name: Build app image
         uses: docker/build-push-action@v5
         with:
-          context: ./.docker/php
+          context: .
           file: ./.docker/php/Dockerfile
           tags: tennis-track-app:latest
           load: true
