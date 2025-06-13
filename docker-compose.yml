@@ -19,14 +19,15 @@ services:
   app:
     container_name: ${PROJECT_NAME}_app
     build:
-      context: ./.docker/php
+      context: .
+      dockerfile: .docker/php/Dockerfile
     ports:
         - ${APP_HOST_PORT}:9000
         - ${APP_VITE_HOST_PORT}:5173
     volumes:
       - ./${SOURCE_DIR_NAME}:/var/www
-      - /${SOURCE_DIR_NAME}/node_modules
-      - /${SOURCE_DIR_NAME}/vendor
+      - /var/www/node_modules
+      - /var/www/vendor
     tty: true
     depends_on:
       db:

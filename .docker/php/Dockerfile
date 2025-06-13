@@ -1,6 +1,6 @@
 FROM php:8.1.8-fpm
 
-COPY php.ini /usr/local/etc/php/
+COPY ./.docker/php/php.ini /usr/local/etc/php/
 
 # for vite server
 EXPOSE 5173
@@ -20,16 +20,10 @@ ENV PATH $PATH:/composer/vendor/bin
 COPY --from=composer:2.4 /usr/bin/composer /usr/bin/composer
 
 # Install Node and npm
-ENV NODE_VERSION=16.14.0
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-ENV NVM_DIR=/root/.nvm
-RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
-ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+  && apt-get install -y nodejs
 
 WORKDIR /var/www
+ADD ./backend /var/www
 
-ADD . /server/storage
-
-RUN chown -R www-data:www-data /server/storage
+RUN chown -R www-data:www-data /var/www/storage
